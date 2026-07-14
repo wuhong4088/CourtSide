@@ -3,7 +3,7 @@
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up         │
+│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up          │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -15,26 +15,26 @@ The same header will appear at the top of every page.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up         │
+│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up          │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                                                                                    │
 │                                   Find Your Next Game                                              │
 │                                                                                                    │
-│       Join local pickup games, discover courts, and prepare your gear before you play.            │
+│          Join local pickup games, discover courts, and prepare your gear before you play.          │
 │                                                                                                    │
-│                           [ Find a Game ]   [ Create a Game ]                                       │
+│                                [ Find a Game ]   [ Create a Game ]                                 │
 │                                                                                                    │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ Popular Games                                                                                      │
 │                                                                                                    │
-│ [ Basketball Card ]        [ Pickleball Card ]        [ Tennis Card ]                              │
+│           [ Basketball Card ]            [ Pickleball Card ]            [ Tennis Card ]            │
 │                                                                                                    │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ Recommended Courts                                                                                 │
 │                                                                                                    │
-│ [ Court Card ]             [ Court Card ]                                                           │
+│                        [ Court Card ]                        [ Court Card ]                        │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -44,13 +44,13 @@ The same header will appear at the top of every page.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up         │
+│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up          │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ Find Pickup Games                                                            [ Create New Game ] │
+│ Find Pickup Games                                                              [ Create New Game ] │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ [ Search ]   [ Sport ▼ ]   [ Skill Level ▼ ]   [ Date ▼ ]                                           │
+│ [ Search ]   [ Sport ▼ ]   [ Skill Level ▼ ]   [ Date ▼ ]                                          │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ Basketball                                                                                         │
 │ July 18, 2026 · 6:00 PM                                                                            │
@@ -74,29 +74,29 @@ The same header will appear at the top of every page.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up         │
+│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up          │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ Create a Pickup Game                                                                               │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ Sport Type                                                                                         │
-│ [ Basketball                                                                  ▼ ]                  │
+│ [ Basketball                                                                 ▼ ]                   │
 │                                                                                                    │
-│ Date                                              Time                                             │
-│ [ July 18, 2026 ]                                 [ 6:00 PM ]                                      │
+│  Date                                    Time                                                      │
+│ [ July 18, 2026                      ]    [ 6:00 PM                            ]                   │
 │                                                                                                    │
 │ Skill Level                                                                                        │
-│ [ Intermediate                                                               ▼ ]                  │
+│ [ Intermediate                                                               ▼ ]                   │
 │                                                                                                    │
 │ Location                                                                                           │
-│ [ Boston Common Court                                                        ]                    │
+│ [ Boston Common Court                                                          ]                   │
 │                                                                                                    │
 │ Maximum Players                                                                                    │
-│ [ 6                                                                          ]                    │
+│ [ 6                                                                            ]                   │
 │                                                                                                    │
 │ Description                                                                                        │
-│ [ Looking for players for a friendly game.                                    ]                    │
+│ [ Looking for players for a friendly game.                                     ]                   │
 │                                                                                                    │
 │                                                   [ Cancel ]   [ Create Game ]                     │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -108,11 +108,11 @@ The same header will appear at the top of every page.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up         │
+│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up          │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ My Match History                                                            [ Add New Result ]   │
+│ My Match History                                                                [ Add New Result ] │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ Total Games: 12       Wins: 8       Losses: 4       Win Rate: 67%                                  │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
@@ -138,11 +138,11 @@ The same header will appear at the top of every page.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up         │
+│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up          │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ Court Directory                                                               [ Add a Court ]    │
+│ Court Directory                                                                    [ Add a Court ] │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ [ Search by court or address ]                         [ Sport Type ▼ ]                            │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
@@ -168,27 +168,27 @@ The same header will appear at the top of every page.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up         │
+│ CourtSide   Home   Find Games   Match History   Courts   Gear Checklist   Login   Sign Up          │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ My Gear Checklists                                                          [ New Checklist ]    │
+│ My Gear Checklists                                                               [ New Checklist ] │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Basketball Game Checklist                                                                         │
+│ Basketball Game Checklist                                                                          │
 │                                                                                                    │
-│ ☑ Basketball shoes                                                                                │
-│ ☑ Water bottle                                                                                    │
-│ ☐ Basketball                                                                                      │
-│ ☐ Towel                                                                                           │
-│ ☐ Extra shirt                                                                                     │
+│ ☑ Basketball shoes                                                                                 │
+│ ☑ Water bottle                                                                                     │
+│ ☐ Basketball                                                                                       │
+│ ☐ Towel                                                                                            │
+│ ☐ Extra shirt                                                                                      │
 │                                                                                                    │
 │                                                   [ Add Item ] [ Edit ] [ Delete ]                 │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Pickleball Checklist                                                                              │
+│ Pickleball Checklist                                                                               │
 │                                                                                                    │
-│ ☑ Pickleball paddle                                                                               │
-│ ☐ Pickleballs                                                                                     │
-│ ☐ Water bottle                                                                                    │
+│ ☑ Pickleball paddle                                                                                │
+│ ☐ Pickleballs                                                                                      │
+│ ☐ Water bottle                                                                                     │
 │                                                                                                    │
 │                                                   [ Add Item ] [ Edit ] [ Delete ]                 │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
