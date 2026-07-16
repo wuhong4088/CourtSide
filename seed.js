@@ -14,7 +14,7 @@ async function runSeed() {
     await db.collection('checklists').deleteMany({});
 
     console.log('Inserting mock courts (Partner B — Wu Hung Hsiao)...');
-    const courts = [
+    const baseCourts = [
       {
         name: 'Boston Common Basketball Court',
         address: 'Charles St, Boston, MA 02116',
@@ -48,8 +48,27 @@ async function runSeed() {
         createdAt: new Date()
       }
     ];
+
+    const courts = [...baseCourts];
+    const sportsList = ['Basketball', 'Pickleball', 'Tennis'];
+    const neighborhoods = ['Back Bay', 'Fenway', 'South End', 'Beacon Hill', 'North End', 'Dorchester', 'Roxbury', 'Allston', 'Brighton'];
+    
+    // Generate 1005 synthetic records to satisfy the >1k requirement
+    for (let i = 1; i <= 1005; i++) {
+      const sport = sportsList[i % 3];
+      const neighborhood = neighborhoods[i % neighborhoods.length];
+      courts.push({
+        name: `${neighborhood} ${sport} Court #${i}`,
+        address: `${100 + i} Commonwealth Ave, Boston, MA 02215`,
+        review: `A local favorite for ${sport.toLowerCase()} players. Well maintained with great lighting.`,
+        rating: parseFloat((3.5 + (i % 16) * 0.1).toFixed(1)),
+        sport: sport,
+        createdAt: new Date()
+      });
+    }
+
     await db.collection('courts').insertMany(courts);
-    console.log(`Seeded ${courts.length} court locations.`);
+    console.log(`Seeded ${courts.length} court locations (including >1k synthetic records).`);
 
     console.log('Inserting mock gear checklists (Partner B — Wu Hung Hsiao)...');
     const checklists = [
