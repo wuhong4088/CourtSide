@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Modal from '../components/Modal';
+import './GearChecklist.css';
 
 function GearChecklist({ currentUser }) {
   const [checklists, setChecklists] = useState([]);
@@ -213,7 +215,7 @@ function GearChecklist({ currentUser }) {
 
   return (
     <div className="checklists-container">
-      <div className="flex-between header-row" style={{ marginBottom: '2rem' }}>
+      <div className="flex-between header-row">
         <div>
           <h1 className="page-title">My Gear Checklists</h1>
           <p className="page-subtitle">Manage, create, and verify packing equipment checklists for <strong>{currentUser}</strong>.</p>
@@ -223,7 +225,7 @@ function GearChecklist({ currentUser }) {
 
       {/* Grid of Checklists */}
       {loading ? (
-        <div className="flex-center" style={{ minHeight: '200px', color: '#64748b' }}>Loading packing lists...</div>
+        <div className="flex-center loading-text">Loading packing lists...</div>
       ) : checklists.length > 0 ? (
         <div className="checklists-list grid-cols-2">
           {checklists.map((checklist) => {
@@ -233,9 +235,9 @@ function GearChecklist({ currentUser }) {
               : 0;
 
             return (
-              <div key={checklist._id} className="card checklist-card flex-between flex-column" style={{ alignItems: 'stretch' }}>
+              <div key={checklist._id} className="card checklist-card flex-between flex-column">
                 <div>
-                  <div className="flex-between card-header" style={{ marginBottom: '0.75rem', alignItems: 'center' }}>
+                  <div className="flex-between card-header">
                     {editingTitleChecklistId === checklist._id ? (
                       <form
                         onSubmit={async (e) => {
@@ -258,13 +260,11 @@ function GearChecklist({ currentUser }) {
                             console.error(err);
                           }
                         }}
-                        className="flex-center"
-                        style={{ gap: '0.5rem', flex: 1 }}
+                        className="flex-center edit-title-form"
                       >
                         <input
                           type="text"
-                          className="form-control"
-                          style={{ padding: '0.25rem 0.5rem', fontSize: '1.1rem' }}
+                          className="form-control edit-title-input"
                           value={editTitle}
                           onChange={(e) => setEditTitle(e.target.value)}
                           autoFocus
@@ -273,26 +273,21 @@ function GearChecklist({ currentUser }) {
                         <button type="button" className="btn btn-outline btn-sm" onClick={() => setEditingTitleChecklistId(null)}>Cancel</button>
                       </form>
                     ) : (
-                      <h3 className="checklist-title" style={{ margin: 0 }}>{checklist.title}</h3>
+                      <h3 className="checklist-title">{checklist.title}</h3>
                     )}
                   </div>
 
                   {/* Progress bar */}
                   {checklist.items.length > 0 && (
-                    <div className="progress-bar-container" style={{ marginBottom: '1.25rem' }}>
-                      <div className="flex-between progress-text" style={{ marginBottom: '0.25rem', fontSize: '0.75rem', color: '#64748b', fontWeight: '600' }}>
+                    <div className="progress-bar-container">
+                      <div className="flex-between progress-text">
                         <span>Progress</span>
                         <span>{itemsChecked} of {checklist.items.length} items packed ({progressPercent}%)</span>
                       </div>
-                      <div className="progress-track" style={{ height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div className="progress-track">
                         <div 
                           className="progress-fill" 
-                          style={{ 
-                            height: '100%', 
-                            width: `${progressPercent}%`, 
-                            background: 'linear-gradient(90deg, #2563eb 0%, #7c3aed 100%)',
-                            transition: 'width 0.3s ease'
-                          }} 
+                          style={{ width: `${progressPercent}%` }} 
                         />
                       </div>
                     </div>
@@ -300,10 +295,10 @@ function GearChecklist({ currentUser }) {
 
                   {/* Items list */}
                   {checklist.items.length > 0 ? (
-                    <div className="items-list" style={{ marginBottom: '1.25rem' }}>
+                    <div className="items-list">
                       {checklist.items.map((item, idx) => (
                         <div key={idx} className="checklist-item flex-between">
-                          <label className="flex-center" style={{ gap: '0.75rem', cursor: 'pointer', flex: 1, justifyContent: 'flex-start' }}>
+                          <label className="flex-center checklist-label">
                             <input
                               type="checkbox"
                               className="checklist-checkbox"
@@ -323,8 +318,8 @@ function GearChecklist({ currentUser }) {
                       ))}
                     </div>
                   ) : (
-                    <p style={{ fontStyle: 'italic', fontSize: '0.85rem', color: '#64748b', padding: '1rem 0', textAlign: 'center' }}>
-                      No gear added yet. Click "Add Item" below.
+                    <p className="empty-checklist-text">
+                      No gear added yet. Click &ldquo;Add Item&rdquo; below.
                     </p>
                   )}
                 </div>
@@ -336,30 +331,27 @@ function GearChecklist({ currentUser }) {
                       handleAddItemToCard(e, checklist);
                       setActiveAddInputId(null);
                     }} 
-                    className="flex-center" 
-                    style={{ gap: '0.5rem', marginBottom: '1rem', borderTop: '1px dashed #e2e8f0', paddingTop: '0.75rem' }}
+                    className="flex-center add-item-form"
                   >
                     <input
                       type="text"
                       placeholder="Item name..."
-                      className="form-control"
-                      style={{ fontSize: '0.85rem', padding: '0.4rem 0.6rem' }}
+                      className="form-control add-item-input"
                       value={cardInputs[checklist._id] || ''}
                       onChange={(e) => handleInputChange(checklist._id, e.target.value)}
                       autoFocus
                     />
-                    <button type="submit" className="btn btn-primary" style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}>
+                    <button type="submit" className="btn btn-primary add-item-save-btn">
                       Save
                     </button>
                   </form>
                 )}
 
                 {/* Card Action Buttons (Direct alignment with mockup) */}
-                <div className="flex-center" style={{ gap: '0.5rem', borderTop: '1px solid #e2e8f0', paddingTop: '1rem', marginTop: 'auto' }}>
+                <div className="flex-center card-actions">
                   <button
                     onClick={() => setActiveAddInputId(activeAddInputId === checklist._id ? null : checklist._id)}
                     className="btn btn-outline btn-sm"
-                    style={{ flex: 1 }}
                   >
                     Add Item
                   </button>
@@ -369,14 +361,12 @@ function GearChecklist({ currentUser }) {
                       setEditTitle(checklist.title);
                     }}
                     className="btn btn-outline btn-sm"
-                    style={{ flex: 1 }}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDeleteChecklist(checklist._id)}
                     className="btn btn-outline btn-sm hover-danger"
-                    style={{ flex: 1 }}
                   >
                     Delete
                   </button>
@@ -386,10 +376,10 @@ function GearChecklist({ currentUser }) {
           })}
         </div>
       ) : (
-        <div className="card flex-center empty-state-card" style={{ padding: '4rem', color: '#64748b' }}>
+        <div className="card flex-center empty-state-card">
           <div>
-            <p style={{ fontSize: '1.2rem', fontWeight: '600', marginBottom: '0.5rem' }}>No checklists found</p>
-            <p>Create your first packing equipment checklist by clicking "+ New Checklist" above.</p>
+            <p className="empty-state-title">No checklists found</p>
+            <p>Create your first packing equipment checklist by clicking &ldquo;+ New Checklist&rdquo; above.</p>
           </div>
         </div>
       )}
@@ -440,48 +430,12 @@ function GearChecklist({ currentUser }) {
         </form>
       </Modal>
 
-      <style>{`
-        .checklist-card {
-          min-height: 250px;
-        }
-
-        .checklist-title {
-          font-size: 1.2rem;
-          color: #0f172a;
-          flex: 1;
-        }
-
-        .delete-list-btn {
-          background: transparent;
-          border: none;
-          font-size: 1.5rem;
-          color: #cbd5e1;
-          cursor: pointer;
-          line-height: 1;
-          transition: color 0.2s ease;
-        }
-
-        .delete-list-btn:hover {
-          color: #ef4444;
-        }
-
-        .remove-item-btn {
-          background: transparent;
-          border: none;
-          font-size: 1.25rem;
-          color: #cbd5e1;
-          cursor: pointer;
-          line-height: 1;
-          transition: color 0.2s ease;
-          padding: 0 0.25rem;
-        }
-
-        .remove-item-btn:hover {
-          color: #ef4444;
-        }
-      `}</style>
     </div>
   );
 }
+
+GearChecklist.propTypes = {
+  currentUser: PropTypes.string.isRequired
+};
 
 export default GearChecklist;

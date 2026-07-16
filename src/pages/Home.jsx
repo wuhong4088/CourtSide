@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import './Home.css';
 
-function Home() {
+function Home({ currentUser }) {
   const [featuredCourts, setFeaturedCourts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -95,7 +97,7 @@ function Home() {
                   {renderStars(court.rating)}
                 </div>
                 <p className="court-address">📍 {court.address}</p>
-                <blockquote className="court-review">"{court.review}"</blockquote>
+                <blockquote className="court-review">&ldquo;{court.review}&rdquo;</blockquote>
               </div>
             ))}
           </div>
@@ -105,109 +107,12 @@ function Home() {
           </div>
         )}
       </section>
-
-      <style>{`
-        .section {
-          margin-bottom: 2.5rem;
-        }
-
-        .section-title {
-          font-size: 1.75rem;
-          margin-bottom: 1.25rem;
-          color: #0f172a;
-          position: relative;
-        }
-
-        .btn-lg-padding {
-          padding: 0.9rem 2.25rem;
-          font-size: 1rem;
-          border-radius: 8px;
-        }
-
-        .btn-hero-outline {
-          background: rgba(255, 255, 255, 0.15);
-          color: #ffffff;
-          border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .btn-hero-outline:hover {
-          background: rgba(255, 255, 255, 0.3);
-          border-color: #ffffff;
-        }
-
-        .sport-card {
-          flex-direction: column;
-          text-align: center;
-          padding: 2.5rem 1.5rem;
-          background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-        }
-
-        .sport-icon {
-          font-size: 3.5rem;
-          margin-bottom: 1rem;
-          display: inline-block;
-          animation: float 3s ease-in-out infinite;
-        }
-
-        .sport-card h3 {
-          margin-bottom: 0.5rem;
-          font-size: 1.25rem;
-        }
-
-        .sport-card p {
-          color: #64748b;
-          font-size: 0.9rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .sport-link {
-          font-size: 0.85rem;
-          font-weight: 700;
-          color: #2563eb;
-          transition: transform 0.2s ease;
-        }
-
-        .sport-link:hover {
-          text-decoration: underline;
-        }
-
-        .court-featured-card {
-          border-left: 5px solid #7c3aed;
-        }
-
-        .court-name {
-          font-size: 1.2rem;
-          color: #1e293b;
-        }
-
-        .court-address {
-          font-size: 0.85rem;
-          color: #64748b;
-          margin-bottom: 0.75rem;
-        }
-
-        .court-review {
-          font-style: italic;
-          font-size: 0.9rem;
-          color: #475569;
-          background: #f1f5f9;
-          padding: 0.75rem 1rem;
-          border-radius: 6px;
-          border-left: 3px solid #cbd5e1;
-        }
-
-        .star-empty {
-          color: #cbd5e1;
-        }
-
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
-          100% { transform: translateY(0px); }
-        }
-      `}</style>
     </div>
   );
 }
+
+Home.propTypes = {
+  currentUser: PropTypes.string
+};
 
 export default Home;

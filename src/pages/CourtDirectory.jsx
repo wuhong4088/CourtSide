@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Modal from '../components/Modal';
+import './CourtDirectory.css';
 
 function CourtDirectory({ currentUser }) {
   const [courts, setCourts] = useState([]);
@@ -155,7 +157,7 @@ function CourtDirectory({ currentUser }) {
 
   return (
     <div className="courts-container">
-      <div className="flex-between header-row" style={{ marginBottom: '2rem' }}>
+      <div className="flex-between header-row">
         <div>
           <h1 className="page-title">Court Directory</h1>
           <p className="page-subtitle">Recommending sports courts, surfaces, lighting, and park conditions in your local area.</p>
@@ -164,7 +166,7 @@ function CourtDirectory({ currentUser }) {
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="card search-card flex-between" style={{ gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem', padding: '1rem 1.5rem' }}>
+      <div className="card search-card flex-between">
         <div className="flex-1">
           <input
             type="text"
@@ -191,29 +193,29 @@ function CourtDirectory({ currentUser }) {
 
       {/* Directory Listings */}
       {loading ? (
-        <div className="flex-center" style={{ minHeight: '200px', color: '#64748b' }}>Loading court directory...</div>
+        <div className="flex-center loading-text">Loading court directory...</div>
       ) : courts.length > 0 ? (
         <div className="courts-list grid-cols-2">
           {courts.map((court) => (
-            <div key={court._id} className="card card-hover court-directory-card flex-between flex-column" style={{ alignItems: 'stretch' }}>
-              <div className="court-card-top" style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <h3 className="court-title-text" style={{ fontSize: '1.25rem', margin: '0' }}>{court.name}</h3>
-                <p style={{ margin: '0', fontSize: '0.9rem', color: '#64748b' }}>
+            <div key={court._id} className="card card-hover court-directory-card flex-between flex-column">
+              <div className="court-card-top">
+                <h3 className="court-title-text">{court.name}</h3>
+                <p className="court-location-text">
                   {court.sport || 'Basketball'} · {court.address}
                 </p>
-                <div className="flex-center" style={{ justifyContent: 'flex-start', gap: '0.5rem', margin: '0.2rem 0' }}>
+                <div className="court-stars-row">
                   {renderStars(court.rating)}
-                  <span className="rating-number" style={{ fontSize: '0.9rem', fontWeight: '600' }}>{court.rating}</span>
+                  <span className="rating-number">{court.rating}</span>
                 </div>
-                <div className="court-review-box" style={{ background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '6px', borderLeft: '3px solid #7c3aed', marginTop: '0.5rem' }}>
-                  <p className="review-quote" style={{ fontStyle: 'italic', fontSize: '0.9rem', color: '#334155', margin: '0' }}>
+                <div className="court-review-box">
+                  <p className="review-quote">
                     “{court.review}”
                   </p>
                 </div>
               </div>
 
-              <div className="court-card-bottom flex-center" style={{ justifyContent: 'flex-end', gap: '0.5rem', borderTop: '1px solid #e2e8f0', marginTop: '1.25rem', paddingTop: '1rem' }}>
-                <button className="btn btn-outline btn-sm" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+              <div className="court-card-bottom flex-center">
+                <button className="btn btn-outline btn-sm details-btn" disabled>
                   View Details
                 </button>
                 <button 
@@ -233,10 +235,10 @@ function CourtDirectory({ currentUser }) {
           ))}
         </div>
       ) : (
-        <div className="card flex-center empty-state-card" style={{ padding: '4rem', color: '#64748b' }}>
+        <div className="card flex-center empty-state-card">
           <div>
-            <p style={{ fontSize: '1.2rem', fontWeight: '600', marginBottom: '0.5rem' }}>No courts found</p>
-            <p>Try searching for another keyword, or click "+ Add a Court" to list a new location.</p>
+            <p className="empty-state-title">No courts found</p>
+            <p>Try searching for another keyword, or click &ldquo;+ Add a Court&rdquo; to list a new location.</p>
           </div>
         </div>
       )}
@@ -330,66 +332,12 @@ function CourtDirectory({ currentUser }) {
         </form>
       </Modal>
 
-      <style>{`
-        .court-directory-card {
-          min-height: 250px;
-        }
-
-        .court-title-text {
-          font-size: 1.25rem;
-          color: #0f172a;
-          margin-right: 0.5rem;
-          flex: 1;
-        }
-
-        .rating-number {
-          font-size: 0.85rem;
-          font-weight: 700;
-          color: #475569;
-        }
-
-        .court-location-text {
-          font-size: 0.85rem;
-          color: #64748b;
-          margin-bottom: 1rem;
-        }
-
-        .court-review-box {
-          background: #f8fafc;
-          border-left: 3px solid #7c3aed;
-          padding: 0.75rem 1rem;
-          border-radius: 6px;
-        }
-
-        .review-quote {
-          font-size: 0.9rem;
-          font-style: italic;
-          color: #334155;
-          line-height: 1.5;
-        }
-
-        .court-meta-author {
-          font-size: 0.75rem;
-          color: #94a3b8;
-          font-weight: 500;
-        }
-
-        .star {
-          color: #fbbf24;
-        }
-
-        .star-empty {
-          color: #cbd5e1;
-        }
-
-        .hover-danger:hover {
-          background: #fee2e2;
-          border-color: #fca5a5;
-          color: #ef4444;
-        }
-      `}</style>
     </div>
   );
 }
+
+CourtDirectory.propTypes = {
+  currentUser: PropTypes.string.isRequired
+};
 
 export default CourtDirectory;

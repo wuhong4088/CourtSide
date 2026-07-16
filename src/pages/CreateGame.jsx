@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './CreateGame.css';
 
 function CreateGame() {
   return (
     <div className="create-game-container" style={{ maxWidth: '650px', margin: '0 auto' }}>
-      {/* Scope Notice Banner */}
-      <div className="partner-banner" style={{ background: 'rgba(124, 58, 237, 0.1)', borderLeft: '4px solid #7c3aed', padding: '1rem', borderRadius: '6px', marginBottom: '2rem' }}>
-        <p style={{ margin: 0, fontSize: '0.9rem', color: '#6d28d9', fontWeight: '500' }}>
-          📢 <strong>Integration Notice</strong>: This Create Game page is developed and owned by <strong>Partner A (@Harini Thirunavukkarasan)</strong>. A static mockup is displayed here for navigation integration purposes.
-        </p>
-      </div>
+
 
       <div style={{ marginBottom: '1.5rem' }}>
         <h1 className="page-title">Create a Pickup Game</h1>
@@ -70,12 +66,6 @@ function CreateGame() {
         </form>
       </div>
 
-      <style>{`
-        .page-title {
-          font-size: 2rem;
-          color: #0f172a;
-        }
-      `}</style>
     </div>
   );
 }

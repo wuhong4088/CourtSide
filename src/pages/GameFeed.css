@@ -1,0 +1,9 @@
+.page-title { font-size: 1.5rem; color: #333333; }
+.page-subtitle { color: #666666; font-size: 0.9rem; }
+.flex-1 { flex: 1; }
+.filters-card { padding: 10px 15px; background: #ffffff; border: 1px solid #cccccc; }
+.games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+@media (max-width: 768px) { .games-grid { grid-template-columns: 1fr; } }
+.game-sport-icon { font-size: 1.25rem; }
+.player-count { font-size: 0.8rem; color: #666666; }
+.detail-row { font-size: 0.85rem; margin-bottom: 5px; color: #333333; }

@@ -1,4 +1,5 @@
 import React from 'react';
+import './GameFeed.css';
 
 function GameFeed() {
   // Static mock data strictly for visual integration
@@ -23,12 +24,7 @@ function GameFeed() {
 
   return (
     <div className="feed-container">
-      {/* Scope Notice Banner */}
-      <div className="partner-banner" style={{ background: 'rgba(124, 58, 237, 0.1)', borderLeft: '4px solid #7c3aed', padding: '1rem', borderRadius: '6px', marginBottom: '2rem' }}>
-        <p style={{ margin: 0, fontSize: '0.9rem', color: '#6d28d9', fontWeight: '500' }}>
-          📢 <strong>Notice</strong>: This page is for <strong>Partner A (@Harini Thirunavukkarasan)</strong>'s feature. A static mockup is shown here for integration.
-        </p>
-      </div>
+
 
       <div className="flex-between header-row" style={{ marginBottom: '2rem' }}>
         <div>
@@ -91,17 +87,6 @@ function GameFeed() {
         ))}
       </div>
 
-      <style>{`
-        .page-title { font-size: 2rem; color: #0f172a; }
-        .page-subtitle { color: #64748b; font-size: 0.95rem; }
-        .flex-1 { flex: 1; }
-        .filters-card { padding: 1rem 1.5rem; background: #ffffff; }
-        .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-        @media (max-width: 900px) { .games-grid { grid-template-columns: 1fr; } }
-        .game-sport-icon { font-size: 1.5rem; }
-        .player-count { font-size: 0.85rem; color: #64748b; }
-        .detail-row { font-size: 0.9rem; margin-bottom: 0.4rem; color: #334155; }
-      `}</style>
     </div>
   );
 }

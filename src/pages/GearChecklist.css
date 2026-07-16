@@ -1,0 +1,171 @@
+.checklist-card {
+  min-height: 200px;
+}
+
+.checklist-title {
+  font-size: 1.1rem;
+  color: #333333;
+  flex: 1;
+}
+
+.delete-list-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: #cccccc;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.delete-list-btn:hover {
+  color: #dc3545;
+}
+
+.remove-item-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: #cccccc;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 5px;
+}
+
+.remove-item-btn:hover {
+  color: #dc3545;
+}
+
+/* Checkbox checklist styles */
+.checklist-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 4px;
+  border-bottom: 1px dashed #cccccc;
+  gap: 10px;
+}
+
+.checklist-item:last-child {
+  border-bottom: none;
+}
+
+.checklist-checkbox {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.checklist-text {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.checklist-text.checked {
+  text-decoration: line-through;
+  color: #888888;
+}
+
+/* Cleanup layout helper classes */
+.header-row {
+  margin-bottom: 20px;
+}
+
+.loading-text {
+  min-height: 200px;
+  color: #666666;
+}
+
+.card-header {
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.edit-title-form {
+  gap: 8px;
+  flex: 1;
+}
+
+.edit-title-input {
+  padding: 4px 8px;
+  font-size: 1.1rem;
+}
+
+.progress-bar-container {
+  margin-bottom: 15px;
+}
+
+.progress-text {
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  color: #666666;
+  font-weight: bold;
+}
+
+.progress-track {
+  height: 6px;
+  background: #eeeeee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #007bff;
+}
+
+.items-list {
+  margin-bottom: 15px;
+}
+
+.checklist-label {
+  gap: 10px;
+  cursor: pointer;
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.empty-checklist-text {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #666666;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.add-item-form {
+  gap: 8px;
+  margin-bottom: 10px;
+  border-top: 1px dashed #cccccc;
+  padding-top: 10px;
+}
+
+.add-item-input {
+  font-size: 0.85rem;
+  padding: 4px 6px;
+}
+
+.add-item-save-btn {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+
+.card-actions {
+  gap: 8px;
+  border-top: 1px solid #cccccc;
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+.card-actions button {
+  flex: 1;
+}
+
+.empty-state-card {
+  padding: 40px;
+  color: #666666;
+}
+
+.empty-state-title {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
