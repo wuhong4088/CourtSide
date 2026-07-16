@@ -1,4 +1,5 @@
 import React from 'react';
+import './MatchHistory.css';
 
 function MatchHistory() {
   const mockMatches = [
@@ -18,12 +19,7 @@ function MatchHistory() {
 
   return (
     <div className="match-container">
-      {/* Scope Notice Banner */}
-      <div className="partner-banner" style={{ background: 'rgba(124, 58, 237, 0.1)', borderLeft: '4px solid #7c3aed', padding: '1rem', borderRadius: '6px', marginBottom: '2rem' }}>
-        <p style={{ margin: 0, fontSize: '0.9rem', color: '#6d28d9', fontWeight: '500' }}>
-          📢 <strong>Notice</strong>: This page is for <strong>Partner A (@Harini Thirunavukkarasan)</strong>'s feature. A static mockup is shown here for integration.
-        </p>
-      </div>
+
 
       <div className="flex-between header-row" style={{ marginBottom: '1.5rem' }}>
         <h1 className="page-title">My Match History</h1>
@@ -61,22 +57,6 @@ function MatchHistory() {
         ))}
       </div>
 
-      <style>{`
-        .stats-row { margin-bottom: 2.5rem; }
-        .stat-card { padding: 1.5rem; text-align: center; }
-        .stat-label { font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.25rem; }
-        .stat-value { font-size: 2.25rem; font-weight: 800; color: #1e293b; line-height: 1; }
-        .grid-cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        @media (max-width: 900px) { .grid-cols-4 { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 500px) { .grid-cols-4 { grid-template-columns: 1fr; } }
-        .match-log-row { padding: 1.25rem 1.5rem; border-bottom: 1px solid #e2e8f0; }
-        .match-log-row:last-child { border-bottom: none; }
-        .match-sport-icon { font-size: 1.75rem; }
-        .match-sport-title { font-size: 1.05rem; font-weight: 700; color: #1e293b; }
-        .match-date { font-size: 0.8rem; color: #64748b; }
-        .score-box { font-size: 0.85rem; color: #64748b; }
-        .score-value { font-size: 1.05rem; color: #1e293b; margin-left: 0.4rem; }
-      `}</style>
     </div>
   );
 }

@@ -1,0 +1,96 @@
+.court-directory-card {
+  min-height: 200px;
+}
+
+.court-title-text {
+  font-size: 1.15rem;
+  color: #333333;
+  margin-right: 5px;
+  flex: 1;
+}
+
+.rating-number {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #555555;
+}
+
+.court-location-text {
+  font-size: 0.85rem;
+  color: #666666;
+  margin-bottom: 10px;
+}
+
+.court-review-box {
+  background: #f8f9fa;
+  border-left: 2px solid #007bff;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.review-quote {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #333333;
+  line-height: 1.4;
+}
+
+.court-meta-author {
+  font-size: 0.75rem;
+  color: #888888;
+  font-weight: normal;
+}
+
+.star {
+  color: #ffc107;
+}
+
+.star-empty {
+  color: #cccccc;
+}
+
+.hover-danger:hover {
+  background: #ffebee;
+  border-color: #ffcdd2;
+  color: #dc3545;
+}
+
+.rating-stars {
+  color: #ffc107;
+  font-size: 0.95rem;
+}
+
+/* Helper styles for CourtDirectory JSX */
+.search-card {
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+}
+
+.court-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.court-card-bottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #cccccc;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.details-btn {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.court-stars-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+  margin: 5px 0;
+}

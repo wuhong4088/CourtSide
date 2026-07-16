@@ -2,11 +2,20 @@
 
 A modern full-stack web application designed for sports lovers to organize pickup games, log match results, discover sports courts, and manage packing checklists.
 
-**Members**: @Harini Thirunavukkarasan & @Wu Hung Hsiao  
+**Members**: 
+- **Partner A**: @Harini Thirunavukkarasan (Social Matching & Personal Tracking)
+- **Partner B**: @Wu Hung Hsiao (Location Directory & Gear Checklist)
+
 **Class Link**: [CS 5610 Web Development](https://johnguerra.co/classes/webDevelopment_online_summer_2026/)  
-**Public Page (Deployed URL)**: *TBD (To be added upon deployment)*  
+**Public Page (Deployed URL)**: [https://courtside-8uiv.onrender.com](https://courtside-8uiv.onrender.com)  
 **Slides**: *TBD*  
-**Video Demo**: *TBD*  
+**Video Demo**: *TBD*
+
+---
+
+## Screenshot
+
+![CourtSide Screenshot](./screenshot.png)  
 
 ---
 

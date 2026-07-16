@@ -1,0 +1,14 @@
+.stats-row { margin-bottom: 20px; }
+.stat-card { padding: 10px; text-align: center; border: 1px solid #cccccc; background: #ffffff; }
+.stat-label { font-size: 0.75rem; font-weight: bold; color: #666666; text-transform: uppercase; margin-bottom: 5px; }
+.stat-value { font-size: 1.75rem; font-weight: bold; color: #333333; line-height: 1; }
+.grid-cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 768px) { .grid-cols-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .grid-cols-4 { grid-template-columns: 1fr; } }
+.match-log-row { padding: 10px 15px; border-bottom: 1px solid #cccccc; }
+.match-log-row:last-child { border-bottom: none; }
+.match-sport-icon { font-size: 1.5rem; }
+.match-sport-title { font-size: 0.95rem; font-weight: bold; color: #333333; }
+.match-date { font-size: 0.8rem; color: #666666; }
+.score-box { font-size: 0.8rem; color: #666666; }
+.score-value { font-size: 0.95rem; color: #333333; margin-left: 5px; }
