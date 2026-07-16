@@ -162,7 +162,7 @@ function CourtDirectory({ currentUser }) {
           <h1 className="page-title">Court Directory</h1>
           <p className="page-subtitle">Recommending sports courts, surfaces, lighting, and park conditions in your local area.</p>
         </div>
-        <button onClick={handleOpenAddModal} className="btn btn-primary">+ Add a Court</button>
+        {currentUser && <button onClick={handleOpenAddModal} className="btn btn-primary">+ Add a Court</button>}
       </div>
 
       {/* Search & Filter Bar */}
@@ -218,18 +218,22 @@ function CourtDirectory({ currentUser }) {
                 <button className="btn btn-outline btn-sm details-btn" disabled>
                   View Details
                 </button>
-                <button 
-                  onClick={() => handleOpenEditModal(court)}
-                  className="btn btn-outline btn-sm"
-                >
-                  Edit
-                </button>
-                <button 
-                  onClick={() => handleDeleteCourt(court._id)}
-                  className="btn btn-outline btn-sm hover-danger"
-                >
-                  Delete
-                </button>
+                {currentUser && (
+                  <>
+                    <button 
+                      onClick={() => handleOpenEditModal(court)}
+                      className="btn btn-outline btn-sm"
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteCourt(court._id)}
+                      className="btn btn-outline btn-sm hover-danger"
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))}

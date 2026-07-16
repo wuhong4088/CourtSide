@@ -13,7 +13,7 @@
     "server": "node backend.js",
     "client": "npm run dev --prefix frontend",
     "prebuild": "npm install --prefix frontend",
-    "build": "npm run build --prefix frontend && cp -r frontend/dist/ .",
+    "build": "npm run build --prefix frontend && rm -rf dist && cp -r frontend/dist dist",
     "lint": "npm run lint --prefix frontend",
     "format": "prettier --write \"frontend/src/**/*.{js,jsx,css}\" \"*.js\" \"routes/*.js\" \"db/*.js\""
   },

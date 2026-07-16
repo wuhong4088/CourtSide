@@ -14,30 +14,6 @@ function Navbar({ currentUser, setCurrentUser }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handlePersonaChange = async (e) => {
-    const selected = e.target.value;
-    setCurrentUser(selected);
-    localStorage.setItem('courtside_user', selected);
-
-    // Sync backend session transparently for selected persona
-    try {
-      let res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: selected, password: 'password123' })
-      });
-      if (!res.ok) {
-        res = await fetch('/api/auth/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: selected, password: 'password123' })
-        });
-      }
-    } catch (err) {
-      console.error('Session sync error for persona:', err);
-    }
-  };
-
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!username || !password) return;
@@ -102,8 +78,8 @@ function Navbar({ currentUser, setCurrentUser }) {
     try {
       const res = await fetch('/api/auth/logout', { method: 'POST' });
       if (res.ok) {
-        setCurrentUser('Morgan'); // fallback to default persona
-        localStorage.setItem('courtside_user', 'Morgan');
+        setCurrentUser(''); // reset to empty
+        localStorage.removeItem('courtside_user');
       }
     } catch (err) {
       console.error('Logout error:', err);
@@ -128,28 +104,21 @@ function Navbar({ currentUser, setCurrentUser }) {
           <Link to="/matches" className={`nav-link ${isActive('/matches')}`}>Match History</Link>
           <Link to="/courts" className={`nav-link ${isActive('/courts')}`}>Courts</Link>
           <Link to="/checklists" className={`nav-link ${isActive('/checklists')}`}>Gear Checklist</Link>
-          <span onClick={() => { setShowLogin(true); setUsername(''); setPassword(''); setError(''); }} className="nav-link mock-link" style={{ cursor: 'pointer' }}>Login</span>
-          <span onClick={() => { setShowSignUp(true); setUsername(''); setPassword(''); setError(''); }} className="nav-link mock-link" style={{ cursor: 'pointer' }}>Sign Up</span>
-          <span onClick={handleLogout} className="nav-link mock-link" style={{ cursor: 'pointer', color: '#dc3545' }}>Logout</span>
+          
+          {currentUser ? (
+            <>
+              <span className="nav-link user-indicator" style={{ cursor: 'default' }}>
+                Logged in: <strong>{currentUser}</strong>
+              </span>
+              <span onClick={handleLogout} className="nav-link mock-link" style={{ cursor: 'pointer', color: '#dc3545' }}>Logout</span>
+            </>
+          ) : (
+            <>
+              <span onClick={() => { setShowLogin(true); setUsername(''); setPassword(''); setError(''); }} className="nav-link mock-link" style={{ cursor: 'pointer' }}>Login</span>
+              <span onClick={() => { setShowSignUp(true); setUsername(''); setPassword(''); setError(''); }} className="nav-link mock-link" style={{ cursor: 'pointer' }}>Sign Up</span>
+            </>
+          )}
         </nav>
-
-        <div className="navbar-user-actions">
-          <label htmlFor="persona-select" className="persona-label">Persona:</label>
-          <select 
-            id="persona-select" 
-            value={currentUser} 
-            onChange={handlePersonaChange}
-            className="persona-dropdown"
-          >
-            <option value="Alex">Alex (Social Matcher)</option>
-            <option value="Taylor">Taylor (Competitor)</option>
-            <option value="Jordan">Jordan (Reviewer)</option>
-            <option value="Morgan">Morgan (Gear Checklist)</option>
-          </select>
-          <span className="user-indicator">
-            Logged in: <strong>{currentUser}</strong>
-          </span>
-        </div>
       </div>
 
       {/* Login Modal */}

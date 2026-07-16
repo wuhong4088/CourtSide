@@ -213,6 +213,17 @@ function GearChecklist({ currentUser }) {
     setCardInputs({ ...cardInputs, [checklistId]: val });
   };
 
+  if (!currentUser) {
+    return (
+      <div className="checklists-container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+        <h1 className="page-title">My Gear Checklists</h1>
+        <p className="page-subtitle" style={{ fontSize: '1.1rem', color: '#666666', marginTop: '1rem' }}>
+          Please log in or sign up using the links in the navigation bar to manage your gear checklists.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="checklists-container">
       <div className="flex-between header-row">

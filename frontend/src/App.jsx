@@ -11,7 +11,7 @@ import GearChecklist from './pages/GearChecklist';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {
-    return localStorage.getItem('courtside_user') || 'Morgan';
+    return localStorage.getItem('courtside_user') || '';
   });
 
   // Verify and sync session on mount
@@ -26,9 +26,9 @@ function App() {
         localStorage.setItem('courtside_user', data.username);
       })
       .catch(() => {
-        // Fallback to local storage username if not logged in
-        const saved = localStorage.getItem('courtside_user') || 'Morgan';
-        setCurrentUser(saved);
+        // Clear username if not logged in
+        setCurrentUser('');
+        localStorage.removeItem('courtside_user');
       });
   }, []);
 
