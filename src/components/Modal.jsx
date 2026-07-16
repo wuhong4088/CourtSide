@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import './Modal.css';
 
 function Modal({ isOpen, onClose, title, children, footerButtons }) {
   // Add keyboard ESC listener
@@ -44,23 +46,16 @@ function Modal({ isOpen, onClose, title, children, footerButtons }) {
           </div>
         )}
       </div>
-      <style>{`
-        .close-btn {
-          background: transparent;
-          border: none;
-          font-size: 1.75rem;
-          color: #94a3b8;
-          cursor: pointer;
-          transition: color 0.2s ease;
-          line-height: 1;
-        }
-
-        .close-btn:hover {
-          color: #0f172a;
-        }
-      `}</style>
     </div>
   );
 }
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  footerButtons: PropTypes.node
+};
 
 export default Modal;
