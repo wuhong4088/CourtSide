@@ -10,15 +10,27 @@ import CourtDirectory from './pages/CourtDirectory';
 import GearChecklist from './pages/GearChecklist';
 
 function App() {
-  // Try to load username from localStorage, defaulting to "Morgan"
   const [currentUser, setCurrentUser] = useState(() => {
     return localStorage.getItem('courtside_user') || 'Morgan';
   });
 
-  // Sync to localStorage when user changes
+  // Verify and sync session on mount
   useEffect(() => {
-    localStorage.setItem('courtside_user', currentUser);
-  }, [currentUser]);
+    fetch('/api/auth/session')
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error('No active session');
+      })
+      .then((data) => {
+        setCurrentUser(data.username);
+        localStorage.setItem('courtside_user', data.username);
+      })
+      .catch(() => {
+        // Fallback to local storage username if not logged in
+        const saved = localStorage.getItem('courtside_user') || 'Morgan';
+        setCurrentUser(saved);
+      });
+  }, []);
 
   return (
     <BrowserRouter>

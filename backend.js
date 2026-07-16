@@ -2,8 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import session from 'express-session';
+import passport from './config/passport.js'; // imports configured passport
 import courtRoutes from './routes/courts.js';
 import checklistRoutes from './routes/checklists.js';
+import authRoutes from './routes/Auth.js'; // capital A
 
 dotenv.config();
 
@@ -17,16 +20,32 @@ const __dirname = path.dirname(__filename);
 // Middleware
 app.use(express.json());
 
+// Session Middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'courtside_secret_key_123',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000 // 1 day session cookie
+    }
+  })
+);
+
+// Initialize Passport & Session Support
+app.use(passport.initialize());
+app.use(passport.session());
+
 // API Routes
 app.use('/api/courts', courtRoutes);
-app.use('/api/checklist', checklistRoutes); // Mounts to match the proposal paths
+app.use('/api/checklist', checklistRoutes);
+app.use('/api/auth', authRoutes);
 
 // Serve static React files (built in dist/)
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Fallback for React Router client-side routing (SPAs)
 app.get('*', (req, res) => {
-  // If the request starts with /api but wasn't handled by routes above, send 404
   if (req.originalUrl.startsWith('/api')) {
     return res.status(404).json({ error: 'API route not found' });
   }
@@ -44,4 +63,3 @@ app.listen(PORT, () => {
 });
 
 export default app;
-

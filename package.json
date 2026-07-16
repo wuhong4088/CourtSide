@@ -2,36 +2,33 @@
   "name": "courtside",
   "version": "1.0.0",
   "type": "module",
-  "main": "server.js",
+  "main": "backend.js",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node backend.js",
     "seed": "node seed.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "node server.js",
-    "client": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint src --ext .js,.jsx",
-    "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"*.js\""
+    "server": "node backend.js",
+    "client": "npm run dev --prefix frontend",
+    "prebuild": "npm install --prefix frontend",
+    "build": "npm run build --prefix frontend && cp -r frontend/dist/ .",
+    "lint": "npm run lint --prefix frontend",
+    "format": "prettier --write \"frontend/src/**/*.{js,jsx,css}\" \"*.js\" \"routes/*.js\" \"db/*.js\""
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "mongodb": "^6.7.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.5"
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^5.0.1",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.5",
-    "prettier": "^3.9.5",
-    "prop-types": "^15.8.1",
-    "vite": "^6.0.7"
+    "prettier": "^3.9.5"
   }
 }
