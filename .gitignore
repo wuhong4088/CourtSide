@@ -1,0 +1,12 @@
+# Node dependencies
+node_modules/
+
+# Production build output
+dist/
+
+# Local environment variables containing credentials
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
