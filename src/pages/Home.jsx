@@ -42,11 +42,11 @@ function Home() {
       <section className="hero-section">
         <h1 className="hero-title">Find Your Next Game</h1>
         <p className="hero-subtitle">
-          Join local pickup games, discover nearby sports courts, track your matches, and prepare your gear checklist before you play.
+          Join local pickup games, discover courts, and prepare your gear before you play.
         </p>
         <div className="flex-center" style={{ gap: '1.25rem' }}>
-          <Link to="/courts" className="btn btn-accent btn-lg-padding">Explore Courts</Link>
-          <Link to="/checklists" className="btn btn-outline btn-lg-padding btn-hero-outline">Gear Checklists</Link>
+          <Link to="/games" className="btn btn-accent btn-lg-padding">Find a Game</Link>
+          <Link to="/create-game" className="btn btn-outline btn-lg-padding btn-hero-outline">Create a Game</Link>
         </div>
       </section>
 

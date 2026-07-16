@@ -15,14 +15,21 @@ function CourtDirectory({ currentUser }) {
   const [address, setAddress] = useState('');
   const [rating, setRating] = useState('5');
   const [review, setReview] = useState('');
+  const [sport, setSport] = useState('Basketball');
   const [submitting, setSubmitting] = useState(false);
+
+  // Filter states
+  const [sportFilter, setSportFilter] = useState('');
 
   // Fetch court locations
   const fetchCourts = () => {
     setLoading(true);
-    let url = '/api/courts';
+    let url = '/api/courts?';
     if (searchQuery) {
-      url += `?search=${encodeURIComponent(searchQuery)}`;
+      url += `search=${encodeURIComponent(searchQuery)}&`;
+    }
+    if (sportFilter) {
+      url += `sport=${encodeURIComponent(sportFilter)}&`;
     }
 
     fetch(url)
@@ -42,7 +49,7 @@ function CourtDirectory({ currentUser }) {
 
   useEffect(() => {
     fetchCourts();
-  }, [searchQuery]);
+  }, [searchQuery, sportFilter]);
 
   const handleOpenAddModal = () => {
     setEditingCourt(null);
@@ -50,6 +57,7 @@ function CourtDirectory({ currentUser }) {
     setAddress('');
     setRating('5');
     setReview('');
+    setSport('Basketball');
     setIsModalOpen(true);
   };
 
@@ -59,19 +67,21 @@ function CourtDirectory({ currentUser }) {
     setAddress(court.address);
     setRating(String(court.rating));
     setReview(court.review);
+    setSport(court.sport || 'Basketball');
     setIsModalOpen(true);
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !address || !review) return;
+    if (!name || !address || !review || !sport) return;
 
     setSubmitting(true);
     const bodyContent = {
       name,
       address,
       review,
-      rating: parseFloat(rating)
+      rating: parseFloat(rating),
+      sport
     };
 
     try {
@@ -153,15 +163,30 @@ function CourtDirectory({ currentUser }) {
         <button onClick={handleOpenAddModal} className="btn btn-primary">+ Add a Court</button>
       </div>
 
-      {/* Search Filter input */}
-      <div className="card search-card" style={{ marginBottom: '2rem', padding: '1rem 1.5rem' }}>
-        <input
-          type="text"
-          placeholder="Search courts by name or city/address..."
-          className="form-control"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      {/* Search & Filter Bar */}
+      <div className="card search-card flex-between" style={{ gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem', padding: '1rem 1.5rem' }}>
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="Search by court or address"
+            className="form-control"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <div>
+          <select
+            className="form-control"
+            style={{ width: '180px' }}
+            value={sportFilter}
+            onChange={(e) => setSportFilter(e.target.value)}
+          >
+            <option value="">Sport Type ▼</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Pickleball">Pickleball</option>
+            <option value="Tennis">Tennis</option>
+          </select>
+        </div>
       </div>
 
       {/* Directory Listings */}
@@ -171,36 +196,38 @@ function CourtDirectory({ currentUser }) {
         <div className="courts-list grid-cols-2">
           {courts.map((court) => (
             <div key={court._id} className="card card-hover court-directory-card flex-between flex-column" style={{ alignItems: 'stretch' }}>
-              <div className="court-card-top">
-                <div className="flex-between" style={{ marginBottom: '0.5rem', alignItems: 'flex-start' }}>
-                  <h3 className="court-title-text">{court.name}</h3>
-                  <div className="flex-center" style={{ gap: '0.5rem' }}>
-                    {renderStars(court.rating)}
-                    <span className="rating-number">{court.rating}</span>
-                  </div>
+              <div className="court-card-top" style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                <h3 className="court-title-text" style={{ fontSize: '1.25rem', margin: '0' }}>{court.name}</h3>
+                <p style={{ margin: '0', fontSize: '0.9rem', color: '#64748b' }}>
+                  {court.sport || 'Basketball'} · {court.address}
+                </p>
+                <div className="flex-center" style={{ justifyContent: 'flex-start', gap: '0.5rem', margin: '0.2rem 0' }}>
+                  {renderStars(court.rating)}
+                  <span className="rating-number" style={{ fontSize: '0.9rem', fontWeight: '600' }}>{court.rating}</span>
                 </div>
-                <p className="court-location-text">📍 {court.address}</p>
-                <div className="court-review-box">
-                  <p className="review-quote">"{court.review}"</p>
+                <div className="court-review-box" style={{ background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '6px', borderLeft: '3px solid #7c3aed', marginTop: '0.5rem' }}>
+                  <p className="review-quote" style={{ fontStyle: 'italic', fontSize: '0.9rem', color: '#334155', margin: '0' }}>
+                    “{court.review}”
+                  </p>
                 </div>
               </div>
 
-              <div className="court-card-bottom flex-between" style={{ borderTop: '1px solid #e2e8f0', marginTop: '1.25rem', paddingTop: '1rem' }}>
-                <span className="court-meta-author">Added by Player</span>
-                <div className="flex-center" style={{ gap: '0.5rem' }}>
-                  <button 
-                    onClick={() => handleOpenEditModal(court)}
-                    className="btn btn-outline btn-sm"
-                  >
-                    ✏️ Edit
-                  </button>
-                  <button 
-                    onClick={() => handleDeleteCourt(court._id)}
-                    className="btn btn-outline btn-sm hover-danger"
-                  >
-                    🗑️ Delete
-                  </button>
-                </div>
+              <div className="court-card-bottom flex-center" style={{ justifyContent: 'flex-end', gap: '0.5rem', borderTop: '1px solid #e2e8f0', marginTop: '1.25rem', paddingTop: '1rem' }}>
+                <button className="btn btn-outline btn-sm" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+                  View Details
+                </button>
+                <button 
+                  onClick={() => handleOpenEditModal(court)}
+                  className="btn btn-outline btn-sm"
+                >
+                  Edit
+                </button>
+                <button 
+                  onClick={() => handleDeleteCourt(court._id)}
+                  className="btn btn-outline btn-sm hover-danger"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
@@ -257,6 +284,20 @@ function CourtDirectory({ currentUser }) {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label" htmlFor="court-sport">Sport Type *</label>
+            <select
+              id="court-sport"
+              className="form-control"
+              value={sport}
+              onChange={(e) => setSport(e.target.value)}
+            >
+              <option value="Basketball">Basketball</option>
+              <option value="Pickleball">Pickleball</option>
+              <option value="Tennis">Tennis</option>
+            </select>
           </div>
 
           <div className="form-group">

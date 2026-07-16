@@ -25,63 +25,40 @@ function MatchHistory() {
         </p>
       </div>
 
-      <div className="flex-between header-row" style={{ marginBottom: '2rem' }}>
-        <div>
-          <h1 className="page-title">Personal Match History (Mockup)</h1>
-          <p className="page-subtitle">Track scores, games played, and win/loss percentages.</p>
-        </div>
-        <button className="btn btn-primary" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-          + Add New Result
+      <div className="flex-between header-row" style={{ marginBottom: '1.5rem' }}>
+        <h1 className="page-title">My Match History</h1>
+        <button className="btn btn-outline" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+          Add New Result
         </button>
       </div>
 
-      {/* Static Stats Cards */}
-      <div className="stats-row grid-cols-4" style={{ marginBottom: '2.5rem', opacity: 0.8 }}>
-        <div className="card stat-card flex-center flex-column">
-          <span className="stat-label">Total Games</span>
-          <span className="stat-value">12</span>
-        </div>
-        <div className="card stat-card flex-center flex-column" style={{ borderLeft: '4px solid #22c55e' }}>
-          <span className="stat-label">Wins</span>
-          <span className="stat-value" style={{ color: '#22c55e' }}>8</span>
-        </div>
-        <div className="card stat-card flex-center flex-column" style={{ borderLeft: '4px solid #ef4444' }}>
-          <span className="stat-label">Losses</span>
-          <span className="stat-value" style={{ color: '#ef4444' }}>4</span>
-        </div>
-        <div className="card stat-card flex-center flex-column" style={{ borderLeft: '4px solid #7c3aed' }}>
-          <span className="stat-label">Win Rate</span>
-          <span className="stat-value" style={{ color: '#7c3aed' }}>67%</span>
+      {/* Static Stats Card */}
+      <div className="card" style={{ marginBottom: '1.5rem', padding: '1rem 1.5rem', fontWeight: '500', color: '#334155', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px' }}>
+        <div className="flex-between" style={{ flexWrap: 'wrap', gap: '1rem' }}>
+          <span>Total Games: <strong>12</strong></span>
+          <span>Wins: <strong style={{ color: '#22c55e' }}>8</strong></span>
+          <span>Losses: <strong style={{ color: '#ef4444' }}>4</strong></span>
+          <span>Win Rate: <strong style={{ color: '#7c3aed' }}>67%</strong></span>
         </div>
       </div>
 
       {/* Static Logs */}
-      <h2 className="section-title" style={{ marginBottom: '1.25rem' }}>Match Logs</h2>
-      <div className="card match-list-card" style={{ padding: '0', opacity: 0.85 }}>
-        <div className="match-list-wrapper">
-          {mockMatches.map((match, idx) => (
-            <div key={idx} className="match-log-row flex-between" style={{ pointerEvents: 'none' }}>
-              <div className="flex-center" style={{ gap: '1rem' }}>
-                <span className="match-sport-icon">{match.sport === 'Basketball' ? '🏀' : '🏓'}</span>
-                <div>
-                  <h3 className="match-sport-title">{match.sport}</h3>
-                  <span className="match-date">{match.date}</span>
-                </div>
-              </div>
-
-              <div className="flex-center" style={{ gap: '2rem' }}>
-                <div className="score-box">
-                  <span className="score-label">Score:</span>
-                  <strong className="score-value">{match.score}</strong>
-                </div>
-
-                <span className={`badge ${match.outcome === 'WIN' ? 'badge-outcome-win' : 'badge-outcome-loss'}`}>
-                  {match.outcome}
-                </span>
-              </div>
+      <div className="match-list-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {mockMatches.map((match, idx) => (
+          <div key={idx} className="card match-card" style={{ padding: '1.5rem', position: 'relative', display: 'flex', flexDirection: 'column', gap: '0.4rem', borderLeft: match.outcome === 'WIN' ? '5px solid #22c55e' : '5px solid #ef4444' }}>
+            <h3 style={{ fontSize: '1.2rem', margin: '0' }}>{match.sport}</h3>
+            <p style={{ margin: '0', fontSize: '0.9rem', color: '#64748b' }}>{match.date}</p>
+            <p style={{ margin: '0', fontSize: '0.95rem' }}>Score: {match.score}</p>
+            <p style={{ margin: '0', fontSize: '0.95rem' }}>
+              Result: <span className={`badge ${match.outcome === 'WIN' ? 'badge-outcome-win' : 'badge-outcome-loss'}`}>{match.outcome}</span>
+            </p>
+            
+            <div className="flex-center" style={{ position: 'absolute', right: '1.5rem', top: '50%', transform: 'translateY(-50%)', gap: '0.5rem' }}>
+              <button className="btn btn-outline btn-sm" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>Edit</button>
+              <button className="btn btn-outline btn-sm" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>Delete</button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       <style>{`

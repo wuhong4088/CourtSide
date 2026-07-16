@@ -20,6 +20,7 @@ async function runSeed() {
         address: 'Charles St, Boston, MA 02116',
         review: 'Excellent outdoor courts with double rims. Lights stay on until 10 PM. Always active with good games.',
         rating: 4.5,
+        sport: 'Basketball',
         createdAt: new Date()
       },
       {
@@ -27,6 +28,7 @@ async function runSeed() {
         address: 'Columbus Ave, Boston, MA 02118',
         review: 'Newly renovated courts. Clean nets and great surface grip for pickleball and tennis. Easy parking nearby.',
         rating: 5,
+        sport: 'Basketball',
         createdAt: new Date()
       },
       {
@@ -34,6 +36,7 @@ async function runSeed() {
         address: '360 Huntington Ave, Boston, MA 02115',
         review: 'Indoor sports hall with excellent lighting and clean facilities. Hard to reserve peak hours but top quality.',
         rating: 4.8,
+        sport: 'Tennis',
         createdAt: new Date()
       },
       {
@@ -41,6 +44,7 @@ async function runSeed() {
         address: '1917 Washington St, Roxbury, MA 02118',
         review: 'Solid neighborhood court. Rim is slightly low on the south court but clean play area.',
         rating: 3.8,
+        sport: 'Basketball',
         createdAt: new Date()
       }
     ];

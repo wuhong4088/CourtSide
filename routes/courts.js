@@ -11,8 +11,12 @@ router.get('/', async (req, res) => {
   }
 
   try {
-    const { search } = req.query;
+    const { search, sport } = req.query;
     let query = {};
+
+    if (sport) {
+      query.sport = sport;
+    }
 
     if (search) {
       query.$or = [
@@ -36,11 +40,11 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const { name, address, review, rating } = req.body;
+    const { name, address, review, rating, sport } = req.body;
 
-    if (!name || !address || !review || rating === undefined) {
+    if (!name || !address || !review || rating === undefined || !sport) {
       return res.status(400).json({
-        error: 'Missing required fields. Required: name, address, review, rating.'
+        error: 'Missing required fields. Required: name, address, review, rating, sport.'
       });
     }
 
@@ -49,6 +53,7 @@ router.post('/', async (req, res) => {
       address,
       review,
       rating: parseFloat(rating),
+      sport,
       createdAt: new Date()
     };
 
@@ -71,13 +76,13 @@ router.put('/:id', async (req, res) => {
 
   try {
     const { id } = req.params;
-    const { name, address, review, rating } = req.body;
+    const { name, address, review, rating, sport } = req.body;
 
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid court ID format.' });
     }
 
-    if (!name || !address || !review || rating === undefined) {
+    if (!name || !address || !review || rating === undefined || !sport) {
       return res.status(400).json({ error: 'Missing required fields.' });
     }
 
@@ -87,7 +92,8 @@ router.put('/:id', async (req, res) => {
         name,
         address,
         review,
-        rating: parseFloat(rating)
+        rating: parseFloat(rating),
+        sport
       }
     });
 

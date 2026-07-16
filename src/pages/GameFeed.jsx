@@ -43,14 +43,17 @@ function GameFeed() {
       {/* Static Filters */}
       <div className="card filters-card flex-between" style={{ gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem', opacity: 0.7, pointerEvents: 'none' }}>
         <div className="filter-group flex-1">
-          <input type="text" placeholder="Search games..." className="form-control" readOnly />
+          <input type="text" placeholder="Search..." className="form-control" readOnly />
         </div>
         <div className="filter-dropdowns flex-center" style={{ gap: '1rem' }}>
           <select className="form-control" readOnly>
-            <option>All Sports</option>
+            <option>Sport ▼</option>
           </select>
           <select className="form-control" readOnly>
-            <option>All Skill Levels</option>
+            <option>Skill Level ▼</option>
+          </select>
+          <select className="form-control" readOnly>
+            <option>Date ▼</option>
           </select>
         </div>
       </div>
@@ -78,7 +81,7 @@ function GameFeed() {
 
             <div className="flex-between game-actions" style={{ gap: '0.75rem', marginTop: '1.5rem' }}>
               <button className="btn btn-outline flex-1" disabled style={{ cursor: 'not-allowed', opacity: 0.6 }}>
-                Log Match Result
+                View Details
               </button>
               <button className="btn btn-secondary flex-1" disabled style={{ cursor: 'not-allowed', opacity: 0.6 }}>
                 Join Game

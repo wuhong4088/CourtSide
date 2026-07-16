@@ -26,6 +26,8 @@ function Navbar({ currentUser, setCurrentUser }) {
           <Link to="/matches" className={`nav-link ${isActive('/matches')}`}>Match History</Link>
           <Link to="/courts" className={`nav-link ${isActive('/courts')}`}>Courts</Link>
           <Link to="/checklists" className={`nav-link ${isActive('/checklists')}`}>Gear Checklist</Link>
+          <span className="nav-link mock-link" style={{ cursor: 'pointer', opacity: 0.8 }}>Login</span>
+          <span className="nav-link mock-link" style={{ cursor: 'pointer', opacity: 0.8 }}>Sign Up</span>
         </nav>
 
         <div className="navbar-user-actions">

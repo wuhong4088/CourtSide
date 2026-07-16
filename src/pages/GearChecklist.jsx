@@ -14,6 +14,11 @@ function GearChecklist({ currentUser }) {
   // Inputs for adding items on cards
   const [cardInputs, setCardInputs] = useState({});
 
+  // Inline action states to match mockup buttons
+  const [activeAddInputId, setActiveAddInputId] = useState(null);
+  const [editingTitleChecklistId, setEditingTitleChecklistId] = useState(null);
+  const [editTitle, setEditTitle] = useState('');
+
   // Fetch checklists from database
   const fetchChecklists = () => {
     setLoading(true);
@@ -230,15 +235,46 @@ function GearChecklist({ currentUser }) {
             return (
               <div key={checklist._id} className="card checklist-card flex-between flex-column" style={{ alignItems: 'stretch' }}>
                 <div>
-                  <div className="flex-between card-header" style={{ marginBottom: '0.75rem', alignItems: 'flex-start' }}>
-                    <h3 className="checklist-title">{checklist.title}</h3>
-                    <button 
-                      onClick={() => handleDeleteChecklist(checklist._id)}
-                      className="delete-list-btn" 
-                      title="Delete Checklist"
-                    >
-                      &times;
-                    </button>
+                  <div className="flex-between card-header" style={{ marginBottom: '0.75rem', alignItems: 'center' }}>
+                    {editingTitleChecklistId === checklist._id ? (
+                      <form
+                        onSubmit={async (e) => {
+                          e.preventDefault();
+                          if (!editTitle) return;
+                          try {
+                            const res = await fetch(`/api/checklist/${checklist._id}`, {
+                              method: 'PUT',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                title: editTitle,
+                                items: checklist.items
+                              })
+                            });
+                            if (res.ok) {
+                              setChecklists(checklists.map(c => c._id === checklist._id ? { ...c, title: editTitle } : c));
+                              setEditingTitleChecklistId(null);
+                            }
+                          } catch (err) {
+                            console.error(err);
+                          }
+                        }}
+                        className="flex-center"
+                        style={{ gap: '0.5rem', flex: 1 }}
+                      >
+                        <input
+                          type="text"
+                          className="form-control"
+                          style={{ padding: '0.25rem 0.5rem', fontSize: '1.1rem' }}
+                          value={editTitle}
+                          onChange={(e) => setEditTitle(e.target.value)}
+                          autoFocus
+                        />
+                        <button type="submit" className="btn btn-primary btn-sm">Save</button>
+                        <button type="button" className="btn btn-outline btn-sm" onClick={() => setEditingTitleChecklistId(null)}>Cancel</button>
+                      </form>
+                    ) : (
+                      <h3 className="checklist-title" style={{ margin: 0 }}>{checklist.title}</h3>
+                    )}
                   </div>
 
                   {/* Progress bar */}
@@ -288,29 +324,63 @@ function GearChecklist({ currentUser }) {
                     </div>
                   ) : (
                     <p style={{ fontStyle: 'italic', fontSize: '0.85rem', color: '#64748b', padding: '1rem 0', textAlign: 'center' }}>
-                      No gear added yet. Use the input below to add sports equipment.
+                      No gear added yet. Click "Add Item" below.
                     </p>
                   )}
                 </div>
 
-                {/* Add Item form */}
-                <form 
-                  onSubmit={(e) => handleAddItemToCard(e, checklist)} 
-                  className="flex-center" 
-                  style={{ gap: '0.5rem', borderTop: '1px solid #e2e8f0', paddingTop: '1rem', marginTop: 'auto' }}
-                >
-                  <input
-                    type="text"
-                    placeholder="Add item (e.g. Shoes, Racket)"
-                    className="form-control"
-                    style={{ fontSize: '0.85rem', padding: '0.5rem 0.75rem' }}
-                    value={cardInputs[checklist._id] || ''}
-                    onChange={(e) => handleInputChange(checklist._id, e.target.value)}
-                  />
-                  <button type="submit" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>
-                    +
+                {/* Inline Add Item Form */}
+                {activeAddInputId === checklist._id && (
+                  <form 
+                    onSubmit={(e) => {
+                      handleAddItemToCard(e, checklist);
+                      setActiveAddInputId(null);
+                    }} 
+                    className="flex-center" 
+                    style={{ gap: '0.5rem', marginBottom: '1rem', borderTop: '1px dashed #e2e8f0', paddingTop: '0.75rem' }}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Item name..."
+                      className="form-control"
+                      style={{ fontSize: '0.85rem', padding: '0.4rem 0.6rem' }}
+                      value={cardInputs[checklist._id] || ''}
+                      onChange={(e) => handleInputChange(checklist._id, e.target.value)}
+                      autoFocus
+                    />
+                    <button type="submit" className="btn btn-primary" style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}>
+                      Save
+                    </button>
+                  </form>
+                )}
+
+                {/* Card Action Buttons (Direct alignment with mockup) */}
+                <div className="flex-center" style={{ gap: '0.5rem', borderTop: '1px solid #e2e8f0', paddingTop: '1rem', marginTop: 'auto' }}>
+                  <button
+                    onClick={() => setActiveAddInputId(activeAddInputId === checklist._id ? null : checklist._id)}
+                    className="btn btn-outline btn-sm"
+                    style={{ flex: 1 }}
+                  >
+                    Add Item
                   </button>
-                </form>
+                  <button
+                    onClick={() => {
+                      setEditingTitleChecklistId(checklist._id);
+                      setEditTitle(checklist.title);
+                    }}
+                    className="btn btn-outline btn-sm"
+                    style={{ flex: 1 }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteChecklist(checklist._id)}
+                    className="btn btn-outline btn-sm hover-danger"
+                    style={{ flex: 1 }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             );
           })}

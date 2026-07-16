@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import GameFeed from './pages/GameFeed';
+import CreateGame from './pages/CreateGame';
 import MatchHistory from './pages/MatchHistory';
 import CourtDirectory from './pages/CourtDirectory';
 import GearChecklist from './pages/GearChecklist';
@@ -27,6 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home currentUser={currentUser} />} />
             <Route path="/games" element={<GameFeed />} />
+            <Route path="/create-game" element={<CreateGame />} />
             <Route path="/matches" element={<MatchHistory />} />
             <Route path="/courts" element={<CourtDirectory currentUser={currentUser} />} />
             <Route path="/checklists" element={<GearChecklist currentUser={currentUser} />} />
