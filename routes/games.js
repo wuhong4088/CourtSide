@@ -138,6 +138,43 @@ router.post('/:id/join', async (req, res) => {
   }
 });
 
+// Leave a game (remove a player from participants)
+router.post('/:id/leave', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username } = req.body;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid game ID format.' });
+    }
+    if (!username) {
+      return res.status(400).json({ error: 'Username is required to leave.' });
+    }
+
+    const game = await findGameById(new ObjectId(id));
+    if (!game) {
+      return res.status(404).json({ error: 'Game not found.' });
+    }
+    if (username === game.host) {
+      return res
+        .status(400)
+        .json({ error: 'The host cannot leave their own game.' });
+    }
+    if (!game.participants.includes(username)) {
+      return res.status(400).json({ error: 'You have not joined this game.' });
+    }
+
+    const updatedParticipants = game.participants.filter((p) => p !== username);
+    await updateGame(new ObjectId(id), { participants: updatedParticipants });
+
+    const updatedGame = await findGameById(new ObjectId(id));
+    res.status(200).json(updatedGame);
+  } catch (error) {
+    console.error('Error leaving game:', error);
+    res.status(500).json({ error: 'Failed to leave game.' });
+  }
+});
+
 // Delete a game
 router.delete('/:id', async (req, res) => {
   try {

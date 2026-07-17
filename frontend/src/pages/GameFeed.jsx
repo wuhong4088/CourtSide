@@ -57,6 +57,24 @@ function GameFeed({ currentUser }) {
     }
   };
 
+  const handleLeave = async (game) => {
+    try {
+      const res = await fetch(`/api/games/${game._id}/leave`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: currentUser }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || 'Failed to leave game.');
+        return;
+      }
+      fetchGames();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="feed-container">
       <div
@@ -114,37 +132,60 @@ function GameFeed({ currentUser }) {
         <div className="flex-center loading-text">Loading games...</div>
       ) : games.length > 0 ? (
         <div className="games-grid">
-          {games.slice(0, visibleCount).map((game) => (
-            <div key={game._id} className="card game-card">
-              <div className="flex-between" style={{ marginBottom: '1rem' }}>
-                <div className="flex-center" style={{ gap: '0.5rem' }}>
-                  <span className="badge badge-sport">{game.sport}</span>
-                  <span className="badge badge-level">{game.skillLevel}</span>
+          {games.slice(0, visibleCount).map((game) => {
+            const isHost = currentUser && currentUser === game.host;
+            const isJoined =
+              currentUser && game.participants.includes(currentUser);
+            const isFull = game.participants.length >= game.maxPlayers;
+
+            return (
+              <div key={game._id} className="card game-card">
+                <div className="flex-between" style={{ marginBottom: '1rem' }}>
+                  <div className="flex-center" style={{ gap: '0.5rem' }}>
+                    <span className="badge badge-sport">{game.sport}</span>
+                    <span className="badge badge-level">{game.skillLevel}</span>
+                    {isJoined && !isHost && (
+                      <span className="badge badge-outcome-win">Joined</span>
+                    )}
+                  </div>
+                  <span className="player-count">
+                    <strong>
+                      {game.participants.length} of {game.maxPlayers} players
+                    </strong>
+                  </span>
                 </div>
-                <span className="player-count">
-                  <strong>
-                    {game.participants.length} of {game.maxPlayers} players
-                  </strong>
-                </span>
-              </div>
 
-              <div className="game-details" style={{ marginBottom: '1rem' }}>
-                <p className="detail-row">📅 {game.time.replace('T', ' · ')}</p>
-                <p className="detail-row">📍 {game.location}</p>
-                <p className="detail-row">👑 Host: {game.host}</p>
-              </div>
+                <div className="game-details" style={{ marginBottom: '1rem' }}>
+                  <p className="detail-row">
+                    📅 {game.time.replace('T', ' · ')}
+                  </p>
+                  <p className="detail-row">📍 {game.location}</p>
+                  <p className="detail-row">👑 Host: {game.host}</p>
+                </div>
 
-              <button
-                onClick={() => handleJoin(game)}
-                className="btn btn-secondary"
-                disabled={game.participants.length >= game.maxPlayers}
-              >
-                {game.participants.length >= game.maxPlayers
-                  ? 'Game Full'
-                  : 'Join Game'}
-              </button>
-            </div>
-          ))}
+                {isHost ? (
+                  <button className="btn btn-outline" disabled>
+                    You are hosting
+                  </button>
+                ) : isJoined ? (
+                  <button
+                    onClick={() => handleLeave(game)}
+                    className="btn btn-outline hover-danger"
+                  >
+                    Leave Game
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleJoin(game)}
+                    className="btn btn-secondary"
+                    disabled={isFull}
+                  >
+                    {isFull ? 'Game Full' : 'Join Game'}
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div className="card flex-center empty-state-card">
