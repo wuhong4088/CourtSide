@@ -15,6 +15,7 @@ function MatchHistory({ currentUser }) {
   const [outcome, setOutcome] = useState('WIN');
   const [date, setDate] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(24);
 
   const fetchMatches = () => {
     setLoading(true);
@@ -135,7 +136,7 @@ function MatchHistory({ currentUser }) {
         <div className="flex-center loading-text">Loading match history...</div>
       ) : matches.length > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {matches.slice(0, 24).map((match) => (
+          {matches.slice(0, visibleCount).map((match) => (
             <div
               key={match._id}
               className="card flex-between"
@@ -162,6 +163,14 @@ function MatchHistory({ currentUser }) {
       ) : (
         <div className="card flex-center empty-state-card">
           <p>No match results yet. Click &ldquo;+ Add New Result&rdquo; to log one.</p>
+        </div>
+      )}
+
+      {matches.length > visibleCount && (
+        <div className="flex-center" style={{ marginTop: '1.5rem' }}>
+          <button onClick={() => setVisibleCount(visibleCount + 24)} className="btn btn-outline">
+            Load More Results
+          </button>
         </div>
       )}
 

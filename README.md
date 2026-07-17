@@ -116,7 +116,7 @@ To run both the Express backend and the Vite React frontend in development mode:
 ```bash
 npm run dev
 ```
-Open `http://localhost:3000` in your browser.
+Open `http://localhost:3000` in your browser (Vite will pick the next free port, e.g. `3001`, if 3000 is already in use — check your terminal output for the exact URL).
 
 ### 5. Developer Quality Checks
 ```bash

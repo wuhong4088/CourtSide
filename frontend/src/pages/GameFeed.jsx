@@ -9,6 +9,7 @@ function GameFeed({ currentUser }) {
   const [search, setSearch] = useState('');
   const [sport, setSport] = useState('');
   const [skillLevel, setSkillLevel] = useState('');
+  const [visibleCount, setVisibleCount] = useState(24);
 
   const fetchGames = () => {
     setLoading(true);
@@ -30,6 +31,7 @@ function GameFeed({ currentUser }) {
   };
 
   useEffect(() => {
+    setVisibleCount(24);
     fetchGames();
   }, [search, sport, skillLevel]);
 
@@ -107,7 +109,7 @@ function GameFeed({ currentUser }) {
         <div className="flex-center loading-text">Loading games...</div>
       ) : games.length > 0 ? (
         <div className="games-grid">
-          {games.slice(0, 24).map((game) => (
+          {games.slice(0, visibleCount).map((game) => (
             <div key={game._id} className="card game-card">
               <div className="flex-between" style={{ marginBottom: '1rem' }}>
                 <div className="flex-center" style={{ gap: '0.5rem' }}>
@@ -140,6 +142,14 @@ function GameFeed({ currentUser }) {
       ) : (
         <div className="card flex-center empty-state-card">
           <p>No games found. Click &ldquo;+ Create New Game&rdquo; to post one.</p>
+        </div>
+      )}
+
+      {games.length > visibleCount && (
+        <div className="flex-center" style={{ marginTop: '1.5rem' }}>
+          <button onClick={() => setVisibleCount(visibleCount + 24)} className="btn btn-outline">
+            Load More Games
+          </button>
         </div>
       )}
     </div>
