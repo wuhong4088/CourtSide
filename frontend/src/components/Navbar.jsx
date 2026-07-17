@@ -12,7 +12,12 @@ function Navbar({ currentUser, setCurrentUser }) {
   const [showSignUp, setShowSignUp] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('Male');
   const [error, setError] = useState('');
+
+  const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -46,13 +51,22 @@ function Navbar({ currentUser, setCurrentUser }) {
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-    if (!username || !password) return;
+    if (!username || !password || !name || !age || !gender) return;
+
+    if (!isValidEmail(username)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
 
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, name, age, gender }),
       });
 
       if (!res.ok) {
@@ -67,6 +81,9 @@ function Navbar({ currentUser, setCurrentUser }) {
       setShowSignUp(false);
       setUsername('');
       setPassword('');
+      setName('');
+      setAge('');
+      setGender('Male');
       setError('');
     } catch (err) {
       console.error(err);
@@ -126,40 +143,41 @@ function Navbar({ currentUser, setCurrentUser }) {
               >
                 Logged in: <strong>{currentUser}</strong>
               </span>
-              <span
+              <button
                 onClick={handleLogout}
-                className="nav-link mock-link"
-                style={{ cursor: 'pointer', color: '#dc3545' }}
+                className="nav-link nav-link-btn"
+                style={{ color: '#dc3545' }}
               >
                 Logout
-              </span>
+              </button>
             </>
           ) : (
             <>
-              <span
+              <button
                 onClick={() => {
                   setShowLogin(true);
                   setUsername('');
                   setPassword('');
                   setError('');
                 }}
-                className="nav-link mock-link"
-                style={{ cursor: 'pointer' }}
+                className="nav-link nav-link-btn"
               >
                 Login
-              </span>
-              <span
+              </button>
+              <button
                 onClick={() => {
                   setShowSignUp(true);
                   setUsername('');
                   setPassword('');
+                  setName('');
+                  setAge('');
+                  setGender('Male');
                   setError('');
                 }}
-                className="nav-link mock-link"
-                style={{ cursor: 'pointer' }}
+                className="nav-link nav-link-btn"
               >
                 Sign Up
-              </span>
+              </button>
             </>
           )}
         </nav>
@@ -257,12 +275,25 @@ function Navbar({ currentUser, setCurrentUser }) {
             </p>
           )}
           <div className="form-group">
+            <label className="form-label" htmlFor="signup-name">
+              Name *
+            </label>
+            <input
+              id="signup-name"
+              type="text"
+              className="form-control"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
             <label className="form-label" htmlFor="signup-username">
-              Username *
+              Email *
             </label>
             <input
               id="signup-username"
-              type="text"
+              type="email"
               className="form-control"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -271,7 +302,7 @@ function Navbar({ currentUser, setCurrentUser }) {
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="signup-password">
-              Password *
+              Password * (minimum 6 characters)
             </label>
             <input
               id="signup-password"
@@ -279,8 +310,38 @@ function Navbar({ currentUser, setCurrentUser }) {
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              minLength={6}
               required
             />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="signup-age">
+              Age *
+            </label>
+            <input
+              id="signup-age"
+              type="number"
+              min="1"
+              className="form-control"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="signup-gender">
+              Gender *
+            </label>
+            <select
+              id="signup-gender"
+              className="form-control"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
         </form>
       </Modal>

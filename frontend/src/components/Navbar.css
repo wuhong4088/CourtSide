@@ -55,6 +55,13 @@
   border-bottom-color: #007bff;
 }
 
+.nav-link-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .navbar-user-actions {
   display: flex;
   align-items: center;

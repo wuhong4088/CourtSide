@@ -16,17 +16,29 @@ router.get('/session', (req, res) => {
 
 // POST /api/auth/register
 router.post('/register', async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { username, password, name, age, gender } = req.body;
+  if (!username || !password || !name || !age || !gender) {
+    return res.status(400).json({
+      error: 'Email, password, name, age, and gender are required.',
+    });
+  }
+
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
+  if (!isValidEmail) {
     return res
       .status(400)
-      .json({ error: 'Username and password are required.' });
+      .json({ error: 'Please provide a valid email address.' });
+  }
+  if (password.length < 6) {
+    return res
+      .status(400)
+      .json({ error: 'Password must be at least 6 characters long.' });
   }
 
   try {
     const existingUser = await findUserByUsername(username);
     if (existingUser) {
-      return res.status(400).json({ error: 'Username is already taken.' });
+      return res.status(400).json({ error: 'Email is already registered.' });
     }
 
     const salt = crypto.randomBytes(16).toString('hex');
@@ -36,6 +48,9 @@ router.post('/register', async (req, res, next) => {
       username,
       salt,
       passwordHash,
+      name,
+      age: parseInt(age),
+      gender,
       createdAt: new Date(),
     };
 
