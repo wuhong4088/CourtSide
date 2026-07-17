@@ -13,9 +13,17 @@ A modern full-stack web application designed for sports lovers to organize picku
 
 ---
 
-## Screenshot
+## Screenshots
 
-![CourtSide Screenshot](./screenshot.png)  
+![CourtSide Home Page](Screenshots/Home.png)
+
+| Feature | Screenshot |
+|---|---|
+| Find Pickup Games — browse, search, and filter | ![Find Games](Screenshots/Find%20Games.png) |
+| Find Pickup Games — logged in, showing "Joined" state and Leave Game | ![Find Game post Login](Screenshots/Find%20Game%20post%20Login.png) |
+| Match History — stats and win/loss log | ![Match History](Screenshots/Match%20History.png) |
+| Court Directory (Partner B) | ![Court List](Screenshots/Court%20List.png) |
+| Gear Checklist (Partner B) | ![Gear Checklist](Screenshots/Gear%20Checklist.png) |
 
 ---
 
@@ -50,16 +58,23 @@ CourtSide helps sports enthusiasts stay active and organized. The application co
 
 ### Partner A (@Harini Thirunavukkarasan)
 - **Data Models**:
-  - `Game` (sport type, time, skill level, host, participants)
-  - `MatchResult` (score, outcome, linked to user + game)
+  - `Game` (sport, time, skill level, host, location, max players, participants, description)
+  - `MatchResult` (sport, score, outcome, date, linked to user)
 - **API Endpoints**:
+  - `GET /api/games` (with search, sport, and skill level filters)
   - `POST /api/games`
-  - `GET /api/games`
-  - `POST /api/games/:id/result`
+  - `PUT /api/games/:id`
+  - `DELETE /api/games/:id`
+  - `POST /api/games/:id/join`
+  - `POST /api/games/:id/leave`
+  - `GET /api/matches/:userId`
+  - `POST /api/matches`
+  - `PUT /api/matches/:id`
+  - `DELETE /api/matches/:id`
 - **Frontend Views**:
-  - Game posting form
-  - Game feed/browse view
-  - Personal match history view
+  - Game posting form (Create Game)
+  - Game feed/browse view with join and leave (Find Games)
+  - Personal match history view with computed win/loss stats (Match History)
 
 ### Partner B (@Wu Hung Hsiao)
 - **Data Models**:
@@ -103,6 +118,7 @@ Create a `.env` file in the root directory:
 ```ini
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/courtside
 PORT=5000
+SESSION_SECRET=<any long random string>
 ```
 
 ### 3. Seed Database
@@ -131,8 +147,8 @@ npm run format
 
 ## Design Document & Mockups
 The full planning documentation is detailed in:
-- **Design Document**: [DESIGN_DOCUMENT.md](file:///Users/hung/Desktop/git/CourtSide/DESIGN_DOCUMENT.md) (includes database schemas, ER diagrams, personas, and use cases).
-- **Mockups**: [Mockup.md](file:///Users/hung/Desktop/git/CourtSide/Mockup.md) (includes interactive page ASCII wireframes).
+- **Design Document**: [docs/DESIGN_DOCUMENT.md](docs/DESIGN_DOCUMENT.md) (includes database schemas, ER diagrams, personas, and use cases).
+- **Mockups**: [docs/Mockup.md](docs/Mockup.md) (includes interactive page ASCII wireframes).
 
 ---
 
@@ -142,9 +158,9 @@ The full planning documentation is detailed in:
 ---
 
 ## GenAI Disclosure
-Generative AI was used as an assistant to design, structure, write, and debug code and documentation, verifying compliance with the project specifications and course rubric.
+Generative AI was used as an assistant to design, structure, and debug code and documentation, verifying compliance with the project specifications and course rubric.
 
 ---
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](file:///Users/hung/Desktop/git/CourtSide/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -99,15 +99,19 @@ erDiagram
         string time
         string skillLevel
         string host
+        string location
+        int maxPlayers
         string[] participants
+        string description
         date createdAt
     }
     MATCH_RESULTS {
         ObjectId id PK
-        ObjectId gameId FK "References GAMES"
+        string sport
         string userId "Username"
         string score
         string outcome "WIN or LOSS"
+        string date
         date createdAt
     }
     COURTS {
@@ -128,10 +132,9 @@ erDiagram
         boolean checked
     }
     CHECKLISTS ||--o{ CHECKLIST_ITEMS : contains
-    GAMES ||--o| MATCH_RESULTS : records
 ```
 
 ---
 
 ## 6. Wireframes & Mockups
-The wireframe layout grids and full page layouts are structured in [Mockup.md](file:///Users/hung/Desktop/git/CourtSide/Mockup.md), outlining the responsive UI elements and navigation hierarchy.
+The wireframe layout grids and full page layouts are structured in [Mockup.md](Mockup.md), outlining the responsive UI elements and navigation hierarchy.
