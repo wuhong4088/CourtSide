@@ -39,9 +39,9 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home currentUser={currentUser} />} />
-            <Route path="/games" element={<GameFeed />} />
-            <Route path="/create-game" element={<CreateGame />} />
-            <Route path="/matches" element={<MatchHistory />} />
+            <Route path="/games" element={<GameFeed currentUser={currentUser} />} />
+            <Route path="/create-game" element={<CreateGame currentUser={currentUser} />} />
+            <Route path="/matches" element={<MatchHistory currentUser={currentUser} />} />
             <Route path="/courts" element={<CourtDirectory currentUser={currentUser} />} />
             <Route path="/checklists" element={<GearChecklist currentUser={currentUser} />} />
           </Routes>
