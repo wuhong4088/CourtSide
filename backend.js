@@ -6,6 +6,8 @@ import session from 'express-session';
 import passport from './config/passport.js'; // imports configured passport
 import courtRoutes from './routes/courts.js';
 import checklistRoutes from './routes/checklists.js';
+import gameRoutes from './routes/games.js';
+import matchRoutes from './routes/matches.js';
 import authRoutes from './routes/Auth.js'; // capital A
 
 dotenv.config();
@@ -39,6 +41,8 @@ app.use(passport.session());
 // API Routes
 app.use('/api/courts', courtRoutes);
 app.use('/api/checklist', checklistRoutes);
+app.use('/api/games', gameRoutes);
+app.use('/api/matches', matchRoutes);
 app.use('/api/auth', authRoutes);
 
 // Serve static React files (built in dist/)
