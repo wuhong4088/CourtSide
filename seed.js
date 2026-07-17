@@ -5,13 +5,15 @@ import { client } from './db/connector.js';
 
 async function runSeed() {
   try {
-    console.log('Connecting to MongoDB for seeding (Partner B Only)...');
+    console.log('Connecting to MongoDB for seeding...');
     await client.connect();
     const db = client.db();
 
-    console.log('Clearing existing court and checklist collections...');
+    console.log('Clearing existing collections...');
     await db.collection('courts').deleteMany({});
     await db.collection('checklists').deleteMany({});
+    await db.collection('games').deleteMany({});
+    await db.collection('match_results').deleteMany({});
 
     console.log('Inserting mock courts (Partner B — Wu Hung Hsiao)...');
     const baseCourts = [
@@ -99,7 +101,74 @@ async function runSeed() {
     await db.collection('checklists').insertMany(checklists);
     console.log(`Seeded ${checklists.length} gear checklists.`);
 
-    console.log('Database seeding completed successfully (Partner B only)!');
+    console.log('Inserting synthetic pickup games (Partner A — Harini Thirunavukkarasan)...');
+    const games = [];
+    const gameSports = ['Basketball', 'Pickleball', 'Tennis'];
+    const skillLevels = ['Beginner', 'Intermediate', 'Advanced'];
+    const hosts = ['Alex', 'Taylor', 'Jordan', 'Morgan', 'Sam', 'Riley', 'Casey', 'Jamie'];
+    const gameLocations = [
+      'Boston Common Basketball Court',
+      'Carter Playground Courts',
+      'Northeastern Recreation Center',
+      'Ramsey Park Court',
+      'Charlesbank Courts',
+      'Malcolm X Park',
+    ];
+
+    // Generate 1005 synthetic games to satisfy the >1k requirement
+    for (let i = 1; i <= 1005; i++) {
+      const sport = gameSports[i % gameSports.length];
+      const skillLevel = skillLevels[i % skillLevels.length];
+      const host = hosts[i % hosts.length];
+      const location = gameLocations[i % gameLocations.length];
+      const maxPlayers = sport === 'Tennis' ? 2 : sport === 'Pickleball' ? 4 : 6;
+      const day = 10 + (i % 18); // days 10-27
+      const hour = 8 + (i % 12); // hours 8-19
+
+      games.push({
+        sport,
+        time: `2026-08-${String(day).padStart(2, '0')}T${String(hour).padStart(2, '0')}:00`,
+        skillLevel,
+        host,
+        location,
+        maxPlayers,
+        participants: [host],
+        description: `Friendly ${sport.toLowerCase()} pickup game. All ${skillLevel.toLowerCase()} players welcome!`,
+        createdAt: new Date(),
+      });
+    }
+
+    await db.collection('games').insertMany(games);
+    console.log(`Seeded ${games.length} pickup games (including >1k synthetic records).`);
+
+    console.log('Inserting synthetic match results (Partner A — Harini Thirunavukkarasan)...');
+    const matches = [];
+    const matchUsers = ['Taylor', 'Alex', 'Jordan', 'Morgan'];
+    const outcomes = ['WIN', 'LOSS'];
+
+    // Generate 200 synthetic match results spread across the demo users
+    for (let i = 1; i <= 200; i++) {
+      const sport = gameSports[i % gameSports.length];
+      const userId = matchUsers[i % matchUsers.length];
+      const outcome = outcomes[i % outcomes.length];
+      const day = 1 + (i % 28);
+      const scoreA = 11 + (i % 11);
+      const scoreB = 5 + (i % 8);
+
+      matches.push({
+        sport,
+        userId,
+        score: outcome === 'WIN' ? `${scoreA} - ${scoreB}` : `${scoreB} - ${scoreA}`,
+        outcome,
+        date: `2026-07-${String(day).padStart(2, '0')}`,
+        createdAt: new Date(),
+      });
+    }
+
+    await db.collection('match_results').insertMany(matches);
+    console.log(`Seeded ${matches.length} match results.`);
+
+    console.log('Database seeding completed successfully!');
   } catch (error) {
     console.error('Error seeding database:', error);
   } finally {
