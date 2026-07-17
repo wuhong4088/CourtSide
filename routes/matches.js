@@ -61,7 +61,12 @@ router.put('/:id', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields.' });
     }
 
-    const result = await updateMatch(new ObjectId(id), { sport, score, outcome, date });
+    const result = await updateMatch(new ObjectId(id), {
+      sport,
+      score,
+      outcome,
+      date,
+    });
 
     if (result.matchedCount === 0) {
       return res.status(404).json({ error: 'Match result not found.' });

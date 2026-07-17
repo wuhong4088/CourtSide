@@ -7,7 +7,9 @@ const router = Router();
 // Get checklists for a specific user
 router.get('/:userId', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
@@ -27,27 +29,31 @@ router.get('/:userId', async (req, res) => {
 // Create a new checklist
 router.post('/', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
     const { userId, title, items } = req.body;
 
     if (!userId || !title) {
-      return res.status(400).json({ error: 'UserId (username) and Title are required.' });
+      return res
+        .status(400)
+        .json({ error: 'UserId (username) and Title are required.' });
     }
 
     const newChecklist = {
       userId,
       title,
       items: Array.isArray(items) ? items : [], // Array of { name: String, checked: Boolean }
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     const result = await db.collection('checklists').insertOne(newChecklist);
     res.status(201).json({
       _id: result.insertedId,
-      ...newChecklist
+      ...newChecklist,
     });
   } catch (error) {
     console.error('Error creating checklist:', error);
@@ -58,7 +64,9 @@ router.post('/', async (req, res) => {
 // Update a checklist (e.g. modify checklist items, checked states, or title)
 router.put('/:id', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
@@ -70,12 +78,14 @@ router.put('/:id', async (req, res) => {
     }
 
     if (!title || !Array.isArray(items)) {
-      return res.status(400).json({ error: 'Title and items array are required.' });
+      return res
+        .status(400)
+        .json({ error: 'Title and items array are required.' });
     }
 
     const filter = { _id: new ObjectId(id) };
     const result = await db.collection('checklists').updateOne(filter, {
-      $set: { title, items }
+      $set: { title, items },
     });
 
     if (result.matchedCount === 0) {
@@ -93,7 +103,9 @@ router.put('/:id', async (req, res) => {
 // Delete a checklist
 router.delete('/:id', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
@@ -103,7 +115,9 @@ router.delete('/:id', async (req, res) => {
       return res.status(400).json({ error: 'Invalid checklist ID format.' });
     }
 
-    const result = await db.collection('checklists').deleteOne({ _id: new ObjectId(id) });
+    const result = await db
+      .collection('checklists')
+      .deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ error: 'Checklist not found.' });

@@ -22,7 +22,7 @@ function Navbar({ currentUser, setCurrentUser }) {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       });
 
       if (!res.ok) {
@@ -52,7 +52,7 @@ function Navbar({ currentUser, setCurrentUser }) {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       });
 
       if (!res.ok) {
@@ -99,23 +99,67 @@ function Navbar({ currentUser, setCurrentUser }) {
         </Link>
 
         <nav className="navbar-links">
-          <Link to="/" className={`nav-link ${isActive('/')}`}>Home</Link>
-          <Link to="/games" className={`nav-link ${isActive('/games')}`}>Find Games</Link>
-          <Link to="/matches" className={`nav-link ${isActive('/matches')}`}>Match History</Link>
-          <Link to="/courts" className={`nav-link ${isActive('/courts')}`}>Courts</Link>
-          <Link to="/checklists" className={`nav-link ${isActive('/checklists')}`}>Gear Checklist</Link>
-          
+          <Link to="/" className={`nav-link ${isActive('/')}`}>
+            Home
+          </Link>
+          <Link to="/games" className={`nav-link ${isActive('/games')}`}>
+            Find Games
+          </Link>
+          <Link to="/matches" className={`nav-link ${isActive('/matches')}`}>
+            Match History
+          </Link>
+          <Link to="/courts" className={`nav-link ${isActive('/courts')}`}>
+            Courts
+          </Link>
+          <Link
+            to="/checklists"
+            className={`nav-link ${isActive('/checklists')}`}
+          >
+            Gear Checklist
+          </Link>
+
           {currentUser ? (
             <>
-              <span className="nav-link user-indicator" style={{ cursor: 'default' }}>
+              <span
+                className="nav-link user-indicator"
+                style={{ cursor: 'default' }}
+              >
                 Logged in: <strong>{currentUser}</strong>
               </span>
-              <span onClick={handleLogout} className="nav-link mock-link" style={{ cursor: 'pointer', color: '#dc3545' }}>Logout</span>
+              <span
+                onClick={handleLogout}
+                className="nav-link mock-link"
+                style={{ cursor: 'pointer', color: '#dc3545' }}
+              >
+                Logout
+              </span>
             </>
           ) : (
             <>
-              <span onClick={() => { setShowLogin(true); setUsername(''); setPassword(''); setError(''); }} className="nav-link mock-link" style={{ cursor: 'pointer' }}>Login</span>
-              <span onClick={() => { setShowSignUp(true); setUsername(''); setPassword(''); setError(''); }} className="nav-link mock-link" style={{ cursor: 'pointer' }}>Sign Up</span>
+              <span
+                onClick={() => {
+                  setShowLogin(true);
+                  setUsername('');
+                  setPassword('');
+                  setError('');
+                }}
+                className="nav-link mock-link"
+                style={{ cursor: 'pointer' }}
+              >
+                Login
+              </span>
+              <span
+                onClick={() => {
+                  setShowSignUp(true);
+                  setUsername('');
+                  setPassword('');
+                  setError('');
+                }}
+                className="nav-link mock-link"
+                style={{ cursor: 'pointer' }}
+              >
+                Sign Up
+              </span>
             </>
           )}
         </nav>
@@ -128,15 +172,34 @@ function Navbar({ currentUser, setCurrentUser }) {
         title="Log In"
         footerButtons={
           <>
-            <button onClick={() => setShowLogin(false)} className="btn btn-outline">Cancel</button>
-            <button onClick={handleLoginSubmit} className="btn btn-primary">Log In</button>
+            <button
+              onClick={() => setShowLogin(false)}
+              className="btn btn-outline"
+            >
+              Cancel
+            </button>
+            <button onClick={handleLoginSubmit} className="btn btn-primary">
+              Log In
+            </button>
           </>
         }
       >
         <form onSubmit={handleLoginSubmit}>
-          {error && <p style={{ color: '#dc3545', fontSize: '0.85rem', marginBottom: '1rem' }}>{error}</p>}
+          {error && (
+            <p
+              style={{
+                color: '#dc3545',
+                fontSize: '0.85rem',
+                marginBottom: '1rem',
+              }}
+            >
+              {error}
+            </p>
+          )}
           <div className="form-group">
-            <label className="form-label" htmlFor="login-username">Username *</label>
+            <label className="form-label" htmlFor="login-username">
+              Username *
+            </label>
             <input
               id="login-username"
               type="text"
@@ -147,7 +210,9 @@ function Navbar({ currentUser, setCurrentUser }) {
             />
           </div>
           <div className="form-group">
-            <label className="form-label" htmlFor="login-password">Password *</label>
+            <label className="form-label" htmlFor="login-password">
+              Password *
+            </label>
             <input
               id="login-password"
               type="password"
@@ -167,15 +232,34 @@ function Navbar({ currentUser, setCurrentUser }) {
         title="Sign Up"
         footerButtons={
           <>
-            <button onClick={() => setShowSignUp(false)} className="btn btn-outline">Cancel</button>
-            <button onClick={handleSignUpSubmit} className="btn btn-primary">Sign Up</button>
+            <button
+              onClick={() => setShowSignUp(false)}
+              className="btn btn-outline"
+            >
+              Cancel
+            </button>
+            <button onClick={handleSignUpSubmit} className="btn btn-primary">
+              Sign Up
+            </button>
           </>
         }
       >
         <form onSubmit={handleSignUpSubmit}>
-          {error && <p style={{ color: '#dc3545', fontSize: '0.85rem', marginBottom: '1rem' }}>{error}</p>}
+          {error && (
+            <p
+              style={{
+                color: '#dc3545',
+                fontSize: '0.85rem',
+                marginBottom: '1rem',
+              }}
+            >
+              {error}
+            </p>
+          )}
           <div className="form-group">
-            <label className="form-label" htmlFor="signup-username">Username *</label>
+            <label className="form-label" htmlFor="signup-username">
+              Username *
+            </label>
             <input
               id="signup-username"
               type="text"
@@ -186,7 +270,9 @@ function Navbar({ currentUser, setCurrentUser }) {
             />
           </div>
           <div className="form-group">
-            <label className="form-label" htmlFor="signup-password">Password *</label>
+            <label className="form-label" htmlFor="signup-password">
+              Password *
+            </label>
             <input
               id="signup-password"
               type="password"

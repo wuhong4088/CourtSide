@@ -2,7 +2,11 @@ import { db } from '../db/connector.js';
 
 export async function getAllGames(query) {
   if (!db) return [];
-  return await db.collection('games').find(query).sort({ createdAt: -1 }).toArray();
+  return await db
+    .collection('games')
+    .find(query)
+    .sort({ createdAt: -1 })
+    .toArray();
 }
 
 export async function createGame(game) {

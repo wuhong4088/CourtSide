@@ -35,13 +35,20 @@ function Modal({ isOpen, onClose, title, children, footerButtons }) {
       <div className="modal-content">
         <div className="modal-header flex-between">
           <h2>{title}</h2>
-          <button onClick={onClose} className="close-btn" aria-label="Close modal">&times;</button>
+          <button
+            onClick={onClose}
+            className="close-btn"
+            aria-label="Close modal"
+          >
+            &times;
+          </button>
         </div>
-        <div className="modal-body">
-          {children}
-        </div>
+        <div className="modal-body">{children}</div>
         {footerButtons && (
-          <div className="modal-footer flex-center" style={{ justifyContent: 'flex-end', gap: '0.75rem' }}>
+          <div
+            className="modal-footer flex-center"
+            style={{ justifyContent: 'flex-end', gap: '0.75rem' }}
+          >
             {footerButtons}
           </div>
         )}
@@ -55,7 +62,7 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  footerButtons: PropTypes.node
+  footerButtons: PropTypes.node,
 };
 
 export default Modal;

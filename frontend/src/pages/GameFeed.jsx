@@ -59,10 +59,15 @@ function GameFeed({ currentUser }) {
 
   return (
     <div className="feed-container">
-      <div className="flex-between header-row" style={{ marginBottom: '1.5rem' }}>
+      <div
+        className="flex-between header-row"
+        style={{ marginBottom: '1.5rem' }}
+      >
         <div>
           <h1 className="page-title">Find Pickup Games</h1>
-          <p className="page-subtitle">Browse active pickup games around Boston.</p>
+          <p className="page-subtitle">
+            Browse active pickup games around Boston.
+          </p>
         </div>
         <Link to="/create-game" className="btn btn-primary">
           + Create New Game
@@ -134,20 +139,27 @@ function GameFeed({ currentUser }) {
                 className="btn btn-secondary"
                 disabled={game.participants.length >= game.maxPlayers}
               >
-                {game.participants.length >= game.maxPlayers ? 'Game Full' : 'Join Game'}
+                {game.participants.length >= game.maxPlayers
+                  ? 'Game Full'
+                  : 'Join Game'}
               </button>
             </div>
           ))}
         </div>
       ) : (
         <div className="card flex-center empty-state-card">
-          <p>No games found. Click &ldquo;+ Create New Game&rdquo; to post one.</p>
+          <p>
+            No games found. Click &ldquo;+ Create New Game&rdquo; to post one.
+          </p>
         </div>
       )}
 
       {games.length > visibleCount && (
         <div className="flex-center" style={{ marginTop: '1.5rem' }}>
-          <button onClick={() => setVisibleCount(visibleCount + 24)} className="btn btn-outline">
+          <button
+            onClick={() => setVisibleCount(visibleCount + 24)}
+            className="btn btn-outline"
+          >
             Load More Games
           </button>
         </div>

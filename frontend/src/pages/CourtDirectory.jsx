@@ -83,7 +83,7 @@ function CourtDirectory({ currentUser }) {
       address,
       review,
       rating: parseFloat(rating),
-      sport
+      sport,
     };
 
     try {
@@ -93,14 +93,14 @@ function CourtDirectory({ currentUser }) {
         res = await fetch(`/api/courts/${editingCourt._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bodyContent)
+          body: JSON.stringify(bodyContent),
         });
       } else {
         // Create court
         res = await fetch('/api/courts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bodyContent)
+          body: JSON.stringify(bodyContent),
         });
       }
 
@@ -122,11 +122,16 @@ function CourtDirectory({ currentUser }) {
   };
 
   const handleDeleteCourt = async (courtId) => {
-    if (!confirm('Are you sure you want to delete this court listing? This cannot be undone.')) return;
+    if (
+      !confirm(
+        'Are you sure you want to delete this court listing? This cannot be undone.'
+      )
+    )
+      return;
 
     try {
       const res = await fetch(`/api/courts/${courtId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
 
       if (!res.ok) {
@@ -147,9 +152,17 @@ function CourtDirectory({ currentUser }) {
     const floor = Math.floor(ratingValue);
     for (let i = 1; i <= 5; i++) {
       if (i <= floor) {
-        stars.push(<span key={i} className="star">&#9733;</span>);
+        stars.push(
+          <span key={i} className="star">
+            &#9733;
+          </span>
+        );
       } else {
-        stars.push(<span key={i} className="star-empty">&#9733;</span>);
+        stars.push(
+          <span key={i} className="star-empty">
+            &#9733;
+          </span>
+        );
       }
     }
     return <span className="rating-stars">{stars}</span>;
@@ -160,9 +173,16 @@ function CourtDirectory({ currentUser }) {
       <div className="flex-between header-row">
         <div>
           <h1 className="page-title">Court Directory</h1>
-          <p className="page-subtitle">Recommending sports courts, surfaces, lighting, and park conditions in your local area.</p>
+          <p className="page-subtitle">
+            Recommending sports courts, surfaces, lighting, and park conditions
+            in your local area.
+          </p>
         </div>
-        {currentUser && <button onClick={handleOpenAddModal} className="btn btn-primary">+ Add a Court</button>}
+        {currentUser && (
+          <button onClick={handleOpenAddModal} className="btn btn-primary">
+            + Add a Court
+          </button>
+        )}
       </div>
 
       {/* Search & Filter Bar */}
@@ -193,11 +213,16 @@ function CourtDirectory({ currentUser }) {
 
       {/* Directory Listings */}
       {loading ? (
-        <div className="flex-center loading-text">Loading court directory...</div>
+        <div className="flex-center loading-text">
+          Loading court directory...
+        </div>
       ) : courts.length > 0 ? (
         <div className="courts-list grid-cols-2">
           {courts.map((court) => (
-            <div key={court._id} className="card card-hover court-directory-card flex-between flex-column">
+            <div
+              key={court._id}
+              className="card card-hover court-directory-card flex-between flex-column"
+            >
               <div className="court-card-top">
                 <h3 className="court-title-text">{court.name}</h3>
                 <p className="court-location-text">
@@ -208,9 +233,7 @@ function CourtDirectory({ currentUser }) {
                   <span className="rating-number">{court.rating}</span>
                 </div>
                 <div className="court-review-box">
-                  <p className="review-quote">
-                    “{court.review}”
-                  </p>
+                  <p className="review-quote">“{court.review}”</p>
                 </div>
               </div>
 
@@ -220,13 +243,13 @@ function CourtDirectory({ currentUser }) {
                 </button>
                 {currentUser && (
                   <>
-                    <button 
+                    <button
                       onClick={() => handleOpenEditModal(court)}
                       className="btn btn-outline btn-sm"
                     >
                       Edit
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleDeleteCourt(court._id)}
                       className="btn btn-outline btn-sm hover-danger"
                     >
@@ -242,7 +265,10 @@ function CourtDirectory({ currentUser }) {
         <div className="card flex-center empty-state-card">
           <div>
             <p className="empty-state-title">No courts found</p>
-            <p>Try searching for another keyword, or click &ldquo;+ Add a Court&rdquo; to list a new location.</p>
+            <p>
+              Try searching for another keyword, or click &ldquo;+ Add a
+              Court&rdquo; to list a new location.
+            </p>
           </div>
         </div>
       )}
@@ -254,10 +280,15 @@ function CourtDirectory({ currentUser }) {
         title={editingCourt ? 'Edit Court Location' : 'Recommend a Court'}
         footerButtons={
           <>
-            <button onClick={() => setIsModalOpen(false)} className="btn btn-outline">Cancel</button>
-            <button 
-              onClick={handleFormSubmit} 
-              disabled={submitting} 
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="btn btn-outline"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleFormSubmit}
+              disabled={submitting}
               className="btn btn-primary"
             >
               {submitting ? 'Saving...' : 'Save Court'}
@@ -267,7 +298,9 @@ function CourtDirectory({ currentUser }) {
       >
         <form onSubmit={handleFormSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="court-name">Court Facility Name *</label>
+            <label className="form-label" htmlFor="court-name">
+              Court Facility Name *
+            </label>
             <input
               id="court-name"
               type="text"
@@ -280,7 +313,9 @@ function CourtDirectory({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="court-address">Address / Location *</label>
+            <label className="form-label" htmlFor="court-address">
+              Address / Location *
+            </label>
             <input
               id="court-address"
               type="text"
@@ -293,7 +328,9 @@ function CourtDirectory({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="court-sport">Sport Type *</label>
+            <label className="form-label" htmlFor="court-sport">
+              Sport Type *
+            </label>
             <select
               id="court-sport"
               className="form-control"
@@ -307,7 +344,9 @@ function CourtDirectory({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="court-rating">Rating (1 to 5 Stars) *</label>
+            <label className="form-label" htmlFor="court-rating">
+              Rating (1 to 5 Stars) *
+            </label>
             <select
               id="court-rating"
               className="form-control"
@@ -323,7 +362,9 @@ function CourtDirectory({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="court-review">Review / Facility Conditions *</label>
+            <label className="form-label" htmlFor="court-review">
+              Review / Facility Conditions *
+            </label>
             <textarea
               id="court-review"
               placeholder="Describe the court surface quality, hoops/nets, lighting, park amenities, parking accessibility..."
@@ -335,13 +376,12 @@ function CourtDirectory({ currentUser }) {
           </div>
         </form>
       </Modal>
-
     </div>
   );
 }
 
 CourtDirectory.propTypes = {
-  currentUser: PropTypes.string.isRequired
+  currentUser: PropTypes.string.isRequired,
 };
 
 export default CourtDirectory;

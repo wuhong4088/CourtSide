@@ -18,7 +18,9 @@ router.get('/session', (req, res) => {
 router.post('/register', async (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required.' });
+    return res
+      .status(400)
+      .json({ error: 'Username and password are required.' });
   }
 
   try {
@@ -34,7 +36,7 @@ router.post('/register', async (req, res, next) => {
       username,
       salt,
       passwordHash,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     await createUser(newUser);
@@ -52,13 +54,17 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required.' });
+    return res
+      .status(400)
+      .json({ error: 'Username and password are required.' });
   }
 
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
     if (!user) {
-      return res.status(400).json({ error: info.message || 'Invalid username or password.' });
+      return res
+        .status(400)
+        .json({ error: info.message || 'Invalid username or password.' });
     }
     req.login(user, (loginErr) => {
       if (loginErr) return next(loginErr);

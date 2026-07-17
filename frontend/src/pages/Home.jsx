@@ -30,9 +30,17 @@ function Home({ currentUser }) {
     const floor = Math.floor(rating);
     for (let i = 1; i <= 5; i++) {
       if (i <= floor) {
-        stars.push(<span key={i} className="star">&#9733;</span>);
+        stars.push(
+          <span key={i} className="star">
+            &#9733;
+          </span>
+        );
       } else {
-        stars.push(<span key={i} className="star-empty">&#9733;</span>);
+        stars.push(
+          <span key={i} className="star-empty">
+            &#9733;
+          </span>
+        );
       }
     }
     return <span className="rating-stars">{stars}</span>;
@@ -44,11 +52,19 @@ function Home({ currentUser }) {
       <section className="hero-section">
         <h1 className="hero-title">Find Your Next Game</h1>
         <p className="hero-subtitle">
-          Join local pickup games, discover courts, and prepare your gear before you play.
+          Join local pickup games, discover courts, and prepare your gear before
+          you play.
         </p>
         <div className="flex-center" style={{ gap: '1.25rem' }}>
-          <Link to="/games" className="btn btn-accent btn-lg-padding">Find a Game</Link>
-          <Link to="/create-game" className="btn btn-outline btn-lg-padding btn-hero-outline">Create a Game</Link>
+          <Link to="/games" className="btn btn-accent btn-lg-padding">
+            Find a Game
+          </Link>
+          <Link
+            to="/create-game"
+            className="btn btn-outline btn-lg-padding btn-hero-outline"
+          >
+            Create a Game
+          </Link>
         </div>
       </section>
 
@@ -60,21 +76,27 @@ function Home({ currentUser }) {
             <span className="sport-icon">🏀</span>
             <h3>Basketball</h3>
             <p>Half court or full court pickup games in local parks.</p>
-            <Link to="/games?sport=Basketball" className="sport-link">Browse Basketball Games &rarr;</Link>
+            <Link to="/games?sport=Basketball" className="sport-link">
+              Browse Basketball Games &rarr;
+            </Link>
           </div>
 
           <div className="card card-hover sport-card flex-center flex-column">
             <span className="sport-icon">🏓</span>
             <h3>Pickleball</h3>
             <p>The fastest-growing racquet sport. Find doubles partners.</p>
-            <Link to="/games?sport=Pickleball" className="sport-link">Browse Pickleball Games &rarr;</Link>
+            <Link to="/games?sport=Pickleball" className="sport-link">
+              Browse Pickleball Games &rarr;
+            </Link>
           </div>
 
           <div className="card card-hover sport-card flex-center flex-column">
             <span className="sport-icon">🎾</span>
             <h3>Tennis</h3>
             <p>Singles rallies or doubles matches. Meet other local hitters.</p>
-            <Link to="/games?sport=Tennis" className="sport-link">Browse Tennis Matches &rarr;</Link>
+            <Link to="/games?sport=Tennis" className="sport-link">
+              Browse Tennis Matches &rarr;
+            </Link>
           </div>
         </div>
       </section>
@@ -83,27 +105,46 @@ function Home({ currentUser }) {
       <section className="section" style={{ marginTop: '3rem' }}>
         <div className="flex-between" style={{ marginBottom: '1.5rem' }}>
           <h2 className="section-title">Recommended Court Locations</h2>
-          <Link to="/courts" className="btn btn-outline btn-sm">View Directory</Link>
+          <Link to="/courts" className="btn btn-outline btn-sm">
+            View Directory
+          </Link>
         </div>
 
         {loading ? (
-          <div className="flex-center" style={{ height: '100px', color: '#64748b' }}>Loading courts...</div>
+          <div
+            className="flex-center"
+            style={{ height: '100px', color: '#64748b' }}
+          >
+            Loading courts...
+          </div>
         ) : featuredCourts.length > 0 ? (
           <div className="grid-cols-2">
             {featuredCourts.map((court) => (
-              <div key={court._id} className="card card-hover court-featured-card">
-                <div className="flex-between" style={{ marginBottom: '0.75rem' }}>
+              <div
+                key={court._id}
+                className="card card-hover court-featured-card"
+              >
+                <div
+                  className="flex-between"
+                  style={{ marginBottom: '0.75rem' }}
+                >
                   <h3 className="court-name">{court.name}</h3>
                   {renderStars(court.rating)}
                 </div>
                 <p className="court-address">📍 {court.address}</p>
-                <blockquote className="court-review">&ldquo;{court.review}&rdquo;</blockquote>
+                <blockquote className="court-review">
+                  &ldquo;{court.review}&rdquo;
+                </blockquote>
               </div>
             ))}
           </div>
         ) : (
-          <div className="card flex-center" style={{ height: '120px', color: '#64748b' }}>
-            No courts available. Run the seeding script to load default court listings!
+          <div
+            className="card flex-center"
+            style={{ height: '120px', color: '#64748b' }}
+          >
+            No courts available. Run the seeding script to load default court
+            listings!
           </div>
         )}
       </section>
@@ -112,7 +153,7 @@ function Home({ currentUser }) {
 }
 
 Home.propTypes = {
-  currentUser: PropTypes.string
+  currentUser: PropTypes.string,
 };
 
 export default Home;

@@ -16,7 +16,9 @@ export async function createMatch(match) {
 
 export async function updateMatch(id, fields) {
   if (!db) return null;
-  return await db.collection('match_results').updateOne({ _id: id }, { $set: fields });
+  return await db
+    .collection('match_results')
+    .updateOne({ _id: id }, { $set: fields });
 }
 
 export async function deleteMatch(id) {

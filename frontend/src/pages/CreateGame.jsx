@@ -15,7 +15,10 @@ function CreateGame({ currentUser }) {
 
   if (!currentUser) {
     return (
-      <div className="create-game-container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+      <div
+        className="create-game-container"
+        style={{ textAlign: 'center', padding: '4rem 1rem' }}
+      >
         <h1 className="page-title">Create a Pickup Game</h1>
         <p className="page-subtitle">Please log in to create a game.</p>
       </div>
@@ -55,7 +58,10 @@ function CreateGame({ currentUser }) {
   };
 
   return (
-    <div className="create-game-container" style={{ maxWidth: '650px', margin: '0 auto' }}>
+    <div
+      className="create-game-container"
+      style={{ maxWidth: '650px', margin: '0 auto' }}
+    >
       <h1 className="page-title" style={{ marginBottom: '1.5rem' }}>
         Create a Pickup Game
       </h1>
@@ -63,8 +69,15 @@ function CreateGame({ currentUser }) {
       <div className="card">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="sport">Sport Type</label>
-            <select id="sport" className="form-control" value={sport} onChange={(e) => setSport(e.target.value)}>
+            <label className="form-label" htmlFor="sport">
+              Sport Type
+            </label>
+            <select
+              id="sport"
+              className="form-control"
+              value={sport}
+              onChange={(e) => setSport(e.target.value)}
+            >
               <option value="Basketball">Basketball</option>
               <option value="Pickleball">Pickleball</option>
               <option value="Tennis">Tennis</option>
@@ -72,7 +85,9 @@ function CreateGame({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="time">Date &amp; Time</label>
+            <label className="form-label" htmlFor="time">
+              Date &amp; Time
+            </label>
             <input
               id="time"
               type="datetime-local"
@@ -84,8 +99,15 @@ function CreateGame({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="skill">Skill Level</label>
-            <select id="skill" className="form-control" value={skillLevel} onChange={(e) => setSkillLevel(e.target.value)}>
+            <label className="form-label" htmlFor="skill">
+              Skill Level
+            </label>
+            <select
+              id="skill"
+              className="form-control"
+              value={skillLevel}
+              onChange={(e) => setSkillLevel(e.target.value)}
+            >
               <option value="Beginner">Beginner</option>
               <option value="Intermediate">Intermediate</option>
               <option value="Advanced">Advanced</option>
@@ -93,7 +115,9 @@ function CreateGame({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="location">Location</label>
+            <label className="form-label" htmlFor="location">
+              Location
+            </label>
             <input
               id="location"
               type="text"
@@ -106,7 +130,9 @@ function CreateGame({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="max">Maximum Players</label>
+            <label className="form-label" htmlFor="max">
+              Maximum Players
+            </label>
             <input
               id="max"
               type="number"
@@ -119,7 +145,9 @@ function CreateGame({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="desc">Description</label>
+            <label className="form-label" htmlFor="desc">
+              Description
+            </label>
             <textarea
               id="desc"
               className="form-control"
@@ -129,9 +157,18 @@ function CreateGame({ currentUser }) {
             />
           </div>
 
-          <div className="flex-center" style={{ justifyContent: 'flex-end', gap: '1rem' }}>
-            <Link to="/games" className="btn btn-outline">Cancel</Link>
-            <button type="submit" className="btn btn-primary" disabled={submitting}>
+          <div
+            className="flex-center"
+            style={{ justifyContent: 'flex-end', gap: '1rem' }}
+          >
+            <Link to="/games" className="btn btn-outline">
+              Cancel
+            </Link>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={submitting}
+            >
               {submitting ? 'Creating...' : 'Create Game'}
             </button>
           </div>

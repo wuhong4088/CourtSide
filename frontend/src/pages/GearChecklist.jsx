@@ -71,8 +71,8 @@ function GearChecklist({ currentUser }) {
         body: JSON.stringify({
           userId: currentUser,
           title: newTitle,
-          items: parsedItems
-        })
+          items: parsedItems,
+        }),
       });
 
       if (!res.ok) {
@@ -98,7 +98,7 @@ function GearChecklist({ currentUser }) {
 
     try {
       const res = await fetch(`/api/checklist/${checklistId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
 
       if (!res.ok) {
@@ -116,7 +116,7 @@ function GearChecklist({ currentUser }) {
 
   // Handle toggling checkbox state
   const handleToggleItem = async (checklist, itemIndex) => {
-    const updatedItems = checklist.items.map((item, idx) => 
+    const updatedItems = checklist.items.map((item, idx) =>
       idx === itemIndex ? { ...item, checked: !item.checked } : item
     );
 
@@ -126,8 +126,8 @@ function GearChecklist({ currentUser }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: checklist.title,
-          items: updatedItems
-        })
+          items: updatedItems,
+        }),
       });
 
       if (!res.ok) {
@@ -136,9 +136,11 @@ function GearChecklist({ currentUser }) {
       }
 
       // Update state locally
-      setChecklists(checklists.map((c) => 
-        c._id === checklist._id ? { ...c, items: updatedItems } : c
-      ));
+      setChecklists(
+        checklists.map((c) =>
+          c._id === checklist._id ? { ...c, items: updatedItems } : c
+        )
+      );
     } catch (err) {
       console.error(err);
     }
@@ -159,8 +161,8 @@ function GearChecklist({ currentUser }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: checklist.title,
-          items: updatedItems
-        })
+          items: updatedItems,
+        }),
       });
 
       if (!res.ok) {
@@ -172,9 +174,11 @@ function GearChecklist({ currentUser }) {
       setCardInputs({ ...cardInputs, [checklist._id]: '' });
 
       // Update state locally
-      setChecklists(checklists.map((c) => 
-        c._id === checklist._id ? { ...c, items: updatedItems } : c
-      ));
+      setChecklists(
+        checklists.map((c) =>
+          c._id === checklist._id ? { ...c, items: updatedItems } : c
+        )
+      );
     } catch (err) {
       console.error(err);
     }
@@ -190,8 +194,8 @@ function GearChecklist({ currentUser }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: checklist.title,
-          items: updatedItems
-        })
+          items: updatedItems,
+        }),
       });
 
       if (!res.ok) {
@@ -200,9 +204,11 @@ function GearChecklist({ currentUser }) {
       }
 
       // Update state locally
-      setChecklists(checklists.map((c) => 
-        c._id === checklist._id ? { ...c, items: updatedItems } : c
-      ));
+      setChecklists(
+        checklists.map((c) =>
+          c._id === checklist._id ? { ...c, items: updatedItems } : c
+        )
+      );
     } catch (err) {
       console.error(err);
     }
@@ -215,10 +221,17 @@ function GearChecklist({ currentUser }) {
 
   if (!currentUser) {
     return (
-      <div className="checklists-container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+      <div
+        className="checklists-container"
+        style={{ textAlign: 'center', padding: '4rem 1rem' }}
+      >
         <h1 className="page-title">My Gear Checklists</h1>
-        <p className="page-subtitle" style={{ fontSize: '1.1rem', color: '#666666', marginTop: '1rem' }}>
-          Please log in or sign up using the links in the navigation bar to manage your gear checklists.
+        <p
+          className="page-subtitle"
+          style={{ fontSize: '1.1rem', color: '#666666', marginTop: '1rem' }}
+        >
+          Please log in or sign up using the links in the navigation bar to
+          manage your gear checklists.
         </p>
       </div>
     );
@@ -229,9 +242,14 @@ function GearChecklist({ currentUser }) {
       <div className="flex-between header-row">
         <div>
           <h1 className="page-title">My Gear Checklists</h1>
-          <p className="page-subtitle">Manage, create, and verify packing equipment checklists for <strong>{currentUser}</strong>.</p>
+          <p className="page-subtitle">
+            Manage, create, and verify packing equipment checklists for{' '}
+            <strong>{currentUser}</strong>.
+          </p>
         </div>
-        <button onClick={handleOpenAddModal} className="btn btn-primary">+ New Checklist</button>
+        <button onClick={handleOpenAddModal} className="btn btn-primary">
+          + New Checklist
+        </button>
       </div>
 
       {/* Grid of Checklists */}
@@ -240,13 +258,19 @@ function GearChecklist({ currentUser }) {
       ) : checklists.length > 0 ? (
         <div className="checklists-list grid-cols-2">
           {checklists.map((checklist) => {
-            const itemsChecked = checklist.items.filter((i) => i.checked).length;
-            const progressPercent = checklist.items.length > 0 
-              ? Math.round((itemsChecked / checklist.items.length) * 100) 
-              : 0;
+            const itemsChecked = checklist.items.filter(
+              (i) => i.checked
+            ).length;
+            const progressPercent =
+              checklist.items.length > 0
+                ? Math.round((itemsChecked / checklist.items.length) * 100)
+                : 0;
 
             return (
-              <div key={checklist._id} className="card checklist-card flex-between flex-column">
+              <div
+                key={checklist._id}
+                className="card checklist-card flex-between flex-column"
+              >
                 <div>
                   <div className="flex-between card-header">
                     {editingTitleChecklistId === checklist._id ? (
@@ -255,16 +279,25 @@ function GearChecklist({ currentUser }) {
                           e.preventDefault();
                           if (!editTitle) return;
                           try {
-                            const res = await fetch(`/api/checklist/${checklist._id}`, {
-                              method: 'PUT',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({
-                                title: editTitle,
-                                items: checklist.items
-                              })
-                            });
+                            const res = await fetch(
+                              `/api/checklist/${checklist._id}`,
+                              {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                  title: editTitle,
+                                  items: checklist.items,
+                                }),
+                              }
+                            );
                             if (res.ok) {
-                              setChecklists(checklists.map(c => c._id === checklist._id ? { ...c, title: editTitle } : c));
+                              setChecklists(
+                                checklists.map((c) =>
+                                  c._id === checklist._id
+                                    ? { ...c, title: editTitle }
+                                    : c
+                                )
+                              );
                               setEditingTitleChecklistId(null);
                             }
                           } catch (err) {
@@ -280,8 +313,19 @@ function GearChecklist({ currentUser }) {
                           onChange={(e) => setEditTitle(e.target.value)}
                           autoFocus
                         />
-                        <button type="submit" className="btn btn-primary btn-sm">Save</button>
-                        <button type="button" className="btn btn-outline btn-sm" onClick={() => setEditingTitleChecklistId(null)}>Cancel</button>
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-sm"
+                        >
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-outline btn-sm"
+                          onClick={() => setEditingTitleChecklistId(null)}
+                        >
+                          Cancel
+                        </button>
                       </form>
                     ) : (
                       <h3 className="checklist-title">{checklist.title}</h3>
@@ -293,12 +337,15 @@ function GearChecklist({ currentUser }) {
                     <div className="progress-bar-container">
                       <div className="flex-between progress-text">
                         <span>Progress</span>
-                        <span>{itemsChecked} of {checklist.items.length} items packed ({progressPercent}%)</span>
+                        <span>
+                          {itemsChecked} of {checklist.items.length} items
+                          packed ({progressPercent}%)
+                        </span>
                       </div>
                       <div className="progress-track">
-                        <div 
-                          className="progress-fill" 
-                          style={{ width: `${progressPercent}%` }} 
+                        <div
+                          className="progress-fill"
+                          style={{ width: `${progressPercent}%` }}
                         />
                       </div>
                     </div>
@@ -316,10 +363,16 @@ function GearChecklist({ currentUser }) {
                               checked={item.checked}
                               onChange={() => handleToggleItem(checklist, idx)}
                             />
-                            <span className={`checklist-text ${item.checked ? 'checked' : ''}`}>{item.name}</span>
+                            <span
+                              className={`checklist-text ${item.checked ? 'checked' : ''}`}
+                            >
+                              {item.name}
+                            </span>
                           </label>
-                          <button 
-                            onClick={() => handleRemoveItemFromCard(checklist, idx)}
+                          <button
+                            onClick={() =>
+                              handleRemoveItemFromCard(checklist, idx)
+                            }
                             className="remove-item-btn"
                             title="Remove Item"
                           >
@@ -337,11 +390,11 @@ function GearChecklist({ currentUser }) {
 
                 {/* Inline Add Item Form */}
                 {activeAddInputId === checklist._id && (
-                  <form 
+                  <form
                     onSubmit={(e) => {
                       handleAddItemToCard(e, checklist);
                       setActiveAddInputId(null);
-                    }} 
+                    }}
                     className="flex-center add-item-form"
                   >
                     <input
@@ -349,10 +402,15 @@ function GearChecklist({ currentUser }) {
                       placeholder="Item name..."
                       className="form-control add-item-input"
                       value={cardInputs[checklist._id] || ''}
-                      onChange={(e) => handleInputChange(checklist._id, e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange(checklist._id, e.target.value)
+                      }
                       autoFocus
                     />
-                    <button type="submit" className="btn btn-primary add-item-save-btn">
+                    <button
+                      type="submit"
+                      className="btn btn-primary add-item-save-btn"
+                    >
                       Save
                     </button>
                   </form>
@@ -361,7 +419,13 @@ function GearChecklist({ currentUser }) {
                 {/* Card Action Buttons (Direct alignment with mockup) */}
                 <div className="flex-center card-actions">
                   <button
-                    onClick={() => setActiveAddInputId(activeAddInputId === checklist._id ? null : checklist._id)}
+                    onClick={() =>
+                      setActiveAddInputId(
+                        activeAddInputId === checklist._id
+                          ? null
+                          : checklist._id
+                      )
+                    }
                     className="btn btn-outline btn-sm"
                   >
                     Add Item
@@ -390,7 +454,10 @@ function GearChecklist({ currentUser }) {
         <div className="card flex-center empty-state-card">
           <div>
             <p className="empty-state-title">No checklists found</p>
-            <p>Create your first packing equipment checklist by clicking &ldquo;+ New Checklist&rdquo; above.</p>
+            <p>
+              Create your first packing equipment checklist by clicking &ldquo;+
+              New Checklist&rdquo; above.
+            </p>
           </div>
         </div>
       )}
@@ -402,10 +469,15 @@ function GearChecklist({ currentUser }) {
         title="New Gear Checklist"
         footerButtons={
           <>
-            <button onClick={() => setIsModalOpen(false)} className="btn btn-outline">Cancel</button>
-            <button 
-              onClick={handleCreateChecklist} 
-              disabled={submitting} 
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="btn btn-outline"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleCreateChecklist}
+              disabled={submitting}
               className="btn btn-primary"
             >
               {submitting ? 'Creating...' : 'Create Checklist'}
@@ -415,7 +487,9 @@ function GearChecklist({ currentUser }) {
       >
         <form onSubmit={handleCreateChecklist}>
           <div className="form-group">
-            <label className="form-label" htmlFor="checklist-title">Checklist Name *</label>
+            <label className="form-label" htmlFor="checklist-title">
+              Checklist Name *
+            </label>
             <input
               id="checklist-title"
               type="text"
@@ -428,7 +502,9 @@ function GearChecklist({ currentUser }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="checklist-defaults">Pre-populate Items (optional)</label>
+            <label className="form-label" htmlFor="checklist-defaults">
+              Pre-populate Items (optional)
+            </label>
             <input
               id="checklist-defaults"
               type="text"
@@ -440,13 +516,12 @@ function GearChecklist({ currentUser }) {
           </div>
         </form>
       </Modal>
-
     </div>
   );
 }
 
 GearChecklist.propTypes = {
-  currentUser: PropTypes.string.isRequired
+  currentUser: PropTypes.string.isRequired,
 };
 
 export default GearChecklist;

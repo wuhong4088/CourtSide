@@ -40,7 +40,8 @@ router.get('/', async (req, res) => {
 // Create a new game
 router.post('/', async (req, res) => {
   try {
-    const { sport, time, skillLevel, host, location, maxPlayers, description } = req.body;
+    const { sport, time, skillLevel, host, location, maxPlayers, description } =
+      req.body;
 
     if (!sport || !time || !skillLevel || !host || !location || !maxPlayers) {
       return res.status(400).json({ error: 'Missing required fields.' });
@@ -70,7 +71,8 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { sport, time, skillLevel, host, location, maxPlayers, description } = req.body;
+    const { sport, time, skillLevel, host, location, maxPlayers, description } =
+      req.body;
 
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid game ID format.' });

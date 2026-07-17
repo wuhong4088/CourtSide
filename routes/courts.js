@@ -7,7 +7,9 @@ const router = Router();
 // Get all court locations
 router.get('/', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
@@ -21,11 +23,15 @@ router.get('/', async (req, res) => {
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
-        { address: { $regex: search, $options: 'i' } }
+        { address: { $regex: search, $options: 'i' } },
       ];
     }
 
-    const courts = await db.collection('courts').find(query).sort({ createdAt: -1 }).toArray();
+    const courts = await db
+      .collection('courts')
+      .find(query)
+      .sort({ createdAt: -1 })
+      .toArray();
     res.status(200).json(courts);
   } catch (error) {
     console.error('Error fetching courts:', error);
@@ -36,7 +42,9 @@ router.get('/', async (req, res) => {
 // Create a new court location
 router.post('/', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
@@ -44,7 +52,8 @@ router.post('/', async (req, res) => {
 
     if (!name || !address || !review || rating === undefined || !sport) {
       return res.status(400).json({
-        error: 'Missing required fields. Required: name, address, review, rating, sport.'
+        error:
+          'Missing required fields. Required: name, address, review, rating, sport.',
       });
     }
 
@@ -54,13 +63,13 @@ router.post('/', async (req, res) => {
       review,
       rating: parseFloat(rating),
       sport,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     const result = await db.collection('courts').insertOne(newCourt);
     res.status(201).json({
       _id: result.insertedId,
-      ...newCourt
+      ...newCourt,
     });
   } catch (error) {
     console.error('Error creating court:', error);
@@ -71,7 +80,9 @@ router.post('/', async (req, res) => {
 // Update an existing court location
 router.put('/:id', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
@@ -93,8 +104,8 @@ router.put('/:id', async (req, res) => {
         address,
         review,
         rating: parseFloat(rating),
-        sport
-      }
+        sport,
+      },
     });
 
     if (result.matchedCount === 0) {
@@ -112,7 +123,9 @@ router.put('/:id', async (req, res) => {
 // Delete a court location
 router.delete('/:id', async (req, res) => {
   if (!db) {
-    return res.status(500).json({ error: 'Database connection is not active.' });
+    return res
+      .status(500)
+      .json({ error: 'Database connection is not active.' });
   }
 
   try {
@@ -122,7 +135,9 @@ router.delete('/:id', async (req, res) => {
       return res.status(400).json({ error: 'Invalid court ID format.' });
     }
 
-    const result = await db.collection('courts').deleteOne({ _id: new ObjectId(id) });
+    const result = await db
+      .collection('courts')
+      .deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ error: 'Court location not found.' });
