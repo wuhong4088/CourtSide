@@ -8,8 +8,9 @@ A modern full-stack web application designed for sports lovers to organize picku
 
 **Class Link**: [CS 5610 Web Development](https://johnguerra.co/classes/webDevelopment_online_summer_2026/)  
 **Public Page (Deployed URL)**: [https://courtside-8uiv.onrender.com](https://courtside-8uiv.onrender.com)  
-**Slides**: *TBD*  
-**Video Demo**: *TBD*
+**Slides**: [Google Slides](https://docs.google.com/presentation/d/1nLB53jPXGPbCSzlLn9PHc-GvXx5TLoP7r1KxjwAQA1s/edit?slide=id.g3f554011a8f_0_54#slide=id.g3f554011a8f_0_54)  
+**Video Demo**: [YouTube](https://youtu.be/y16I1naJ47k?si=9lPxkL_cakBOBIzH)
+
 
 ---
 
