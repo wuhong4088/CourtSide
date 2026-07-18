@@ -148,8 +148,8 @@ npm run format
 
 ## Design Document & Mockups
 The full planning documentation is detailed in:
-- **Design Document**: [docs/DESIGN_DOCUMENT.md](docs/DESIGN_DOCUMENT.md) (includes database schemas, ER diagrams, personas, and use cases).
-- **Mockups**: [docs/Mockup.md](docs/Mockup.md) (includes interactive page ASCII wireframes).
+- **Design Document**: [DESIGN.md](DESIGN.md) (includes database schemas, ER diagrams, personas, and use cases).
+- **Mockups**: [Mockup.md](Mockup.md) (includes interactive page ASCII wireframes).
 
 ---
 
