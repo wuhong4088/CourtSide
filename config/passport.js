@@ -1,11 +1,15 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import crypto from 'crypto';
+import { promisify } from 'util';
 import { findUserByUsername } from '../models/users.js';
 
-// Simple PBKDF2 Password Hashing
-function hashPassword(password, salt) {
-  return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+const pbkdf2 = promisify(crypto.pbkdf2);
+
+// Simple PBKDF2 Password Hashing (Asynchronous)
+async function hashPassword(password, salt) {
+  const hash = await pbkdf2(password, salt, 1000, 64, 'sha512');
+  return hash.toString('hex');
 }
 
 // Configure local strategy
@@ -16,7 +20,7 @@ passport.use(
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      const hash = hashPassword(password, user.salt);
+      const hash = await hashPassword(password, user.salt);
       if (hash !== user.passwordHash) {
         return done(null, false, { message: 'Incorrect password.' });
       }
