@@ -9,6 +9,7 @@ import checklistRoutes from './routes/checklists.js';
 import gameRoutes from './routes/games.js';
 import matchRoutes from './routes/matches.js';
 import authRoutes from './routes/Auth.js'; // capital A
+import { connectPromise } from './db/connector.js';
 
 dotenv.config();
 
@@ -67,8 +68,16 @@ app.use((err, req, res, _next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Connect to database, then start listening
+connectPromise
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Fatal database connection error. Server not started.', err);
+    process.exit(1);
+  });
 
 export default app;
