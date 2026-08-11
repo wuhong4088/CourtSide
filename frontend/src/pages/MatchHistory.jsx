@@ -138,10 +138,10 @@ function MatchHistory({ currentUser }) {
             Total Games: <strong>{total}</strong>
           </span>
           <span>
-            Wins: <strong style={{ color: '#22c55e' }}>{wins}</strong>
+            Wins: <strong style={{ color: 'var(--accent)' }}>{wins}</strong>
           </span>
           <span>
-            Losses: <strong style={{ color: '#ef4444' }}>{losses}</strong>
+            Losses: <strong style={{ color: 'var(--danger)' }}>{losses}</strong>
           </span>
           <span>
             Win Rate: <strong style={{ color: '#7c3aed' }}>{winRate}%</strong>

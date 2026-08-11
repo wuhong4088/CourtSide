@@ -23,7 +23,7 @@
 
 .court-review-box {
   background: #f8f9fa;
-  border-left: 2px solid #007bff;
+  border-left: 2px solid var(--primary);
   padding: 8px 12px;
   border-radius: 4px;
 }
@@ -52,7 +52,7 @@
 .hover-danger:hover {
   background: #ffebee;
   border-color: #ffcdd2;
-  color: #dc3545;
+  color: var(--danger);
 }
 
 .rating-stars {

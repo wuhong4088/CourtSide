@@ -99,6 +99,7 @@ function GameFeed({ currentUser }) {
             type="text"
             placeholder="Search by location or host"
             className="form-control"
+            aria-label="Search by location or host"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -106,6 +107,7 @@ function GameFeed({ currentUser }) {
         <select
           className="form-control"
           style={{ width: '160px' }}
+          aria-label="Filter by sport"
           value={sport}
           onChange={(e) => setSport(e.target.value)}
         >
@@ -117,6 +119,7 @@ function GameFeed({ currentUser }) {
         <select
           className="form-control"
           style={{ width: '160px' }}
+          aria-label="Filter by skill level"
           value={skillLevel}
           onChange={(e) => setSkillLevel(e.target.value)}
         >

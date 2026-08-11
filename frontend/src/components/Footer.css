@@ -20,9 +20,10 @@
 }
 
 .footer-link {
-  color: #007bff;
+  color: var(--primary);
+  text-decoration: underline;
 }
 
 .footer-link:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }

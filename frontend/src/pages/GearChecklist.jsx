@@ -374,6 +374,7 @@ function GearChecklist({ currentUser }) {
                               handleRemoveItemFromCard(checklist, idx)
                             }
                             className="remove-item-btn"
+                            aria-label="Remove item"
                             title="Remove Item"
                           >
                             &times;

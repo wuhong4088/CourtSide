@@ -2,17 +2,17 @@
 
 :root {
   /* Colors */
-  --primary: #007bff;
-  --primary-hover: #0056b3;
-  --secondary: #6c757d;
-  --secondary-hover: #5a6268;
-  --accent: #28a745;
-  --accent-hover: #218838;
-  --danger: #dc3545;
-  --danger-hover: #c82333;
+  --primary: #0056b3;
+  --primary-hover: #003d80;
+  --secondary: #4b5563;
+  --secondary-hover: #374151;
+  --accent: #196f3d;
+  --accent-hover: #114f2b;
+  --danger: #b01a27;
+  --danger-hover: #8a141e;
   --dark: #333333;
   --gray-dark: #495057;
-  --gray-light: #6c757d;
+  --gray-light: #4b5563;
   --border: #cccccc;
   --bg-main: #f8f9fa;
   --white: #ffffff;
@@ -20,7 +20,7 @@
   --glass-border: #cccccc;
 
   /* Typography */
-  --font-main: Arial, Helvetica, sans-serif;
+  --font-main: 'Inter', Arial, Helvetica, sans-serif;
 
   /* Borders & Radius */
   --radius-sm: 4px;
@@ -34,6 +34,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Keyboard Accessibility Focus Indicator */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
 body {

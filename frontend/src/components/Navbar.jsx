@@ -146,7 +146,7 @@ function Navbar({ currentUser, setCurrentUser }) {
               <button
                 onClick={handleLogout}
                 className="nav-link nav-link-btn"
-                style={{ color: '#dc3545' }}
+                style={{ color: 'var(--danger)' }}
               >
                 Logout
               </button>
@@ -206,7 +206,7 @@ function Navbar({ currentUser, setCurrentUser }) {
           {error && (
             <p
               style={{
-                color: '#dc3545',
+                color: 'var(--danger)',
                 fontSize: '0.85rem',
                 marginBottom: '1rem',
               }}
@@ -266,7 +266,7 @@ function Navbar({ currentUser, setCurrentUser }) {
           {error && (
             <p
               style={{
-                color: '#dc3545',
+                color: 'var(--danger)',
                 fontSize: '0.85rem',
                 marginBottom: '1rem',
               }}

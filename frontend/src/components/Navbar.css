@@ -28,7 +28,7 @@
 }
 
 .logo-text {
-  color: #007bff;
+  color: var(--primary);
 }
 
 .navbar-links {
@@ -46,13 +46,13 @@
 }
 
 .nav-link:hover {
-  color: #007bff;
+  color: var(--primary);
 }
 
 .nav-link.active {
-  color: #007bff;
+  color: var(--primary);
   font-weight: bold;
-  border-bottom-color: #007bff;
+  border-bottom-color: var(--primary);
 }
 
 .nav-link-btn {

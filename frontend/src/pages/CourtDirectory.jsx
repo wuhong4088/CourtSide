@@ -192,6 +192,7 @@ function CourtDirectory({ currentUser }) {
             type="text"
             placeholder="Search by court or address"
             className="form-control"
+            aria-label="Search by court or address"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -200,6 +201,7 @@ function CourtDirectory({ currentUser }) {
           <select
             className="form-control"
             style={{ width: '180px' }}
+            aria-label="Filter by sport type"
             value={sportFilter}
             onChange={(e) => setSportFilter(e.target.value)}
           >
