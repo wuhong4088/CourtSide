@@ -188,8 +188,7 @@ function Home({ currentUser }) {
             className="card flex-center"
             style={{ height: '120px', color: '#64748b' }}
           >
-            No courts available. Run the seeding script to load default court
-            listings!
+            No recommended courts available at this time.
           </div>
         )}
       </section>

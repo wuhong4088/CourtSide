@@ -94,7 +94,7 @@ function GameFeed({ currentUser }) {
             Browse active pickup games around Boston.
           </p>
         </div>
-        <Link to="/create-game" className="btn btn-primary">
+        <Link to="/create-game" className="btn btn-success">
           + Create New Game
         </Link>
       </div>

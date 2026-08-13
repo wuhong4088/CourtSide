@@ -166,7 +166,7 @@ function CreateGame({ currentUser }) {
             </Link>
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-success"
               disabled={submitting}
             >
               {submitting ? 'Creating...' : 'Create Game'}

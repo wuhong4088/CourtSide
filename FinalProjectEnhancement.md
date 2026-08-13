@@ -58,7 +58,8 @@ Added explicit labels and screen-reader context to inputs and icon buttons:
 
 Based on usability study findings from interviews with 3 participants, we implemented several iterations to resolve identified pain points:
 
-- **Action Buttons Semantic Coding (Must)**: Defined `--success` (Emerald Green) and `.btn-success` CSS variables/classes. Unified all positive action buttons (Join, Add, Save) across `GameFeed.jsx`, `CourtDirectory.jsx`, `GearChecklist.jsx`, and `MatchHistory.jsx` to be green, and destructive actions (Delete, Leave) to be Crimson Red (`btn-danger`).
+- **Action Buttons Semantic Coding (Must)**: Defined `--success` (Emerald Green) and `.btn-success` CSS variables/classes. Unified all positive action and approval buttons (Join, Add, Save, Create Game, Create New Game) across `GameFeed.jsx`, `CourtDirectory.jsx`, `GearChecklist.jsx`, `MatchHistory.jsx`, and `CreateGame.jsx` to be green, and destructive actions (Delete, Leave) to be Crimson Red (`btn-danger`), ensuring full color-palette consistency.
+- **Removed Developer Jargon & Polished Copy**: Cleaned up internal/developer-facing placeholder terms and technical jargon on the frontend (e.g. replaced the raw "run seeding script" warning on the Homepage with a polished, production-ready state message: "No recommended courts available at this time.") to remove any mechanical or unpolished "AI/template feel".
 - **Homepage Onboarding Section (Should)**: Inserted a step-by-step "How to Use CourtSide" instructional guide with 4 cards explaining the main workflows to improve task clarity for first-time users.
 - **Game Feed Date Filter (Should)**: Added a Calendar Date Filter in `GameFeed.jsx` and updated the `routes/games.js` backend to support server-side regex filtering, enabling users to scan for games on specific dates easily.
 - **Immediate Toast Feedback & Participant List (Must)**: 
