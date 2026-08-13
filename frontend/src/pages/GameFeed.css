@@ -36,3 +36,30 @@
   margin-bottom: 5px;
   color: #333333;
 }
+
+/* Floating Success Toast Style */
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--success);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  font-weight: bold;
+  font-size: 0.95rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

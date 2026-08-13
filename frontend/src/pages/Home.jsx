@@ -68,6 +68,51 @@ function Home({ currentUser }) {
         </div>
       </section>
 
+      {/* Onboarding Guide Section */}
+      <section
+        className="section"
+        style={{ marginTop: '2.5rem', marginBottom: '2.5rem' }}
+      >
+        <h2
+          className="section-title"
+          style={{ textAlign: 'center', marginBottom: '1.5rem' }}
+        >
+          How to Use CourtSide
+        </h2>
+        <div className="grid-cols-4">
+          <div className="card onboarding-card flex-center">
+            <span className="onboarding-icon">📍</span>
+            <h3>1. Discover Courts</h3>
+            <p>
+              Explore local facility maps, surface types, ratings, and reviews.
+            </p>
+          </div>
+          <div className="card onboarding-card flex-center">
+            <span className="onboarding-icon">🏀</span>
+            <h3>2. Join Games</h3>
+            <p>
+              Browse active pickup matches, check co-participants, and claim
+              your spot.
+            </p>
+          </div>
+          <div className="card onboarding-card flex-center">
+            <span className="onboarding-icon">🎒</span>
+            <h3>3. Pack Gear</h3>
+            <p>
+              Customize and check off your equipment lists before heading out.
+            </p>
+          </div>
+          <div className="card onboarding-card flex-center">
+            <span className="onboarding-icon">📈</span>
+            <h3>4. Log Matches</h3>
+            <p>
+              Record game scores, opponent names, and court locations to track
+              performance.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Popular Games Section */}
       <section className="section">
         <h2 className="section-title">Popular Sports</h2>

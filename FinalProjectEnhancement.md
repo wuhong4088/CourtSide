@@ -51,3 +51,19 @@ Added explicit labels and screen-reader context to inputs and icon buttons:
 - **Search & Filters**: Added `aria-label` to search inputs and filter dropdowns in `CourtDirectory.jsx` and `GameFeed.jsx`.
 - **Delete Triggers**: Added `aria-label="Remove item"` to the cross symbol (`&times;`) button in `GearChecklist.jsx`.
 - **Typography**: Set `index.css` main font family to `'Inter', Arial, Helvetica, sans-serif` to match the imported Google Fonts font.
+
+---
+
+## 5. Usability & User Interview Enhancements
+
+Based on usability study findings from interviews with 3 participants, we implemented several iterations to resolve identified pain points:
+
+- **Action Buttons Semantic Coding (Must)**: Defined `--success` (Emerald Green) and `.btn-success` CSS variables/classes. Unified all positive action buttons (Join, Add, Save) across `GameFeed.jsx`, `CourtDirectory.jsx`, `GearChecklist.jsx`, and `MatchHistory.jsx` to be green, and destructive actions (Delete, Leave) to be Crimson Red (`btn-danger`).
+- **Homepage Onboarding Section (Should)**: Inserted a step-by-step "How to Use CourtSide" instructional guide with 4 cards explaining the main workflows to improve task clarity for first-time users.
+- **Game Feed Date Filter (Should)**: Added a Calendar Date Filter in `GameFeed.jsx` and updated the `routes/games.js` backend to support server-side regex filtering, enabling users to scan for games on specific dates easily.
+- **Immediate Toast Feedback & Participant List (Must)**: 
+  - Rendered joined co-participants lists on each game card.
+  - Implemented an animated floating success toast message on game join that auto-dismisses after 3 seconds.
+- **Two-Stage Court Directory Redesign (Could)**: Separated court search and discovery from the review process. Users now search court cards, click "View Details & Reviews" to view specific location pages containing the reviews, and click a separate "Write/Update Review" button to open the rating modal, resolving confusion.
+- **Expanded Match Records (Could)**: Updated `MatchHistory.jsx` and `routes/matches.js` to support Opponent Name and Court/Location fields, presenting default values ("N/A", "Local Court") when blank and allowing full card edits.
+- **Legible Packing Progress**: Increased the packed counter text size in `GearChecklist.css` from `0.75rem` to `0.85rem` to improve accessibility.

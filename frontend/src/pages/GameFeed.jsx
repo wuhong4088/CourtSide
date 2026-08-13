@@ -9,6 +9,8 @@ function GameFeed({ currentUser }) {
   const [search, setSearch] = useState('');
   const [sport, setSport] = useState('');
   const [skillLevel, setSkillLevel] = useState('');
+  const [date, setDate] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
   const [visibleCount, setVisibleCount] = useState(24);
 
   const fetchGames = () => {
@@ -17,6 +19,7 @@ function GameFeed({ currentUser }) {
     if (search) url += `search=${encodeURIComponent(search)}&`;
     if (sport) url += `sport=${encodeURIComponent(sport)}&`;
     if (skillLevel) url += `skillLevel=${encodeURIComponent(skillLevel)}&`;
+    if (date) url += `date=${encodeURIComponent(date)}&`;
 
     fetch(url)
       .then((res) => res.json())
@@ -33,7 +36,7 @@ function GameFeed({ currentUser }) {
   useEffect(() => {
     setVisibleCount(24);
     fetchGames();
-  }, [search, sport, skillLevel]);
+  }, [search, sport, skillLevel, date]);
 
   const handleJoin = async (game) => {
     if (!currentUser) {
@@ -51,6 +54,10 @@ function GameFeed({ currentUser }) {
         alert(data.error || 'Failed to join game.');
         return;
       }
+      setToastMessage('Successfully joined the pickup game!');
+      setTimeout(() => {
+        setToastMessage('');
+      }, 3000);
       fetchGames();
     } catch (err) {
       console.error(err);
@@ -128,6 +135,14 @@ function GameFeed({ currentUser }) {
           <option value="Intermediate">Intermediate</option>
           <option value="Advanced">Advanced</option>
         </select>
+        <input
+          type="date"
+          className="form-control"
+          style={{ width: '160px' }}
+          aria-label="Filter by date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
       </div>
 
       {/* Game Cards */}
@@ -166,6 +181,44 @@ function GameFeed({ currentUser }) {
                   <p className="detail-row">👑 Host: {game.host}</p>
                 </div>
 
+                <div
+                  className="participants-section"
+                  style={{ marginBottom: '1rem' }}
+                >
+                  <p
+                    className="detail-row-title"
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '0.85rem',
+                      marginBottom: '0.25rem',
+                    }}
+                  >
+                    Players Joined:
+                  </p>
+                  <div
+                    className="participants-list"
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '0.25rem',
+                    }}
+                  >
+                    {game.participants.map((participant, idx) => (
+                      <span
+                        key={idx}
+                        className="badge participant-badge"
+                        style={{
+                          backgroundColor: '#e2e8f0',
+                          color: '#1e293b',
+                          border: '1px solid #cbd5e1',
+                        }}
+                      >
+                        👤 {participant}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
                 {isHost ? (
                   <button className="btn btn-outline" disabled>
                     You are hosting
@@ -173,14 +226,14 @@ function GameFeed({ currentUser }) {
                 ) : isJoined ? (
                   <button
                     onClick={() => handleLeave(game)}
-                    className="btn btn-outline hover-danger"
+                    className="btn btn-danger"
                   >
                     Leave Game
                   </button>
                 ) : (
                   <button
                     onClick={() => handleJoin(game)}
-                    className="btn btn-secondary"
+                    className="btn btn-success"
                     disabled={isFull}
                   >
                     {isFull ? 'Game Full' : 'Join Game'}
@@ -208,6 +261,8 @@ function GameFeed({ currentUser }) {
           </button>
         </div>
       )}
+
+      {toastMessage && <div className="toast-notification">{toastMessage}</div>}
     </div>
   );
 }

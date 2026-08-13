@@ -7,9 +7,11 @@ function CourtDirectory({ currentUser }) {
   const [courts, setCourts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCourt, setSelectedCourt] = useState(null);
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [editingCourt, setEditingCourt] = useState(null); // null if adding new court
 
   // Form states
@@ -111,11 +113,66 @@ function CourtDirectory({ currentUser }) {
         return;
       }
 
+      const savedCourt = await res.json();
+      if (
+        editingCourt &&
+        selectedCourt &&
+        selectedCourt._id === editingCourt._id
+      ) {
+        setSelectedCourt(savedCourt);
+      }
+
       setIsModalOpen(false);
       fetchCourts();
     } catch (err) {
       console.error(err);
       alert('Network error saving court location.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleOpenWriteReviewModal = (court) => {
+    setEditingCourt(court);
+    setRating(String(court.rating));
+    setReview(court.review);
+    setIsReviewModalOpen(true);
+  };
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!review) return;
+
+    setSubmitting(true);
+    const bodyContent = {
+      name: editingCourt.name,
+      address: editingCourt.address,
+      sport: editingCourt.sport || 'Basketball',
+      review,
+      rating: parseFloat(rating),
+    };
+
+    try {
+      const res = await fetch(`/api/courts/${editingCourt._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bodyContent),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.error || 'Failed to save review.');
+        setSubmitting(false);
+        return;
+      }
+
+      const updatedCourt = await res.json();
+      setSelectedCourt(updatedCourt);
+      setIsReviewModalOpen(false);
+      fetchCourts();
+    } catch (err) {
+      console.error(err);
+      alert('Network error saving review.');
     } finally {
       setSubmitting(false);
     }
@@ -140,6 +197,7 @@ function CourtDirectory({ currentUser }) {
         return;
       }
 
+      setSelectedCourt(null);
       fetchCourts();
     } catch (err) {
       console.error(err);
@@ -178,104 +236,180 @@ function CourtDirectory({ currentUser }) {
             in your local area.
           </p>
         </div>
-        {currentUser && (
-          <button onClick={handleOpenAddModal} className="btn btn-primary">
+        {currentUser && !selectedCourt && (
+          <button onClick={handleOpenAddModal} className="btn btn-success">
             + Add a Court
           </button>
         )}
       </div>
 
-      {/* Search & Filter Bar */}
-      <div className="card search-card flex-between">
-        <div className="flex-1">
-          <input
-            type="text"
-            placeholder="Search by court or address"
-            className="form-control"
-            aria-label="Search by court or address"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <div>
-          <select
-            className="form-control"
-            style={{ width: '180px' }}
-            aria-label="Filter by sport type"
-            value={sportFilter}
-            onChange={(e) => setSportFilter(e.target.value)}
+      {selectedCourt ? (
+        /* Stage 2: Selected Court Details & Reviews */
+        <div
+          className="card selected-court-details-card"
+          style={{ padding: '20px' }}
+        >
+          <div
+            className="flex-between"
+            style={{
+              borderBottom: '1px solid var(--border)',
+              paddingBottom: '1rem',
+              marginBottom: '1rem',
+              flexWrap: 'wrap',
+              gap: '1rem',
+            }}
           >
-            <option value="">Sport Type ▼</option>
-            <option value="Basketball">Basketball</option>
-            <option value="Pickleball">Pickleball</option>
-            <option value="Tennis">Tennis</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Directory Listings */}
-      {loading ? (
-        <div className="flex-center loading-text">
-          Loading court directory...
-        </div>
-      ) : courts.length > 0 ? (
-        <div className="courts-list grid-cols-2">
-          {courts.map((court) => (
-            <div
-              key={court._id}
-              className="card card-hover court-directory-card flex-between flex-column"
-            >
-              <div className="court-card-top">
-                <h3 className="court-title-text">{court.name}</h3>
-                <p className="court-location-text">
-                  {court.sport || 'Basketball'} · {court.address}
-                </p>
-                <div className="court-stars-row">
-                  {renderStars(court.rating)}
-                  <span className="rating-number">{court.rating}</span>
-                </div>
-                <div className="court-review-box">
-                  <p className="review-quote">“{court.review}”</p>
-                </div>
-              </div>
-
-              <div className="court-card-bottom flex-center">
-                <button className="btn btn-outline btn-sm details-btn" disabled>
-                  View Details
-                </button>
-                {currentUser && (
-                  <>
-                    <button
-                      onClick={() => handleOpenEditModal(court)}
-                      className="btn btn-outline btn-sm"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteCourt(court._id)}
-                      className="btn btn-outline btn-sm hover-danger"
-                    >
-                      Delete
-                    </button>
-                  </>
-                )}
-              </div>
+            <div>
+              <h2 style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>
+                {selectedCourt.name}
+              </h2>
+              <p
+                className="court-location-text"
+                style={{ fontSize: '1rem', color: '#555555', marginBottom: 0 }}
+              >
+                {selectedCourt.sport} · {selectedCourt.address}
+              </p>
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="card flex-center empty-state-card">
-          <div>
-            <p className="empty-state-title">No courts found</p>
-            <p>
-              Try searching for another keyword, or click &ldquo;+ Add a
-              Court&rdquo; to list a new location.
-            </p>
+            <div className="flex-center" style={{ gap: '0.5rem' }}>
+              {renderStars(selectedCourt.rating)}
+              <span className="rating-number" style={{ fontSize: '1.1rem' }}>
+                {selectedCourt.rating} / 5
+              </span>
+            </div>
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.20rem', marginBottom: '0.5rem' }}>
+              Community Review
+            </h3>
+            <div
+              className="court-review-box"
+              style={{ background: '#f8f9fa', padding: '1rem' }}
+            >
+              <p className="review-quote" style={{ fontSize: '0.95rem' }}>
+                “{selectedCourt.review}”
+              </p>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div
+            className="flex-center"
+            style={{
+              gap: '0.75rem',
+              justifyContent: 'flex-start',
+              flexWrap: 'wrap',
+            }}
+          >
+            <button
+              onClick={() => setSelectedCourt(null)}
+              className="btn btn-outline"
+            >
+              &larr; Back to Directory
+            </button>
+            {currentUser && (
+              <>
+                <button
+                  onClick={() => handleOpenWriteReviewModal(selectedCourt)}
+                  className="btn btn-success"
+                >
+                  Write/Update Review
+                </button>
+                <button
+                  onClick={() => handleOpenEditModal(selectedCourt)}
+                  className="btn btn-outline"
+                >
+                  Edit Court Info
+                </button>
+                <button
+                  onClick={() => handleDeleteCourt(selectedCourt._id)}
+                  className="btn btn-danger"
+                >
+                  Delete Court
+                </button>
+              </>
+            )}
           </div>
         </div>
+      ) : (
+        /* Stage 1: Directory Search and Listing Grid */
+        <>
+          {/* Search & Filter Bar */}
+          <div className="card search-card flex-between">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Search by court or address"
+                className="form-control"
+                aria-label="Search by court or address"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div>
+              <select
+                className="form-control"
+                style={{ width: '180px' }}
+                aria-label="Filter by sport type"
+                value={sportFilter}
+                onChange={(e) => setSportFilter(e.target.value)}
+              >
+                <option value="">Sport Type ▼</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Pickleball">Pickleball</option>
+                <option value="Tennis">Tennis</option>
+              </select>
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="flex-center loading-text">
+              Loading court directory...
+            </div>
+          ) : courts.length > 0 ? (
+            <div className="courts-list grid-cols-2">
+              {courts.map((court) => (
+                <div
+                  key={court._id}
+                  className="card card-hover court-directory-card flex-between flex-column"
+                >
+                  <div className="court-card-top">
+                    <h3 className="court-title-text">{court.name}</h3>
+                    <p className="court-location-text">
+                      {court.sport || 'Basketball'} · {court.address}
+                    </p>
+                    <div className="court-stars-row">
+                      {renderStars(court.rating)}
+                      <span className="rating-number">{court.rating}</span>
+                    </div>
+                  </div>
+
+                  <div className="court-card-bottom flex-center">
+                    <button
+                      onClick={() => setSelectedCourt(court)}
+                      className="btn btn-success btn-sm"
+                    >
+                      View Details &amp; Reviews
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="card flex-center empty-state-card">
+              <div>
+                <p className="empty-state-title">No courts found</p>
+                <p>
+                  Try searching for another keyword, or click &ldquo;+ Add a
+                  Court&rdquo; to list a new location.
+                </p>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
-      {/* Court Form Modal */}
+      {/* Add / Edit Court Info Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -291,7 +425,7 @@ function CourtDirectory({ currentUser }) {
             <button
               onClick={handleFormSubmit}
               disabled={submitting}
-              className="btn btn-primary"
+              className="btn btn-success"
             >
               {submitting ? 'Saving...' : 'Save Court'}
             </button>
@@ -345,12 +479,74 @@ function CourtDirectory({ currentUser }) {
             </select>
           </div>
 
+          {!editingCourt && (
+            <>
+              <div className="form-group">
+                <label className="form-label" htmlFor="court-rating">
+                  Rating (1 to 5 Stars) *
+                </label>
+                <select
+                  id="court-rating"
+                  className="form-control"
+                  value={rating}
+                  onChange={(e) => setRating(e.target.value)}
+                >
+                  <option value="5">★★★★★ (5 Stars)</option>
+                  <option value="4">★★★★☆ (4 Stars)</option>
+                  <option value="3">★★★☆☆ (3 Stars)</option>
+                  <option value="2">★★☆☆☆ (2 Stars)</option>
+                  <option value="1">★☆☆☆☆ (1 Star)</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label" htmlFor="court-review">
+                  Review / Facility Conditions *
+                </label>
+                <textarea
+                  id="court-review"
+                  placeholder="Describe the court surface quality, hoops/nets, lighting, park amenities, parking accessibility..."
+                  className="form-control"
+                  required
+                  value={review}
+                  onChange={(e) => setReview(e.target.value)}
+                />
+              </div>
+            </>
+          )}
+        </form>
+      </Modal>
+
+      {/* Write / Update Review Modal */}
+      <Modal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        title={`Write Review for ${editingCourt?.name || ''}`}
+        footerButtons={
+          <>
+            <button
+              onClick={() => setIsReviewModalOpen(false)}
+              className="btn btn-outline"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleReviewSubmit}
+              disabled={submitting}
+              className="btn btn-success"
+            >
+              {submitting ? 'Saving...' : 'Save Review'}
+            </button>
+          </>
+        }
+      >
+        <form onSubmit={handleReviewSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="court-rating">
+            <label className="form-label" htmlFor="review-rating">
               Rating (1 to 5 Stars) *
             </label>
             <select
-              id="court-rating"
+              id="review-rating"
               className="form-control"
               value={rating}
               onChange={(e) => setRating(e.target.value)}
@@ -362,14 +558,13 @@ function CourtDirectory({ currentUser }) {
               <option value="1">★☆☆☆☆ (1 Star)</option>
             </select>
           </div>
-
           <div className="form-group">
-            <label className="form-label" htmlFor="court-review">
+            <label className="form-label" htmlFor="review-text">
               Review / Facility Conditions *
             </label>
             <textarea
-              id="court-review"
-              placeholder="Describe the court surface quality, hoops/nets, lighting, park amenities, parking accessibility..."
+              id="review-text"
+              placeholder="Describe surface quality, lighting, hoops/nets, accessibility..."
               className="form-control"
               required
               value={review}
@@ -383,7 +578,7 @@ function CourtDirectory({ currentUser }) {
 }
 
 CourtDirectory.propTypes = {
-  currentUser: PropTypes.string.isRequired,
+  currentUser: PropTypes.string,
 };
 
 export default CourtDirectory;

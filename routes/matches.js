@@ -25,7 +25,8 @@ router.get('/:userId', async (req, res) => {
 // Create a new match result
 router.post('/', async (req, res) => {
   try {
-    const { sport, userId, score, outcome, date } = req.body;
+    const { sport, userId, score, outcome, date, opponent, location } =
+      req.body;
 
     if (!sport || !userId || !score || !outcome || !date) {
       return res.status(400).json({ error: 'Missing required fields.' });
@@ -37,6 +38,8 @@ router.post('/', async (req, res) => {
       score,
       outcome,
       date,
+      opponent: opponent || '',
+      location: location || '',
       createdAt: new Date(),
     };
 
@@ -52,7 +55,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { sport, score, outcome, date } = req.body;
+    const { sport, score, outcome, date, opponent, location } = req.body;
 
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ error: 'Invalid match ID format.' });
@@ -66,6 +69,8 @@ router.put('/:id', async (req, res) => {
       score,
       outcome,
       date,
+      opponent: opponent || '',
+      location: location || '',
     });
 
     if (result.matchedCount === 0) {

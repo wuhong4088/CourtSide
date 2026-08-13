@@ -13,7 +13,7 @@ const router = Router();
 // Get all games (with optional search, sport, and skill level filters)
 router.get('/', async (req, res) => {
   try {
-    const { search, sport, skillLevel } = req.query;
+    const { search, sport, skillLevel, date } = req.query;
     const query = {};
 
     if (sport) {
@@ -21,6 +21,9 @@ router.get('/', async (req, res) => {
     }
     if (skillLevel) {
       query.skillLevel = skillLevel;
+    }
+    if (date) {
+      query.time = { $regex: `^${date}` };
     }
     if (search) {
       query.$or = [

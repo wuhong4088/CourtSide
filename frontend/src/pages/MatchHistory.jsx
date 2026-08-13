@@ -14,6 +14,8 @@ function MatchHistory({ currentUser }) {
   const [score, setScore] = useState('');
   const [outcome, setOutcome] = useState('WIN');
   const [date, setDate] = useState('');
+  const [opponent, setOpponent] = useState('');
+  const [location, setLocation] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [visibleCount, setVisibleCount] = useState(24);
 
@@ -41,6 +43,8 @@ function MatchHistory({ currentUser }) {
     setScore('');
     setOutcome('WIN');
     setDate('');
+    setOpponent('');
+    setLocation('');
     setIsModalOpen(true);
   };
 
@@ -50,6 +54,8 @@ function MatchHistory({ currentUser }) {
     setScore(match.score);
     setOutcome(match.outcome);
     setDate(match.date);
+    setOpponent(match.opponent || '');
+    setLocation(match.location || '');
     setIsModalOpen(true);
   };
 
@@ -58,7 +64,15 @@ function MatchHistory({ currentUser }) {
     if (!score || !date) return;
 
     setSubmitting(true);
-    const body = { sport, userId: currentUser, score, outcome, date };
+    const body = {
+      sport,
+      userId: currentUser,
+      score,
+      outcome,
+      date,
+      opponent,
+      location,
+    };
     const url = editingMatch
       ? `/api/matches/${editingMatch._id}`
       : '/api/matches';
@@ -126,7 +140,7 @@ function MatchHistory({ currentUser }) {
         style={{ marginBottom: '1.5rem' }}
       >
         <h1 className="page-title">My Match History</h1>
-        <button onClick={handleOpenAdd} className="btn btn-primary">
+        <button onClick={handleOpenAdd} className="btn btn-success">
           + Add New Result
         </button>
       </div>
@@ -168,6 +182,8 @@ function MatchHistory({ currentUser }) {
               <div>
                 <h3 className="match-sport-title">{match.sport}</h3>
                 <p className="match-date">{match.date}</p>
+                <p>Opponent: {match.opponent || 'N/A'}</p>
+                <p>Location: {match.location || 'Local Court'}</p>
                 <p>Score: {match.score}</p>
                 <p>
                   Result:{' '}
@@ -187,7 +203,7 @@ function MatchHistory({ currentUser }) {
                 </button>
                 <button
                   onClick={() => handleDelete(match._id)}
-                  className="btn btn-outline btn-sm hover-danger"
+                  className="btn btn-danger btn-sm"
                 >
                   Delete
                 </button>
@@ -231,7 +247,7 @@ function MatchHistory({ currentUser }) {
             <button
               onClick={handleSubmit}
               disabled={submitting}
-              className="btn btn-primary"
+              className="btn btn-success"
             >
               {submitting ? 'Saving...' : 'Save Result'}
             </button>
@@ -265,6 +281,32 @@ function MatchHistory({ currentUser }) {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="m-opponent">
+              Opponent Name
+            </label>
+            <input
+              id="m-opponent"
+              type="text"
+              className="form-control"
+              placeholder="e.g. Alex (optional)"
+              value={opponent}
+              onChange={(e) => setOpponent(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="m-location">
+              Court / Location
+            </label>
+            <input
+              id="m-location"
+              type="text"
+              className="form-control"
+              placeholder="e.g. Boston Common (optional)"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </div>
           <div className="form-group">

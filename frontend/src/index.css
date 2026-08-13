@@ -8,6 +8,8 @@
   --secondary-hover: #374151;
   --accent: #196f3d;
   --accent-hover: #114f2b;
+  --success: #196f3d;
+  --success-hover: #114f2b;
   --danger: #b01a27;
   --danger-hover: #8a141e;
   --dark: #333333;
@@ -118,9 +120,16 @@ a:hover {
   gap: 15px;
 }
 
+.grid-cols-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
 @media (max-width: 768px) {
   .grid-cols-2,
-  .grid-cols-3 {
+  .grid-cols-3,
+  .grid-cols-4 {
     grid-template-columns: 1fr;
   }
 }
@@ -186,6 +195,15 @@ a:hover {
 
 .btn-accent:hover {
   background-color: var(--accent-hover);
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: var(--white);
+}
+
+.btn-success:hover {
+  background-color: var(--success-hover);
 }
 
 .btn-danger {

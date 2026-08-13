@@ -247,7 +247,7 @@ function GearChecklist({ currentUser }) {
             <strong>{currentUser}</strong>.
           </p>
         </div>
-        <button onClick={handleOpenAddModal} className="btn btn-primary">
+        <button onClick={handleOpenAddModal} className="btn btn-success">
           + New Checklist
         </button>
       </div>
@@ -315,7 +315,7 @@ function GearChecklist({ currentUser }) {
                         />
                         <button
                           type="submit"
-                          className="btn btn-primary btn-sm"
+                          className="btn btn-success btn-sm"
                         >
                           Save
                         </button>
@@ -410,7 +410,7 @@ function GearChecklist({ currentUser }) {
                     />
                     <button
                       type="submit"
-                      className="btn btn-primary add-item-save-btn"
+                      className="btn btn-success add-item-save-btn"
                     >
                       Save
                     </button>
@@ -442,7 +442,7 @@ function GearChecklist({ currentUser }) {
                   </button>
                   <button
                     onClick={() => handleDeleteChecklist(checklist._id)}
-                    className="btn btn-outline btn-sm hover-danger"
+                    className="btn btn-danger btn-sm"
                   >
                     Delete
                   </button>
@@ -479,7 +479,7 @@ function GearChecklist({ currentUser }) {
             <button
               onClick={handleCreateChecklist}
               disabled={submitting}
-              className="btn btn-primary"
+              className="btn btn-success"
             >
               {submitting ? 'Creating...' : 'Create Checklist'}
             </button>
