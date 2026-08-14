@@ -10,6 +10,7 @@ function GameFeed({ currentUser }) {
   const [sport, setSport] = useState('');
   const [skillLevel, setSkillLevel] = useState('');
   const [date, setDate] = useState('');
+  const [myGamesOnly, setMyGamesOnly] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [visibleCount, setVisibleCount] = useState(24);
 
@@ -43,6 +44,7 @@ function GameFeed({ currentUser }) {
       alert('Please log in to join a game.');
       return;
     }
+    if (!confirm('Join this pickup game?')) return;
     try {
       const res = await fetch(`/api/games/${game._id}/join`, {
         method: 'POST',
@@ -65,6 +67,7 @@ function GameFeed({ currentUser }) {
   };
 
   const handleLeave = async (game) => {
+    if (!confirm('Leave this pickup game?')) return;
     try {
       const res = await fetch(`/api/games/${game._id}/leave`, {
         method: 'POST',
@@ -81,6 +84,12 @@ function GameFeed({ currentUser }) {
       console.error(err);
     }
   };
+
+  const displayedGames = myGamesOnly
+    ? games.filter(
+        (game) => currentUser && game.participants.includes(currentUser)
+      )
+    : games;
 
   return (
     <div className="feed-container">
@@ -143,21 +152,44 @@ function GameFeed({ currentUser }) {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
+        {currentUser && (
+          <label
+            className="flex-center"
+            style={{ gap: '0.4rem', fontSize: '0.9rem' }}
+          >
+            <input
+              type="checkbox"
+              checked={myGamesOnly}
+              onChange={(e) => {
+                setMyGamesOnly(e.target.checked);
+                setVisibleCount(24);
+              }}
+            />
+            My Games Only
+          </label>
+        )}
       </div>
 
       {/* Game Cards */}
       {loading ? (
         <div className="flex-center loading-text">Loading games...</div>
-      ) : games.length > 0 ? (
+      ) : displayedGames.length > 0 ? (
         <div className="games-grid">
-          {games.slice(0, visibleCount).map((game) => {
+          {displayedGames.slice(0, visibleCount).map((game) => {
             const isHost = currentUser && currentUser === game.host;
             const isJoined =
               currentUser && game.participants.includes(currentUser);
             const isFull = game.participants.length >= game.maxPlayers;
+            const isPast = new Date(game.time) < new Date();
 
             return (
-              <div key={game._id} className="card game-card">
+              <div
+                key={game._id}
+                className={`card game-card${isPast ? ' game-card--past' : ''}`}
+              >
+                {isPast && (
+                  <span className="badge past-game-badge">Past Game</span>
+                )}
                 <div className="flex-between" style={{ marginBottom: '1rem' }}>
                   <div className="flex-center" style={{ gap: '0.5rem' }}>
                     <span className="badge badge-sport">{game.sport}</span>
@@ -234,9 +266,13 @@ function GameFeed({ currentUser }) {
                   <button
                     onClick={() => handleJoin(game)}
                     className="btn btn-success"
-                    disabled={isFull}
+                    disabled={isFull || isPast}
                   >
-                    {isFull ? 'Game Full' : 'Join Game'}
+                    {isPast
+                      ? 'Game Has Passed'
+                      : isFull
+                        ? 'Game Full'
+                        : 'Join Game'}
                   </button>
                 )}
               </div>
@@ -246,12 +282,14 @@ function GameFeed({ currentUser }) {
       ) : (
         <div className="card flex-center empty-state-card">
           <p>
-            No games found. Click &ldquo;+ Create New Game&rdquo; to post one.
+            {myGamesOnly
+              ? "You haven't joined any games yet."
+              : 'No games found. Click "+ Create New Game" to post one.'}
           </p>
         </div>
       )}
 
-      {games.length > visibleCount && (
+      {displayedGames.length > visibleCount && (
         <div className="flex-center" style={{ marginTop: '1.5rem' }}>
           <button
             onClick={() => setVisibleCount(visibleCount + 24)}

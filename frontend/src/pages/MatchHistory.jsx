@@ -18,6 +18,7 @@ function MatchHistory({ currentUser }) {
   const [location, setLocation] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [visibleCount, setVisibleCount] = useState(24);
+  const [sportFilter, setSportFilter] = useState('');
 
   const fetchMatches = () => {
     setLoading(true);
@@ -127,11 +128,18 @@ function MatchHistory({ currentUser }) {
     );
   }
 
-  // Compute stats
-  const total = matches.length;
-  const wins = matches.filter((m) => m.outcome === 'WIN').length;
-  const losses = total - wins;
-  const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
+  // Filter by sport, then compute stats from the filtered list
+  const filteredMatches = sportFilter
+    ? matches.filter((m) => m.sport === sportFilter)
+    : matches;
+
+  const total = filteredMatches.length;
+  const wins = filteredMatches.filter((m) => m.outcome === 'WIN').length;
+  const losses = filteredMatches.filter((m) => m.outcome === 'LOSS').length;
+  const ties = filteredMatches.filter((m) => m.outcome === 'TIE').length;
+  const decisiveGames = wins + losses;
+  const winRate =
+    decisiveGames > 0 ? Math.round((wins / decisiveGames) * 100) : 0;
 
   return (
     <div className="match-container">
@@ -143,6 +151,28 @@ function MatchHistory({ currentUser }) {
         <button onClick={handleOpenAdd} className="btn btn-success">
           + Add New Result
         </button>
+      </div>
+
+      {/* Sport Filter */}
+      <div className="card" style={{ marginBottom: '1.5rem' }}>
+        <label className="form-label" htmlFor="sport-filter">
+          Filter by Sport
+        </label>
+        <select
+          id="sport-filter"
+          className="form-control"
+          style={{ width: '200px' }}
+          value={sportFilter}
+          onChange={(e) => {
+            setSportFilter(e.target.value);
+            setVisibleCount(24);
+          }}
+        >
+          <option value="">All Sports</option>
+          <option value="Basketball">Basketball</option>
+          <option value="Pickleball">Pickleball</option>
+          <option value="Tennis">Tennis</option>
+        </select>
       </div>
 
       {/* Stats */}
@@ -158,6 +188,9 @@ function MatchHistory({ currentUser }) {
             Losses: <strong style={{ color: 'var(--danger)' }}>{losses}</strong>
           </span>
           <span>
+            Ties: <strong style={{ color: 'var(--secondary)' }}>{ties}</strong>
+          </span>
+          <span>
             Win Rate: <strong style={{ color: '#7c3aed' }}>{winRate}%</strong>
           </span>
         </div>
@@ -166,17 +199,19 @@ function MatchHistory({ currentUser }) {
       {/* Match list */}
       {loading ? (
         <div className="flex-center loading-text">Loading match history...</div>
-      ) : matches.length > 0 ? (
+      ) : filteredMatches.length > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {matches.slice(0, visibleCount).map((match) => (
+          {filteredMatches.slice(0, visibleCount).map((match) => (
             <div
               key={match._id}
               className="card flex-between"
               style={{
                 borderLeft:
                   match.outcome === 'WIN'
-                    ? '5px solid #22c55e'
-                    : '5px solid #ef4444',
+                    ? '5px solid var(--accent)'
+                    : match.outcome === 'TIE'
+                      ? '5px solid var(--secondary)'
+                      : '5px solid var(--danger)',
               }}
             >
               <div>
@@ -188,7 +223,13 @@ function MatchHistory({ currentUser }) {
                 <p>
                   Result:{' '}
                   <span
-                    className={`badge ${match.outcome === 'WIN' ? 'badge-outcome-win' : 'badge-outcome-loss'}`}
+                    className={`badge ${
+                      match.outcome === 'WIN'
+                        ? 'badge-outcome-win'
+                        : match.outcome === 'TIE'
+                          ? 'badge-outcome-tie'
+                          : 'badge-outcome-loss'
+                    }`}
                   >
                     {match.outcome}
                   </span>
@@ -220,7 +261,7 @@ function MatchHistory({ currentUser }) {
         </div>
       )}
 
-      {matches.length > visibleCount && (
+      {filteredMatches.length > visibleCount && (
         <div className="flex-center" style={{ marginTop: '1.5rem' }}>
           <button
             onClick={() => setVisibleCount(visibleCount + 24)}
@@ -335,6 +376,7 @@ function MatchHistory({ currentUser }) {
             >
               <option value="WIN">WIN</option>
               <option value="LOSS">LOSS</option>
+              <option value="TIE">TIE</option>
             </select>
           </div>
         </form>

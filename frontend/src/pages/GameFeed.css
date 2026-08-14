@@ -37,6 +37,18 @@
   color: #333333;
 }
 
+.game-card--past {
+  opacity: 0.55;
+}
+
+.past-game-badge {
+  display: inline-block;
+  background-color: #f1f2f4;
+  color: var(--secondary);
+  border: 1px solid #d1d5db;
+  margin-bottom: 0.5rem;
+}
+
 /* Floating Success Toast Style */
 .toast-notification {
   position: fixed;
