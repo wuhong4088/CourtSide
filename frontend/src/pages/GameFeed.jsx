@@ -85,11 +85,23 @@ function GameFeed({ currentUser }) {
     }
   };
 
-  const displayedGames = myGamesOnly
+  const filteredGames = myGamesOnly
     ? games.filter(
         (game) => currentUser && game.participants.includes(currentUser)
       )
     : games;
+
+  // Push past (greyed-out) games to the bottom; keep upcoming games on top,
+  // soonest first, and past games most-recently-ended first.
+  const now = new Date();
+  const displayedGames = [...filteredGames].sort((a, b) => {
+    const aPast = new Date(a.time) < now;
+    const bPast = new Date(b.time) < now;
+    if (aPast !== bPast) return aPast ? 1 : -1;
+    return aPast
+      ? new Date(b.time) - new Date(a.time)
+      : new Date(a.time) - new Date(b.time);
+  });
 
   return (
     <div className="feed-container">
