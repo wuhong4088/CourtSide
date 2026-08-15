@@ -110,7 +110,7 @@ erDiagram
         string sport
         string userId "Username"
         string score
-        string outcome "WIN or LOSS"
+        string outcome "WIN, LOSS, or TIE"
         string date
         date createdAt
     }
@@ -118,10 +118,19 @@ erDiagram
         ObjectId id PK
         string name
         string address
-        string review
-        int rating
+        string sport
+        float rating "Average of all reviews"
+        Review[] reviews
         date createdAt
     }
+    REVIEW {
+        ObjectId id PK
+        string author "Username"
+        float rating
+        string text
+        date createdAt
+    }
+    COURTS ||--o{ REVIEW : contains
     CHECKLISTS {
         ObjectId id PK
         string userId "Username"

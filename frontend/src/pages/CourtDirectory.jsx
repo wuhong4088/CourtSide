@@ -69,40 +69,39 @@ function CourtDirectory({ currentUser }) {
     setEditingCourt(court);
     setName(court.name);
     setAddress(court.address);
-    setRating(String(court.rating));
-    setReview(court.review);
     setSport(court.sport || 'Basketball');
     setIsModalOpen(true);
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !address || !review || !sport) return;
+    if (!name || !address || !sport) return;
+    if (!editingCourt && !review) return;
 
     setSubmitting(true);
-    const bodyContent = {
-      name,
-      address,
-      review,
-      rating: parseFloat(rating),
-      sport,
-    };
 
     try {
       let res;
       if (editingCourt) {
-        // Edit court
+        // Edit court facility info only (name/address/sport)
         res = await fetch(`/api/courts/${editingCourt._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bodyContent),
+          body: JSON.stringify({ name, address, sport }),
         });
       } else {
-        // Create court
+        // Create court with its first review
         res = await fetch('/api/courts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bodyContent),
+          body: JSON.stringify({
+            name,
+            address,
+            sport,
+            review,
+            rating: parseFloat(rating),
+            author: currentUser,
+          }),
         });
       }
 
@@ -132,10 +131,14 @@ function CourtDirectory({ currentUser }) {
     }
   };
 
+  const findMyReview = (court) =>
+    (court.reviews || []).find((r) => r.author === currentUser);
+
   const handleOpenWriteReviewModal = (court) => {
     setEditingCourt(court);
-    setRating(String(court.rating));
-    setReview(court.review);
+    const myReview = findMyReview(court);
+    setRating(myReview ? String(myReview.rating) : '5');
+    setReview(myReview ? myReview.text : '');
     setIsReviewModalOpen(true);
   };
 
@@ -144,20 +147,28 @@ function CourtDirectory({ currentUser }) {
     if (!review) return;
 
     setSubmitting(true);
+    const myReview = findMyReview(editingCourt);
     const bodyContent = {
-      name: editingCourt.name,
-      address: editingCourt.address,
-      sport: editingCourt.sport || 'Basketball',
-      review,
+      author: currentUser,
       rating: parseFloat(rating),
+      text: review,
     };
 
     try {
-      const res = await fetch(`/api/courts/${editingCourt._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bodyContent),
-      });
+      const res = myReview
+        ? await fetch(
+            `/api/courts/${editingCourt._id}/reviews/${myReview._id}`,
+            {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(bodyContent),
+            }
+          )
+        : await fetch(`/api/courts/${editingCourt._id}/reviews`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyContent),
+          });
 
       if (!res.ok) {
         const data = await res.json();
@@ -175,6 +186,34 @@ function CourtDirectory({ currentUser }) {
       alert('Network error saving review.');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDeleteReview = async (court, reviewToDelete) => {
+    if (!confirm('Delete your review for this court?')) return;
+
+    try {
+      const res = await fetch(
+        `/api/courts/${court._id}/reviews/${reviewToDelete._id}`,
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ author: currentUser }),
+        }
+      );
+
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.error || 'Failed to delete review.');
+        return;
+      }
+
+      const updatedCourt = await res.json();
+      setSelectedCourt(updatedCourt);
+      fetchCourts();
+    } catch (err) {
+      console.error(err);
+      alert('Network error deleting review.');
     }
   };
 
@@ -280,16 +319,51 @@ function CourtDirectory({ currentUser }) {
 
           <div style={{ marginBottom: '1.5rem' }}>
             <h3 style={{ fontSize: '1.20rem', marginBottom: '0.5rem' }}>
-              Community Review
+              Reviews ({(selectedCourt.reviews || []).length})
             </h3>
-            <div
-              className="court-review-box"
-              style={{ background: '#f8f9fa', padding: '1rem' }}
-            >
-              <p className="review-quote" style={{ fontSize: '0.95rem' }}>
-                “{selectedCourt.review}”
+            {(selectedCourt.reviews || []).length > 0 ? (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.75rem',
+                }}
+              >
+                {selectedCourt.reviews.map((r) => (
+                  <div
+                    key={r._id}
+                    className="court-review-box"
+                    style={{ background: '#f8f9fa', padding: '1rem' }}
+                  >
+                    <div
+                      className="flex-between"
+                      style={{ marginBottom: '0.35rem' }}
+                    >
+                      <span style={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
+                        {r.author}
+                      </span>
+                      {renderStars(r.rating)}
+                    </div>
+                    <p className="review-quote" style={{ fontSize: '0.95rem' }}>
+                      “{r.text}”
+                    </p>
+                    {currentUser === r.author && (
+                      <button
+                        onClick={() => handleDeleteReview(selectedCourt, r)}
+                        className="btn btn-outline btn-sm"
+                        style={{ marginTop: '0.5rem' }}
+                      >
+                        Delete My Review
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p style={{ color: '#666666', fontSize: '0.9rem' }}>
+                No reviews yet. Be the first to write one!
               </p>
-            </div>
+            )}
           </div>
 
           {/* Action buttons */}
@@ -313,7 +387,9 @@ function CourtDirectory({ currentUser }) {
                   onClick={() => handleOpenWriteReviewModal(selectedCourt)}
                   className="btn btn-success"
                 >
-                  Write/Update Review
+                  {findMyReview(selectedCourt)
+                    ? 'Edit My Review'
+                    : 'Write a Review'}
                 </button>
                 <button
                   onClick={() => handleOpenEditModal(selectedCourt)}
@@ -521,7 +597,7 @@ function CourtDirectory({ currentUser }) {
       <Modal
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
-        title={`Write Review for ${editingCourt?.name || ''}`}
+        title={`${editingCourt && findMyReview(editingCourt) ? 'Edit Your Review for' : 'Write a Review for'} ${editingCourt?.name || ''}`}
         footerButtons={
           <>
             <button

@@ -139,13 +139,14 @@
 }
 
 .add-item-input {
-  font-size: 0.85rem;
-  padding: 4px 6px;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  flex: 1;
 }
 
 .add-item-save-btn {
-  padding: 4px 10px;
-  font-size: 0.85rem;
+  padding: 8px 14px;
+  font-size: 0.9rem;
 }
 
 .card-actions {
