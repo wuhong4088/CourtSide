@@ -148,8 +148,18 @@ npm run format
 
 ## Design Document & Mockups
 The full planning documentation is detailed in:
-- **Design Document**: [DESIGN.md](DESIGN.md) (includes database schemas, ER diagrams, personas, and use cases).
+- **Project 3 Design Document**: [DESIGN.md](DESIGN.md) (includes baseline database schemas, ER diagrams, personas, and use cases).
+- **Final Project Design Enhancements**: [final_project_design.md](final_project_design.md) (includes usability stories, enhanced schemas, and updated use case flows).
 - **Mockups**: [Mockup.md](Mockup.md) (includes interactive page ASCII wireframes).
+
+---
+
+## Final Project: Accessibility & Usability Enhancements
+
+For the Final Project, we conducted usability studies (6 participants total) and implemented several iterations to resolve usability friction and satisfy contrast/keyboard accessibility standards:
+- **Usability Implementations**: The detailed log of usability changes (including unified red/green buttons, calendar date filters, safe join confirmations, "My Games" toggles, multi-review directory layout, sport-wise match filters, and tie stats) is documented in [FinalProjectEnhancement.md](FinalProjectEnhancement.md).
+- **Presentation Slides**: [Google Slides](https://docs.google.com/presentation/d/1nLB53jPXGPbCSzlLn9PHc-GvXx5TLoP7r1KxjwAQA1s/edit?slide=id.g3f554011a8f_0_54#slide=id.g3f554011a8f_0_54)
+- **Narrated Video Demo**: [YouTube Demo](https://youtu.be/y16I1naJ47k?si=9lPxkL_cakBOBIzH)
 
 ---
 
