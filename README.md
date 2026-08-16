@@ -158,8 +158,8 @@ The full planning documentation is detailed in:
 
 For the Final Project, we conducted usability studies (6 participants total) and implemented several iterations to resolve usability friction and satisfy contrast/keyboard accessibility standards:
 - **Usability Implementations**: The detailed log of usability changes (including unified red/green buttons, calendar date filters, safe join confirmations, "My Games" toggles, multi-review directory layout, sport-wise match filters, and tie stats) is documented in [FinalProjectEnhancement.md](FinalProjectEnhancement.md).
-- **Presentation Slides**: [Google Slides](https://docs.google.com/presentation/d/1nLB53jPXGPbCSzlLn9PHc-GvXx5TLoP7r1KxjwAQA1s/edit?slide=id.g3f554011a8f_0_54#slide=id.g3f554011a8f_0_54)
-- **Narrated Video Demo**: [YouTube Demo](https://youtu.be/y16I1naJ47k?si=9lPxkL_cakBOBIzH)
+- **Presentation Slides**: [Google Slides](https://docs.google.com/presentation/d/1a7sl5xPtK1PhDC0w2j_rwDgm1O_uK9md9cBCFq5TxHs/edit?usp=sharing)
+- **Narrated Video Demo**: [YouTube Demo](https://youtu.be/TMTosHlqprk)
 
 ---
 
