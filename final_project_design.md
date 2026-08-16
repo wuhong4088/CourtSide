@@ -1,12 +1,17 @@
 # Final Project: Design Document Enhancements — CourtSide
 
-This document outlines the design enhancements, updated user stories, use cases, and database schemas implemented for the **Final Project: Usability & Accessibility Iteration**, building upon the base system described in [DESIGN.md](DESIGN.md).
+This document outlines the design enhancements, HCI principles, usability studies, and updated schemas implemented for the **Final Project: Usability & Accessibility Iteration**, building upon the base system described in [DESIGN.md](DESIGN.md).
 
 ---
 
-## 1. Project Enhancements Overview
+## 1. Project Enhancements & Iteration Focus
 
-Following usability studies with 6 participants (across two rounds of testing), several core workflows were iterated on to resolve user confusion, improve accessibility (WCAG AA contrast, keyboard outlines), and align with expected map and sports-feed patterns.
+Following usability feedback and audits, our iteration focused on upgrading the CourtSide application based on **HCI Design Principles**, **Lighthouse 100% Accessibility Audits**, and **Usability Study Feedback**.
+
+Key general enhancements include:
+- **Homepage Onboarding**: An interactive 4-step "How to Use" guide for instant first-time orientation.
+- **User Control & Participation**: Complete "Join Game" and "Leave Game" functionality with instant confirmation popups and dynamic participant badge updates.
+- **Improved Data Validation**: Enhanced forms and authentication checks with strict validation and user feedback messages.
 
 ---
 
@@ -66,7 +71,73 @@ Following usability studies with 6 participants (across two rounds of testing), 
 
 ---
 
-## 4. Enhanced Database Schemas
+## 4. Design System & 100% Lighthouse Accessibility
+
+To create a clean, accessible layout, the application was upgraded under strict accessibility criteria:
+- **Typography**: Integrated **Google Font Inter** with a structured font-weight hierarchy (700 bold headings, 400 body text) ensuring primary elements are salient and read from the top-left.
+- **Semantic Color Palette (C.R.A.P. Principles)**:
+  - **Emerald Green (`--success`: `#196f3d`)**: Repeated for positive approval actions (Join Game, Save Review, Add Checklist, Save/Create Game).
+  - **Crimson Red (`--danger`: `#b01a27`)**: Reserved for destructive/cancellation actions (Leave Game, Delete Match, Remove Item, Delete Court).
+- **Lighthouse 100% Accessibility Audits**:
+  - Achieved a **100% accessibility score** on Chrome DevTools with zero warnings.
+  - **Full Keyboard Operability**: Universal visible focus indicator outlines on all elements enabling complete navigation via Tab and Enter keys.
+  - **ARIA Support**: Added explicit input labels and `aria-label` tags on icon buttons and controls for screen-reader support.
+
+---
+
+## 5. HCI & Usability Principles (Shneiderman's Eight Golden Rules)
+
+We mapped our usability iteration changes directly to **Shneiderman's Eight Golden Rules of Interface Design**:
+1. **Strive for Consistency**: Standardized semantic button colors (emerald green for approvals, crimson red for cancellations) and typography across all pages.
+2. **Cater to Universal Usability**: Delivered 100% keyboard accessibility, `:focus-visible` focus ring styles, and screen-reader `aria-label` support.
+3. **Offer Informative Feedback**: Added animated success toast alerts that float in upon joining a game (disappearing in 3 seconds) and real-time checklist progress tracking bars.
+4. **Permit Easy Reversal of Actions**: Provided flexible options to leave joined games (with confirmation prompts) or delete checklist items.
+5. **Reduce Short-term Memory Load**: Added the step-by-step onboarding guide on the homepage so users immediately understand the 4 core workflows.
+
+---
+
+## 6. Usability Study Overview & Likert Scores
+
+The usability study comprised moderated testing sessions with screen and audio recording utilizing the think-aloud protocol across **6 tasks** with participants.
+
+### Average Likert Scores by Task (1-5 scale, where 5 is best)
+| Task | Description | Success Score | Intuitiveness Score |
+|---|---|:---:|:---:|
+| **T1** | Create a pickup game | **5.0 / 5.0** | **4.7 / 5.0** |
+| **T2** | Find / Join / Leave a game | **5.0 / 5.0** | **5.0 / 5.0** |
+| **T3** | Log a match result | **4.7 / 5.0** | **4.3 / 5.0** |
+| **T4** | Add a court review | **5.0 / 5.0** | **4.3 / 5.0** |
+| **T5** | Search court directory | **5.0 / 5.0** | **5.0 / 5.0** |
+| **T6** | Manage gear checklist | **5.0 / 5.0** | **5.0 / 5.0** |
+
+---
+
+## 7. Priority Matrix & Implementation Status
+
+### MUST — Implemented
+- **Confirm Dialog before Join/Leave**: Added double-checks on game feeds to prevent accidental sign-ups/leaves.
+- **Tie Outcome Support**: Expanded match logging to include TIE results and fixed stats formulas to avoid counting ties as losses.
+
+### SHOULD — Implemented
+- **"My Games Only" Filter**: Toggled dashboard view listing only games the current user registered for.
+- **Muted Past Games**: Muted past matches visually with a "Past Game" badge and disabled buttons.
+- **Court Reviews Appending**: Redesigned reviews array in MongoDB so users append reviews, avoiding overwriting other community entries.
+
+### COULD — Implemented
+- **Sport Filter on Match History**: Stats cards dynamically filter and recompute per-sport.
+- **Gear Checklist Input Resized**: Shrunk/resized checklist input styling to match standard app form-controls.
+- **Zip Code address match**: Confirmed address matching handles zip code queries.
+
+### WOULD — Deferred (Future Work)
+- **Verified Court Dropdown**: Restrict game creation locations to verified court listings.
+- **Game Group Chat / Host Contact**: Built-in communication channels for players.
+- **Skill Levels in Player Badge**: Show individual participant skill ratings inside joined rosters.
+- **Auto-Submit Scores**: Host auto-submission of results upon game time completion.
+- **Shared Checklists**: Suggested packing templates based on the sport of a joined game.
+
+---
+
+## 8. Enhanced Database Schemas
 
 To support multiple reviews and expanded match history details, the MongoDB collections were enhanced:
 
@@ -104,4 +175,3 @@ To support multiple reviews and expanded match history details, the MongoDB coll
   "createdAt": "date"
 }
 ```
-*Note: Existing courts are automatically normalized on read by the Express backend API so that old data is safely adapted without requiring complex database migrations.*
