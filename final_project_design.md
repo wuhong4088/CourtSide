@@ -83,6 +83,9 @@ Key general enhancements include:
 
 ## 4. Design System & 100% Lighthouse Accessibility
 
+- **Lighthouse Testing**: <img width="1262" height="1180" alt="CleanShot 2026-08-16 at 00 55 11@2x" src="https://github.com/user-attachments/assets/55940668-fb0f-44e3-8341-9a990d23fa45" />
+
+
 To create a clean, accessible layout, the application was upgraded under strict accessibility criteria:
 - **Typography**: Integrated **Google Font Inter** with a structured font-weight hierarchy (700 bold headings, 400 body text) ensuring primary elements are salient and read from the top-left.
 - **Semantic Color Palette (C.R.A.P. Principles)**:
