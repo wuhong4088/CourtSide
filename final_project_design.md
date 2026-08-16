@@ -45,6 +45,10 @@ Key general enhancements include:
    - Alex confirms. The player count increases, a green success toast appears on the bottom-right for 3 seconds, and Alex's avatar badge appears.
    - Alex clicks the **My Games Only** toggle to verify this game appears on their dashboard.
 
+*Screenshots for this use case:*
+- **Game Feed & Date Filter**: ![Final Game Feed](Screenshots/Final_GameFeed.png)
+- **Safe Join Toast & Avatars**: ![Final Game Join Toast](Screenshots/Final_GameJoinToast.png)
+
 ### Use Case 2: Logging a Score, Opponent & Ties (Taylor)
 1. **Actor**: Taylor (Competitive Tracker)
 2. **Pre-conditions**: Taylor completed a game.
@@ -55,6 +59,9 @@ Key general enhancements include:
    - Taylor clicks **Save Result**.
    - The result is written to MongoDB. The frontend re-calculates the stats card. The tie is logged under a new "Ties" counter, and the Win Rate formula excludes the tie from the denominator: `wins / (wins + losses)`.
    - Taylor selects "Pickleball" in the Sport Filter; the stats cards dynamically re-calculate to show only Pickleball stats.
+
+*Screenshot for this use case:*
+- **Rich Match History & Ties**: ![Final Match History](Screenshots/Final_MatchHistory.png)
 
 ### Use Case 3: Two-Stage Court Map Discovery & Multiple Reviews (Jordan)
 1. **Actor**: Jordan (Community Recommender)
@@ -68,6 +75,9 @@ Key general enhancements include:
    - The system appends this review to the court's reviews array in MongoDB and recalculates the average rating.
    - The UI immediately renders the updated review. Jordan has Edit/Delete privileges only on their own review.
    - Jordan clicks **Back to Directory** to return to the full list.
+
+*Screenshot for this use case:*
+- **Two-Stage Court Details & Multiple Reviews**: ![Final Court Details](Screenshots/Final_CourtDetails.png)
 
 ---
 

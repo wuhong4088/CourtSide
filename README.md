@@ -8,14 +8,21 @@ A modern full-stack web application designed for sports lovers to organize picku
 
 **Class Link**: [CS 5610 Web Development](https://johnguerra.co/classes/webDevelopment_online_summer_2026/)  
 **Public Page (Deployed URL)**: [https://courtside-8uiv.onrender.com](https://courtside-8uiv.onrender.com)  
-**Slides**: [Google Slides](https://docs.google.com/presentation/d/1nLB53jPXGPbCSzlLn9PHc-GvXx5TLoP7r1KxjwAQA1s/edit?slide=id.g3f554011a8f_0_54#slide=id.g3f554011a8f_0_54)  
-**Video Demo**: [YouTube](https://youtu.be/y16I1naJ47k?si=9lPxkL_cakBOBIzH)
+
+**Project 3 Deliverables**:
+- **Presentation Slides**: [Google Slides](https://docs.google.com/presentation/d/1nLB53jPXGPbCSzlLn9PHc-GvXx5TLoP7r1KxjwAQA1s/edit?slide=id.g3f554011a8f_0_54#slide=id.g3f554011a8f_0_54)  
+- **Narrated Video Demo**: [YouTube Demo](https://youtu.be/y16I1naJ47k?si=9lPxkL_cakBOBIzH)
+
+**Final Project Usability & Accessibility Deliverables**:
+- **Presentation Slides**: [Google Slides](https://docs.google.com/presentation/d/1a7sl5xPtK1PhDC0w2j_rwDgm1O_uK9md9cBCFq5TxHs/edit?usp=sharing)  
+- **Narrated Video Demo**: [YouTube Demo](https://youtu.be/TMTosHlqprk)
 
 
 ---
 
 ## Screenshots
 
+### Project 3 Base Screenshots
 ![CourtSide Home Page](Screenshots/Home.png)
 
 | Feature | Screenshot |
@@ -25,6 +32,18 @@ A modern full-stack web application designed for sports lovers to organize picku
 | Match History — stats and win/loss log | ![Match History](Screenshots/Match%20History.png) |
 | Court Directory (Partner B) | ![Court List](Screenshots/Court%20List.png) |
 | Gear Checklist (Partner B) | ![Gear Checklist](Screenshots/Gear%20Checklist.png) |
+
+### Final Project Usability & Accessibility Screenshots
+![CourtSide Final Home Page with Onboarding](Screenshots/Final_Home.png)
+
+| Feature / Usability Enhancement | Screenshot |
+|---|---|
+| **Homepage Onboarding** — Interactive 4-step "How to Use" guide | ![Final Onboarding Guide](Screenshots/Final_Home.png) |
+| **Find Pickup Games** — Date filters, participant list badges, and My Games toggle | ![Final Game Feed](Screenshots/Final_GameFeed.png) |
+| **Safe Join Confirmation & Toast** — Emerald green Success Toast notification | ![Final Game Join Toast](Screenshots/Final_GameJoinToast.png) |
+| **Two-Stage Court Reviews** — Detailed court reviews list displaying multiple entries | ![Final Court Details](Screenshots/Final_CourtDetails.png) |
+| **Rich Match Logs & ties** — Opponent name, location metadata, Tie outcomes, and Sport Filters | ![Final Match History](Screenshots/Final_MatchHistory.png) |
+| **Legible Checklist Packing** — Responsive progress indicators and resized inputs | ![Final Gear Checklist](Screenshots/Final_GearChecklist.png) |
 
 ---
 
@@ -158,8 +177,7 @@ The full planning documentation is detailed in:
 
 For the Final Project, we conducted usability studies (6 participants total) and implemented several iterations to resolve usability friction and satisfy contrast/keyboard accessibility standards:
 - **Usability Implementations**: The detailed log of usability changes (including unified red/green buttons, calendar date filters, safe join confirmations, "My Games" toggles, multi-review directory layout, sport-wise match filters, and tie stats) is documented in [FinalProjectEnhancement.md](FinalProjectEnhancement.md).
-- **Presentation Slides**: [Google Slides](https://docs.google.com/presentation/d/1a7sl5xPtK1PhDC0w2j_rwDgm1O_uK9md9cBCFq5TxHs/edit?usp=sharing)
-- **Narrated Video Demo**: [YouTube Demo](https://youtu.be/TMTosHlqprk)
+- **Deliverables**: The final slides and YouTube demo are linked in the top section of this document.
 
 ---
 
