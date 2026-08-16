@@ -42,7 +42,7 @@ router.post('/register', async (req, res, next) => {
     }
 
     const salt = crypto.randomBytes(16).toString('hex');
-    const passwordHash = hashPassword(password, salt);
+    const passwordHash = await hashPassword(password, salt);
 
     const newUser = {
       username,

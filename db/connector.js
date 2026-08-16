@@ -14,14 +14,15 @@ const client = new MongoClient(uri);
 
 const db = client.db();
 
-// Connect to database
-client
+// Connect to database and export the promise
+const connectPromise = client
   .connect()
   .then(() => {
     console.log('Successfully connected to MongoDB.');
   })
   .catch((error) => {
     console.error('Failed to connect to MongoDB:', error.message);
+    throw error;
   });
 
-export { client, db };
+export { client, db, connectPromise };
