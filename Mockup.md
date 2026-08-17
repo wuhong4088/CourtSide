@@ -207,7 +207,11 @@ The same header will appear at the top of every page.
 - Secondary color: `#7C3AED`
 - Accent color: `#22C55E`
 - Background color: `#F8FAFC`
-- Font: Inter
+- Font: Inter 
+
+Peer Reivew Comment:
+Great work! One suggestion would be to add more contrast and variation in the typography. This could help highlight the different elements and make your design stand out even more.
+
 
 ---
 
